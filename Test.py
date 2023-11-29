@@ -1,3 +1,5 @@
+import math
+import numpy
 def prime_list(last_num):
     list_prime_num = [2]
     for i in range(2,last_num):
@@ -17,7 +19,19 @@ def is_prime(num):
 
 
 if __name__ == '__main__':
-    print("Hello world")
+    n='369'
+    l=len(n)
+    list=[]
+    j = int(math.factorial(l) / l)
+    for element in n:
+
+        for i in range(j):
+            list.append([element])
+
+    print(list)
+
+
+
 
 
 
