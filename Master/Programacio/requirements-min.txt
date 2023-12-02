@@ -1,0 +1,17 @@
+flake8==6.0.0
+fqdn==1.5.1
+geopy==2.3.0
+healpy==1.16.2
+isoduration==20.11.0
+jsonpointer==2.3
+jupyter==1.0.0
+networkx==3.0
+pycodestyle_magic==0.5
+scikit-learn==1.2.1
+Scrapy==2.8.0
+seaborn==0.12.2
+sympy==1.11.1
+tweepy==4.12.1
+uri-template==1.2.0
+virtualenv==20.20.0
+webcolors==1.12

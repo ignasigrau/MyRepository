@@ -1,0 +1,3851 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <row>
+    <Code>TOTAL</Code>
+    <Description>Total</Description>
+  </row>
+  <row>
+    <Code>TOTAL_1</Code>
+    <Description>Total excluding rents</Description>
+  </row>
+  <row>
+    <Code>CP01_TO_12</Code>
+    <Description>Total individual consumption expenditure by households</Description>
+  </row>
+  <row>
+    <Code>CP00</Code>
+    <Description>All-items HICP</Description>
+  </row>
+  <row>
+    <Code>00FLASH</Code>
+    <Description>Flash estimate - All items HICP</Description>
+  </row>
+  <row>
+    <Code>CP01</Code>
+    <Description>Food and non-alcoholic beverages</Description>
+  </row>
+  <row>
+    <Code>CP011</Code>
+    <Description>Food</Description>
+  </row>
+  <row>
+    <Code>CP0111</Code>
+    <Description>Bread and cereals</Description>
+  </row>
+  <row>
+    <Code>CP01111</Code>
+    <Description>Rice</Description>
+  </row>
+  <row>
+    <Code>CP01112</Code>
+    <Description>Flours and other cereals</Description>
+  </row>
+  <row>
+    <Code>CP01113</Code>
+    <Description>Bread</Description>
+  </row>
+  <row>
+    <Code>CP01114</Code>
+    <Description>Other bakery products</Description>
+  </row>
+  <row>
+    <Code>CP01115</Code>
+    <Description>Pizza and quiche</Description>
+  </row>
+  <row>
+    <Code>CP0112</Code>
+    <Description>Meat</Description>
+  </row>
+  <row>
+    <Code>CP01121</Code>
+    <Description>Beef and veal</Description>
+  </row>
+  <row>
+    <Code>CP01122</Code>
+    <Description>Pork</Description>
+  </row>
+  <row>
+    <Code>CP01123</Code>
+    <Description>Lamb and goat</Description>
+  </row>
+  <row>
+    <Code>CP01124</Code>
+    <Description>Poultry</Description>
+  </row>
+  <row>
+    <Code>CP01125</Code>
+    <Description>Other meats</Description>
+  </row>
+  <row>
+    <Code>CP01126</Code>
+    <Description>Edible offal</Description>
+  </row>
+  <row>
+    <Code>CP01127</Code>
+    <Description>Dried, salted or smoked meat</Description>
+  </row>
+  <row>
+    <Code>CP0113</Code>
+    <Description>Fish and seafood</Description>
+  </row>
+  <row>
+    <Code>CP01131</Code>
+    <Description>Fresh or chilled fish</Description>
+  </row>
+  <row>
+    <Code>CP01132</Code>
+    <Description>Frozen fish</Description>
+  </row>
+  <row>
+    <Code>CP01133</Code>
+    <Description>Fresh or chilled seafood</Description>
+  </row>
+  <row>
+    <Code>CP01134</Code>
+    <Description>Frozen seafood</Description>
+  </row>
+  <row>
+    <Code>CP0114</Code>
+    <Description>Milk, cheese and eggs</Description>
+  </row>
+  <row>
+    <Code>CP01141</Code>
+    <Description>Fresh whole milk</Description>
+  </row>
+  <row>
+    <Code>CP01142</Code>
+    <Description>Fresh low fat milk</Description>
+  </row>
+  <row>
+    <Code>CP01143</Code>
+    <Description>Preserved milk</Description>
+  </row>
+  <row>
+    <Code>CP01144</Code>
+    <Description>Yoghurt</Description>
+  </row>
+  <row>
+    <Code>CP01145</Code>
+    <Description>Cheese and curd</Description>
+  </row>
+  <row>
+    <Code>CP01146</Code>
+    <Description>Other milk products</Description>
+  </row>
+  <row>
+    <Code>CP01147</Code>
+    <Description>Eggs</Description>
+  </row>
+  <row>
+    <Code>CP0115</Code>
+    <Description>Oils and fats</Description>
+  </row>
+  <row>
+    <Code>CP01151</Code>
+    <Description>Butter</Description>
+  </row>
+  <row>
+    <Code>CP01152</Code>
+    <Description>Margarine and other vegetable fats</Description>
+  </row>
+  <row>
+    <Code>CP01153</Code>
+    <Description>Olive oil</Description>
+  </row>
+  <row>
+    <Code>CP01154</Code>
+    <Description>Other edible oils</Description>
+  </row>
+  <row>
+    <Code>CP01155</Code>
+    <Description>Other edible animal fats</Description>
+  </row>
+  <row>
+    <Code>CP0116</Code>
+    <Description>Fruit</Description>
+  </row>
+  <row>
+    <Code>CP01161</Code>
+    <Description>Fresh or chilled fruit</Description>
+  </row>
+  <row>
+    <Code>CP01162</Code>
+    <Description>Frozen fruit</Description>
+  </row>
+  <row>
+    <Code>CP01163</Code>
+    <Description>Dried fruit and nuts</Description>
+  </row>
+  <row>
+    <Code>CP01164</Code>
+    <Description>Preserved fruit and fruit-based products</Description>
+  </row>
+  <row>
+    <Code>CP01165</Code>
+    <Description>Stone fruits (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP01166</Code>
+    <Description>Berries (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP01167</Code>
+    <Description>Other fresh, chilled or frozen fruits</Description>
+  </row>
+  <row>
+    <Code>CP01168</Code>
+    <Description>Dried fruit</Description>
+  </row>
+  <row>
+    <Code>CP01169</Code>
+    <Description>Preserved fruit and fruit-based products</Description>
+  </row>
+  <row>
+    <Code>CP0117</Code>
+    <Description>Vegetables</Description>
+  </row>
+  <row>
+    <Code>CP01171</Code>
+    <Description>Fresh or chilled vegetables other than potatoes and other tubers</Description>
+  </row>
+  <row>
+    <Code>CP01172</Code>
+    <Description>Frozen vegetables other than potatoes and other tubers</Description>
+  </row>
+  <row>
+    <Code>CP01173</Code>
+    <Description>Dried vegetables, other preserved or processed vegetables</Description>
+  </row>
+  <row>
+    <Code>CP01174</Code>
+    <Description>Potatoes</Description>
+  </row>
+  <row>
+    <Code>CP01175</Code>
+    <Description>Crisps</Description>
+  </row>
+  <row>
+    <Code>CP01176</Code>
+    <Description>Other tubers and products of tuber vegetables</Description>
+  </row>
+  <row>
+    <Code>CP01177</Code>
+    <Description>Potatoes</Description>
+  </row>
+  <row>
+    <Code>CP01178</Code>
+    <Description>Other tubers and products of tuber vegetables</Description>
+  </row>
+  <row>
+    <Code>CP0118</Code>
+    <Description>Sugar, jam, honey, chocolate and confectionery</Description>
+  </row>
+  <row>
+    <Code>CP01181</Code>
+    <Description>Sugar</Description>
+  </row>
+  <row>
+    <Code>CP01182</Code>
+    <Description>Jams, marmalades and honey</Description>
+  </row>
+  <row>
+    <Code>HONEY</Code>
+    <Description>Honey</Description>
+  </row>
+  <row>
+    <Code>CP01183</Code>
+    <Description>Chocolate</Description>
+  </row>
+  <row>
+    <Code>CP01184</Code>
+    <Description>Confectionery products</Description>
+  </row>
+  <row>
+    <Code>CP01185</Code>
+    <Description>Edible ices and ice cream</Description>
+  </row>
+  <row>
+    <Code>CP01186</Code>
+    <Description>Artificial sugar substitutes</Description>
+  </row>
+  <row>
+    <Code>CP0119</Code>
+    <Description>Food products n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP01191</Code>
+    <Description>Sauces, condiments</Description>
+  </row>
+  <row>
+    <Code>CP01192</Code>
+    <Description>Salt, spices and culinary herbs</Description>
+  </row>
+  <row>
+    <Code>CP01193</Code>
+    <Description>Baby food</Description>
+  </row>
+  <row>
+    <Code>CP01194</Code>
+    <Description>Ready-made meals</Description>
+  </row>
+  <row>
+    <Code>CP012</Code>
+    <Description>Non-alcoholic beverages</Description>
+  </row>
+  <row>
+    <Code>CP0121</Code>
+    <Description>Coffee, tea and cocoa</Description>
+  </row>
+  <row>
+    <Code>CP01211</Code>
+    <Description>Coffee</Description>
+  </row>
+  <row>
+    <Code>CP01212</Code>
+    <Description>Tea</Description>
+  </row>
+  <row>
+    <Code>CP01213</Code>
+    <Description>Cocoa and powdered chocolate</Description>
+  </row>
+  <row>
+    <Code>CP0122</Code>
+    <Description>Mineral waters, soft drinks, fruit and vegetable juices</Description>
+  </row>
+  <row>
+    <Code>CP01221</Code>
+    <Description>Mineral or spring waters</Description>
+  </row>
+  <row>
+    <Code>CP01222</Code>
+    <Description>Soft drinks</Description>
+  </row>
+  <row>
+    <Code>CP01223</Code>
+    <Description>Fruit and vegetables juices</Description>
+  </row>
+  <row>
+    <Code>CP01224</Code>
+    <Description>Vegetable juices</Description>
+  </row>
+  <row>
+    <Code>CP02</Code>
+    <Description>Alcoholic beverages, tobacco and narcotics</Description>
+  </row>
+  <row>
+    <Code>CP021_022</Code>
+    <Description>Alcoholic beverages and tobacco</Description>
+  </row>
+  <row>
+    <Code>CP021</Code>
+    <Description>Alcoholic beverages</Description>
+  </row>
+  <row>
+    <Code>CP0211</Code>
+    <Description>Spirits</Description>
+  </row>
+  <row>
+    <Code>CP0212</Code>
+    <Description>Wine</Description>
+  </row>
+  <row>
+    <Code>CP02121</Code>
+    <Description>Wine from grapes</Description>
+  </row>
+  <row>
+    <Code>CP02122</Code>
+    <Description>Wine from other fruits</Description>
+  </row>
+  <row>
+    <Code>CP0213</Code>
+    <Description>Beer</Description>
+  </row>
+  <row>
+    <Code>CP022</Code>
+    <Description>Tobacco</Description>
+  </row>
+  <row>
+    <Code>CP0221</Code>
+    <Description>Tobacco (ND)</Description>
+  </row>
+  <row>
+    <Code>CP02211</Code>
+    <Description>Cigarettes</Description>
+  </row>
+  <row>
+    <Code>CP02212</Code>
+    <Description>Cigars</Description>
+  </row>
+  <row>
+    <Code>CP02213</Code>
+    <Description>Other tobacco</Description>
+  </row>
+  <row>
+    <Code>CP023</Code>
+    <Description>Narcotics</Description>
+  </row>
+  <row>
+    <Code>CP0231</Code>
+    <Description>Narcotics (ND)</Description>
+  </row>
+  <row>
+    <Code>CP03</Code>
+    <Description>Clothing and footwear</Description>
+  </row>
+  <row>
+    <Code>CP031</Code>
+    <Description>Clothing</Description>
+  </row>
+  <row>
+    <Code>CP0311</Code>
+    <Description>Clothing materials</Description>
+  </row>
+  <row>
+    <Code>CP0312</Code>
+    <Description>Garments</Description>
+  </row>
+  <row>
+    <Code>CP03121</Code>
+    <Description>Garments for men</Description>
+  </row>
+  <row>
+    <Code>CP03122</Code>
+    <Description>Garments for women</Description>
+  </row>
+  <row>
+    <Code>CP03123</Code>
+    <Description>Garments for infants (0 to 2 years) and children (3 to 13 years)</Description>
+  </row>
+  <row>
+    <Code>CP0313</Code>
+    <Description>Other articles of clothing and clothing accessories</Description>
+  </row>
+  <row>
+    <Code>CP0314</Code>
+    <Description>Cleaning, repair and hire of clothing</Description>
+  </row>
+  <row>
+    <Code>CP032</Code>
+    <Description>Footwear</Description>
+  </row>
+  <row>
+    <Code>CP0321</Code>
+    <Description>Shoes and other footwear</Description>
+  </row>
+  <row>
+    <Code>CP03211</Code>
+    <Description>Footwear for men</Description>
+  </row>
+  <row>
+    <Code>CP03212</Code>
+    <Description>Footwear for women</Description>
+  </row>
+  <row>
+    <Code>CP03213</Code>
+    <Description>Footwear for infants and children</Description>
+  </row>
+  <row>
+    <Code>CP0322</Code>
+    <Description>Repair and hire of footwear</Description>
+  </row>
+  <row>
+    <Code>CP04</Code>
+    <Description>Housing, water, electricity, gas and other fuels</Description>
+  </row>
+  <row>
+    <Code>CP041</Code>
+    <Description>Actual rentals for housing</Description>
+  </row>
+  <row>
+    <Code>CP0411</Code>
+    <Description>Actual rentals paid by tenants</Description>
+  </row>
+  <row>
+    <Code>CP0412</Code>
+    <Description>Other actual rentals</Description>
+  </row>
+  <row>
+    <Code>CP042</Code>
+    <Description>Imputed rentals for housing</Description>
+  </row>
+  <row>
+    <Code>CP0421</Code>
+    <Description>Imputed rentals of owner-occupiers</Description>
+  </row>
+  <row>
+    <Code>CP0422</Code>
+    <Description>Other imputed rentals</Description>
+  </row>
+  <row>
+    <Code>CP04221</Code>
+    <Description>Imputed rentals of households housed free.</Description>
+  </row>
+  <row>
+    <Code>CP04222</Code>
+    <Description>Imputed rentals for secondary residences</Description>
+  </row>
+  <row>
+    <Code>CP043</Code>
+    <Description>Maintenance and repair of the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP0431</Code>
+    <Description>Materials for the maintenance and repair of the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP0432</Code>
+    <Description>Services for the maintenance and repair of the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP044</Code>
+    <Description>Water supply and miscellaneous services relating to the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP0441</Code>
+    <Description>Water supply</Description>
+  </row>
+  <row>
+    <Code>CP0442</Code>
+    <Description>Refuse collection</Description>
+  </row>
+  <row>
+    <Code>CP0443</Code>
+    <Description>Sewerage collection</Description>
+  </row>
+  <row>
+    <Code>CP0444</Code>
+    <Description>Other services relating to the dwelling n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP045</Code>
+    <Description>Electricity, gas and other fuels</Description>
+  </row>
+  <row>
+    <Code>CP0451</Code>
+    <Description>Electricity</Description>
+  </row>
+  <row>
+    <Code>CP0452</Code>
+    <Description>Gas</Description>
+  </row>
+  <row>
+    <Code>CP04521</Code>
+    <Description>Natural gas and town gas</Description>
+  </row>
+  <row>
+    <Code>CP04522</Code>
+    <Description>Liquefied hydrocarbons (butane, propane, etc.)</Description>
+  </row>
+  <row>
+    <Code>CP0453</Code>
+    <Description>Liquid fuels</Description>
+  </row>
+  <row>
+    <Code>CP0454</Code>
+    <Description>Solid fuels</Description>
+  </row>
+  <row>
+    <Code>CP0455</Code>
+    <Description>Heat energy</Description>
+  </row>
+  <row>
+    <Code>CP05</Code>
+    <Description>Furnishings, household equipment and routine household maintenance</Description>
+  </row>
+  <row>
+    <Code>CP051</Code>
+    <Description>Furniture and furnishings, carpets and other floor coverings</Description>
+  </row>
+  <row>
+    <Code>CP0511</Code>
+    <Description>Furniture and furnishings</Description>
+  </row>
+  <row>
+    <Code>CP0512</Code>
+    <Description>Carpets and other floor coverings</Description>
+  </row>
+  <row>
+    <Code>CP0513</Code>
+    <Description>Repair of furniture, furnishings and floor coverings</Description>
+  </row>
+  <row>
+    <Code>CP052</Code>
+    <Description>Household textiles</Description>
+  </row>
+  <row>
+    <Code>CP0521</Code>
+    <Description>Household textiles (SD)</Description>
+  </row>
+  <row>
+    <Code>CP053</Code>
+    <Description>Household appliances</Description>
+  </row>
+  <row>
+    <Code>CP0531_532</Code>
+    <Description>Major household appliances whether electric or not and small electric household appliances</Description>
+  </row>
+  <row>
+    <Code>CP0531</Code>
+    <Description>Major household appliances whether electric or not</Description>
+  </row>
+  <row>
+    <Code>CP05311</Code>
+    <Description>Refrigerators, freezers and fridge-freezers</Description>
+  </row>
+  <row>
+    <Code>CP05312</Code>
+    <Description>Clothes washing machines, clothes drying machines and dish washing machines</Description>
+  </row>
+  <row>
+    <Code>CP05313</Code>
+    <Description>Cookers</Description>
+  </row>
+  <row>
+    <Code>CP05314</Code>
+    <Description>Heaters, air conditioners</Description>
+  </row>
+  <row>
+    <Code>CP05315</Code>
+    <Description>Cleaning equipment</Description>
+  </row>
+  <row>
+    <Code>CP05316</Code>
+    <Description>Sewing and knitting machines</Description>
+  </row>
+  <row>
+    <Code>CP05317</Code>
+    <Description>Other major household appliances</Description>
+  </row>
+  <row>
+    <Code>CP0532</Code>
+    <Description>Small electric household appliances</Description>
+  </row>
+  <row>
+    <Code>CP0533</Code>
+    <Description>Repair of household appliances</Description>
+  </row>
+  <row>
+    <Code>CP054</Code>
+    <Description>Glassware, tableware and household utensils</Description>
+  </row>
+  <row>
+    <Code>CP0541</Code>
+    <Description>Glassware, tableware and household utensils (SD)</Description>
+  </row>
+  <row>
+    <Code>CP05411</Code>
+    <Description>Glass and crystal-ware, tableware</Description>
+  </row>
+  <row>
+    <Code>CP05412</Code>
+    <Description>Cutlery, flatware and silverware</Description>
+  </row>
+  <row>
+    <Code>CP05413</Code>
+    <Description>Kitchen and domestic ustensils</Description>
+  </row>
+  <row>
+    <Code>CP05414</Code>
+    <Description>Repair of glasseware, tableware and household ustensils</Description>
+  </row>
+  <row>
+    <Code>CP055</Code>
+    <Description>Tools and equipment for house and garden</Description>
+  </row>
+  <row>
+    <Code>CP0551</Code>
+    <Description>Major tools and equipment</Description>
+  </row>
+  <row>
+    <Code>CP0552</Code>
+    <Description>Small tools and miscellaneous accessories</Description>
+  </row>
+  <row>
+    <Code>CP056</Code>
+    <Description>Goods and services for routine household maintenance</Description>
+  </row>
+  <row>
+    <Code>CP0561</Code>
+    <Description>Non-durable household goods</Description>
+  </row>
+  <row>
+    <Code>CP05611</Code>
+    <Description>Cleaning and maintenance products</Description>
+  </row>
+  <row>
+    <Code>CP05612</Code>
+    <Description>Other non-durable small household articles</Description>
+  </row>
+  <row>
+    <Code>CP0562</Code>
+    <Description>Domestic services and household services</Description>
+  </row>
+  <row>
+    <Code>CP05621</Code>
+    <Description>Domestic services by paid staff</Description>
+  </row>
+  <row>
+    <Code>CP05622</Code>
+    <Description>Cleaning services</Description>
+  </row>
+  <row>
+    <Code>CP06</Code>
+    <Description>Health</Description>
+  </row>
+  <row>
+    <Code>CP061</Code>
+    <Description>Medical products, appliances and equipment</Description>
+  </row>
+  <row>
+    <Code>CP0611</Code>
+    <Description>Pharmaceutical products</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Other medical products</Description>
+  </row>
+  <row>
+    <Code>CP0612</Code>
+    <Description>Other medical products</Description>
+  </row>
+  <row>
+    <Code>CP0613</Code>
+    <Description>Therapeutic appliances and equipment</Description>
+  </row>
+  <row>
+    <Code>CP062</Code>
+    <Description>Out-patient services</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Medical services</Description>
+  </row>
+  <row>
+    <Code>CP0621</Code>
+    <Description>Medical services</Description>
+  </row>
+  <row>
+    <Code>CP0622</Code>
+    <Description>Dental services</Description>
+  </row>
+  <row>
+    <Code>CP0623</Code>
+    <Description>Paramedical services</Description>
+  </row>
+  <row>
+    <Code>CP06231</Code>
+    <Description>Services of medical analysis laboratories and X-ray centres</Description>
+  </row>
+  <row>
+    <Code>CP06232</Code>
+    <Description>Thermal-baths, corrective-gymnastic therapy, ambulance and hire of therapeutic equipment</Description>
+  </row>
+  <row>
+    <Code>CP06233</Code>
+    <Description>Other non-hospital services</Description>
+  </row>
+  <row>
+    <Code>CP063</Code>
+    <Description>Hospital services</Description>
+  </row>
+  <row>
+    <Code>CP0631</Code>
+    <Description>Hospital services</Description>
+  </row>
+  <row>
+    <Code>CP07</Code>
+    <Description>Transport</Description>
+  </row>
+  <row>
+    <Code>CP071</Code>
+    <Description>Purchase of vehicles</Description>
+  </row>
+  <row>
+    <Code>CP0711</Code>
+    <Description>Motor cars</Description>
+  </row>
+  <row>
+    <Code>CP07111</Code>
+    <Description>New motor cars</Description>
+  </row>
+  <row>
+    <Code>CP07112</Code>
+    <Description>Second-hand motor cars</Description>
+  </row>
+  <row>
+    <Code>CP0712_713_714</Code>
+    <Description>Motor cycles, bicycles and animal drawn vehicles</Description>
+  </row>
+  <row>
+    <Code>CP0712_713</Code>
+    <Description>Motor cycles and bicycles</Description>
+  </row>
+  <row>
+    <Code>CP0712</Code>
+    <Description>Motor cycles</Description>
+  </row>
+  <row>
+    <Code>CP0713</Code>
+    <Description>Bicycles</Description>
+  </row>
+  <row>
+    <Code>CP0714</Code>
+    <Description>Animal drawn vehicles</Description>
+  </row>
+  <row>
+    <Code>CP072</Code>
+    <Description>Operation of personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP0721</Code>
+    <Description>Spare parts and accessories for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP0722</Code>
+    <Description>Fuels and lubricants for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP0723</Code>
+    <Description>Maintenance and repair of personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP0724</Code>
+    <Description>Other services in respect of personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP073</Code>
+    <Description>Transport services</Description>
+  </row>
+  <row>
+    <Code>CP0731</Code>
+    <Description>Passenger transport by railway</Description>
+  </row>
+  <row>
+    <Code>CP0732</Code>
+    <Description>Passenger transport by road</Description>
+  </row>
+  <row>
+    <Code>CP0733</Code>
+    <Description>Passenger transport by air</Description>
+  </row>
+  <row>
+    <Code>CP0734</Code>
+    <Description>Passenger transport by sea and inland waterway</Description>
+  </row>
+  <row>
+    <Code>CP0735</Code>
+    <Description>Combined passenger transport</Description>
+  </row>
+  <row>
+    <Code>CP0736</Code>
+    <Description>Other purchased transport services</Description>
+  </row>
+  <row>
+    <Code>CP08</Code>
+    <Description>Communications</Description>
+  </row>
+  <row>
+    <Code>CP081</Code>
+    <Description>Postal services</Description>
+  </row>
+  <row>
+    <Code>CP0811</Code>
+    <Description>Postal services (S)</Description>
+  </row>
+  <row>
+    <Code>CP082_83</Code>
+    <Description>Telephone and telefax equipment and services</Description>
+  </row>
+  <row>
+    <Code>CP082</Code>
+    <Description>Telephone and telefax equipment</Description>
+  </row>
+  <row>
+    <Code>CP0821</Code>
+    <Description>Telephone and telefax equipment (D)</Description>
+  </row>
+  <row>
+    <Code>CP083</Code>
+    <Description>Telephone and telefax services</Description>
+  </row>
+  <row>
+    <Code>CP0831</Code>
+    <Description>Telephone and telefax services (S)</Description>
+  </row>
+  <row>
+    <Code>CP09</Code>
+    <Description>Recreation and culture</Description>
+  </row>
+  <row>
+    <Code>CP091</Code>
+    <Description>Audio-visual, photographic and information processing equipment</Description>
+  </row>
+  <row>
+    <Code>CP0911</Code>
+    <Description>Equipment for the reception, recording and reproduction of sound and picture</Description>
+  </row>
+  <row>
+    <Code>CP09111</Code>
+    <Description>Equipment for the reception, recording and reproduction of sound</Description>
+  </row>
+  <row>
+    <Code>CP09112</Code>
+    <Description>Equipment for the reception, recording and reproduction of sound and vision</Description>
+  </row>
+  <row>
+    <Code>CP0912</Code>
+    <Description>Photographic and cinematographic equipment and optical instruments</Description>
+  </row>
+  <row>
+    <Code>CP09121</Code>
+    <Description>Cameras</Description>
+  </row>
+  <row>
+    <Code>CP09122</Code>
+    <Description>Accessories for photographic and cinematographic equipment</Description>
+  </row>
+  <row>
+    <Code>CP0913</Code>
+    <Description>Information processing equipment</Description>
+  </row>
+  <row>
+    <Code>CP0914</Code>
+    <Description>Recording media</Description>
+  </row>
+  <row>
+    <Code>CP0915</Code>
+    <Description>Repair of audio-visual, photographic and information processing equipment</Description>
+  </row>
+  <row>
+    <Code>CP092A</Code>
+    <Description>Recreational and cultural services</Description>
+  </row>
+  <row>
+    <Code>CP092</Code>
+    <Description>Other major durables for recreation and culture</Description>
+  </row>
+  <row>
+    <Code>CP0921_922</Code>
+    <Description>Major durables for indoor and outdoor recreation including musical instruments</Description>
+  </row>
+  <row>
+    <Code>CP0921</Code>
+    <Description>Major durables for outdoor recreation</Description>
+  </row>
+  <row>
+    <Code>CP0922</Code>
+    <Description>Musical instruments and major durables for indoor recreation</Description>
+  </row>
+  <row>
+    <Code>CP09221</Code>
+    <Description>Musical instruments</Description>
+  </row>
+  <row>
+    <Code>CP09222</Code>
+    <Description>Major durables for indoor recreation</Description>
+  </row>
+  <row>
+    <Code>CP0923</Code>
+    <Description>Maintenance and repair of other major durables for recreation and culture</Description>
+  </row>
+  <row>
+    <Code>CP093</Code>
+    <Description>Other recreational items and equipment, gardens and pets</Description>
+  </row>
+  <row>
+    <Code>CP0931</Code>
+    <Description>Games, toys and hobbies</Description>
+  </row>
+  <row>
+    <Code>CP0932</Code>
+    <Description>Equipment for sport, camping and open-air recreation</Description>
+  </row>
+  <row>
+    <Code>CP0933</Code>
+    <Description>Gardens, plants and flowers</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Pets and related products</Description>
+  </row>
+  <row>
+    <Code>CP0934</Code>
+    <Description>Pets and related products</Description>
+  </row>
+  <row>
+    <Code>CP0935</Code>
+    <Description>Veterinary and other services for pets</Description>
+  </row>
+  <row>
+    <Code>CP094</Code>
+    <Description>Recreational and cultural services</Description>
+  </row>
+  <row>
+    <Code>CP0941</Code>
+    <Description>Recreational and sporting services</Description>
+  </row>
+  <row>
+    <Code>CP0942</Code>
+    <Description>Cultural services</Description>
+  </row>
+  <row>
+    <Code>CP09421</Code>
+    <Description>Cinemas, theatres, concerts</Description>
+  </row>
+  <row>
+    <Code>CP09422</Code>
+    <Description>Museums, libraries, zoological gardens</Description>
+  </row>
+  <row>
+    <Code>CP09423</Code>
+    <Description>Television and radio licence fees, subscriptions</Description>
+  </row>
+  <row>
+    <Code>CP09424</Code>
+    <Description>Hire of equipment and accessories for culture</Description>
+  </row>
+  <row>
+    <Code>CP0943</Code>
+    <Description>Games of chance</Description>
+  </row>
+  <row>
+    <Code>CP095</Code>
+    <Description>Newspapers, books and stationery</Description>
+  </row>
+  <row>
+    <Code>CP0951</Code>
+    <Description>Books</Description>
+  </row>
+  <row>
+    <Code>CP0952</Code>
+    <Description>Newspapers and periodicals</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Miscellaneous printed matter</Description>
+  </row>
+  <row>
+    <Code>CP0953</Code>
+    <Description>Miscellaneous printed matter</Description>
+  </row>
+  <row>
+    <Code>CP0954</Code>
+    <Description>Stationery and drawing materials</Description>
+  </row>
+  <row>
+    <Code>CP096</Code>
+    <Description>Package holidays</Description>
+  </row>
+  <row>
+    <Code>CP10</Code>
+    <Description>Education</Description>
+  </row>
+  <row>
+    <Code>CP101</Code>
+    <Description>Pre-primary and primary education</Description>
+  </row>
+  <row>
+    <Code>CP1011</Code>
+    <Description>Pre primary and primary education (S)</Description>
+  </row>
+  <row>
+    <Code>CP102</Code>
+    <Description>Secondary education</Description>
+  </row>
+  <row>
+    <Code>CP1021</Code>
+    <Description>Secondary education (S)</Description>
+  </row>
+  <row>
+    <Code>CP103</Code>
+    <Description>Post-secondary non-tertiary education</Description>
+  </row>
+  <row>
+    <Code>CP1031</Code>
+    <Description>Post-secondary non-tertiary education (S)</Description>
+  </row>
+  <row>
+    <Code>CP104</Code>
+    <Description>Tertiary education</Description>
+  </row>
+  <row>
+    <Code>CP1041</Code>
+    <Description>Tertiary education (S)</Description>
+  </row>
+  <row>
+    <Code>CP105</Code>
+    <Description>Education not definable by level</Description>
+  </row>
+  <row>
+    <Code>CP1051</Code>
+    <Description>Education non definable by level (S)</Description>
+  </row>
+  <row>
+    <Code>CP11</Code>
+    <Description>Restaurants and hotels</Description>
+  </row>
+  <row>
+    <Code>CP111</Code>
+    <Description>Catering services</Description>
+  </row>
+  <row>
+    <Code>CP1111</Code>
+    <Description>Restaurants, cafés and the like</Description>
+  </row>
+  <row>
+    <Code>CP11111</Code>
+    <Description>Restaurants, cafés and dancing establishments</Description>
+  </row>
+  <row>
+    <Code>CP11112</Code>
+    <Description>Fast food and take away food services</Description>
+  </row>
+  <row>
+    <Code>CP1112</Code>
+    <Description>Canteens</Description>
+  </row>
+  <row>
+    <Code>CP112</Code>
+    <Description>Accommodation services</Description>
+  </row>
+  <row>
+    <Code>CP1121</Code>
+    <Description>Accommodation services (S)</Description>
+  </row>
+  <row>
+    <Code>CP12</Code>
+    <Description>Miscellaneous goods and services</Description>
+  </row>
+  <row>
+    <Code>CP121</Code>
+    <Description>Personal care</Description>
+  </row>
+  <row>
+    <Code>CP1211</Code>
+    <Description>Hairdressing salons and personal grooming establishments</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Electrical appliances for personal care</Description>
+  </row>
+  <row>
+    <Code>CP1212</Code>
+    <Description>Electrical appliances for personal care</Description>
+  </row>
+  <row>
+    <Code>CP1213</Code>
+    <Description>Other appliances, articles and products for personal care</Description>
+  </row>
+  <row>
+    <Code>CP122</Code>
+    <Description>Prostitution</Description>
+  </row>
+  <row>
+    <Code>CP1221</Code>
+    <Description>Prostitution (S)</Description>
+  </row>
+  <row>
+    <Code>CP123</Code>
+    <Description>Personal effects n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP1231</Code>
+    <Description>Jewellery, clocks and watches</Description>
+  </row>
+  <row>
+    <Code>CP1232</Code>
+    <Description>Other personal effects</Description>
+  </row>
+  <row>
+    <Code>CP12321</Code>
+    <Description>Travel goods</Description>
+  </row>
+  <row>
+    <Code>CP12322</Code>
+    <Description>Articles for babies</Description>
+  </row>
+  <row>
+    <Code>CP124</Code>
+    <Description>Social protection</Description>
+  </row>
+  <row>
+    <Code>CP1241</Code>
+    <Description>Social proctection services (S)</Description>
+  </row>
+  <row>
+    <Code>CP12411</Code>
+    <Description>Social proctection services</Description>
+  </row>
+  <row>
+    <Code>CP12412</Code>
+    <Description>Cr裨es, nurseries</Description>
+  </row>
+  <row>
+    <Code>CP125</Code>
+    <Description>Insurance</Description>
+  </row>
+  <row>
+    <Code>CP1251</Code>
+    <Description>Life insurance</Description>
+  </row>
+  <row>
+    <Code>CP1252</Code>
+    <Description>Insurance connected with the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP1253</Code>
+    <Description>Insurance connected with health</Description>
+  </row>
+  <row>
+    <Code>CP1254</Code>
+    <Description>Insurance connected with transport</Description>
+  </row>
+  <row>
+    <Code>CP1255</Code>
+    <Description>Other insurance</Description>
+  </row>
+  <row>
+    <Code>CP126</Code>
+    <Description>Financial services n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP1261</Code>
+    <Description>FISIM</Description>
+  </row>
+  <row>
+    <Code>CP1262</Code>
+    <Description>Other financial services n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP127</Code>
+    <Description>Other services n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP1271</Code>
+    <Description>Other services n.e.c. (S)</Description>
+  </row>
+  <row>
+    <Code>DURABLE</Code>
+    <Description>Durable</Description>
+  </row>
+  <row>
+    <Code>NO_DURABLE</Code>
+    <Description>No durable</Description>
+  </row>
+  <row>
+    <Code>SEMI_DURABLE</Code>
+    <Description>Semi durable</Description>
+  </row>
+  <row>
+    <Code>SERVICE</Code>
+    <Description>Service</Description>
+  </row>
+  <row>
+    <Code>CP13</Code>
+    <Description>Individual consumption expenditure of non-profit institutions serving households</Description>
+  </row>
+  <row>
+    <Code>CP131</Code>
+    <Description>Housing (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP132</Code>
+    <Description>Health (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1321</Code>
+    <Description>Pharmaceutical products (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1322</Code>
+    <Description>Other medical products (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1323</Code>
+    <Description>Therapeutic appliances and equipment (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1324</Code>
+    <Description>Out-patient medical services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1325</Code>
+    <Description>Out-patient dental services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1326</Code>
+    <Description>Out-patient paramedical services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1327</Code>
+    <Description>Hospital services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1328</Code>
+    <Description>Other health services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP133</Code>
+    <Description>Recreation and services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1331</Code>
+    <Description>Recreation and sporting services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1332</Code>
+    <Description>Cultural services (non-profit institutions serving household)</Description>
+  </row>
+  <row>
+    <Code>CP134</Code>
+    <Description>Education (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1341</Code>
+    <Description>Pre-primary and primary education (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1342</Code>
+    <Description>Secondary education (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1343</Code>
+    <Description>Post-secondary non-tertiary education (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1344</Code>
+    <Description>Tertiary education (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1345</Code>
+    <Description>Education not definable by level (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1346</Code>
+    <Description>Other educational services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP135</Code>
+    <Description>Social protection (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP136</Code>
+    <Description>Other services (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1361</Code>
+    <Description>Religion (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1362</Code>
+    <Description>Political parties, labour and professional organisations (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1363</Code>
+    <Description>Environment protection (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP1364</Code>
+    <Description>Services n.e.c. (non-profit institutions serving households)</Description>
+  </row>
+  <row>
+    <Code>CP14</Code>
+    <Description>Individual consumption expenditure of general government</Description>
+  </row>
+  <row>
+    <Code>CP141</Code>
+    <Description>Housing (general government)</Description>
+  </row>
+  <row>
+    <Code>CP142</Code>
+    <Description>Health (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1421</Code>
+    <Description>Pharmaceutical products (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1422</Code>
+    <Description>Other medical products (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1423</Code>
+    <Description>Therapeutic appliances and equipment (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1424</Code>
+    <Description>Out-patient medical services (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1425</Code>
+    <Description>Out-patient dental services (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1426</Code>
+    <Description>Out-patient paramedical services (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1427</Code>
+    <Description>Hospital services (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1428</Code>
+    <Description>Public health services (general government)</Description>
+  </row>
+  <row>
+    <Code>CP143</Code>
+    <Description>Recreation and culture (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1431</Code>
+    <Description>Recreational and sporting services (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1432</Code>
+    <Description>Cultural services (general government)</Description>
+  </row>
+  <row>
+    <Code>CP144</Code>
+    <Description>Education (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1441</Code>
+    <Description>Pre-primary and primary education (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1442</Code>
+    <Description>Secondary education (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1443</Code>
+    <Description>Post-secondary non-tertiary education (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1444</Code>
+    <Description>Tertiary education (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1445</Code>
+    <Description>Education not definable by level (general government)</Description>
+  </row>
+  <row>
+    <Code>CP1446</Code>
+    <Description>Subsidiary services to education (general government)</Description>
+  </row>
+  <row>
+    <Code>CP145</Code>
+    <Description>Social protection (general government)</Description>
+  </row>
+  <row>
+    <Code>GOODS</Code>
+    <Description>Goods (overall index excluding services)</Description>
+  </row>
+  <row>
+    <Code>IGOODS</Code>
+    <Description>Industrial goods</Description>
+  </row>
+  <row>
+    <Code>IGOODSXE</Code>
+    <Description>Non-energy industrial goods</Description>
+  </row>
+  <row>
+    <Code>IGOODSXEDU</Code>
+    <Description>Non-energy industrial goods, durables only</Description>
+  </row>
+  <row>
+    <Code>IGOODSXESD</Code>
+    <Description>Non-energy industrial goods, semi-durables only</Description>
+  </row>
+  <row>
+    <Code>IGOODSXEND</Code>
+    <Description>Non-energy industrial goods, non-durables only</Description>
+  </row>
+  <row>
+    <Code>ENRGY</Code>
+    <Description>Energy</Description>
+  </row>
+  <row>
+    <Code>FOOD</Code>
+    <Description>Food including alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>FOODUNP</Code>
+    <Description>Unprocessed food</Description>
+  </row>
+  <row>
+    <Code>FOODPROC</Code>
+    <Description>Processed food including alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>SERV</Code>
+    <Description>Services (overall index excluding goods)</Description>
+  </row>
+  <row>
+    <Code>SERVCOMM</Code>
+    <Description>Services related to communication</Description>
+  </row>
+  <row>
+    <Code>SERVHOUSE</Code>
+    <Description>Services related to housing</Description>
+  </row>
+  <row>
+    <Code>SERVRP</Code>
+    <Description>Services related to recreation, including repairs and personal care</Description>
+  </row>
+  <row>
+    <Code>SERVRP_OTH</Code>
+    <Description>Services related to recreation and personal care, excluding package holidays and accomodation</Description>
+  </row>
+  <row>
+    <Code>SERVRP_PHA</Code>
+    <Description>Services related to package holidays and accomodation</Description>
+  </row>
+  <row>
+    <Code>SERVTRANS</Code>
+    <Description>Services related to transport</Description>
+  </row>
+  <row>
+    <Code>SERVMISC</Code>
+    <Description>Services - miscellaneous</Description>
+  </row>
+  <row>
+    <Code>00XE</Code>
+    <Description>Overall index excluding energy</Description>
+  </row>
+  <row>
+    <Code>00XEFOOD</Code>
+    <Description>Overall index excluding energy, food, alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>00XEFOODUNP</Code>
+    <Description>Overall index excluding energy and unprocessed food</Description>
+  </row>
+  <row>
+    <Code>SEAS</Code>
+    <Description>Seasonal food</Description>
+  </row>
+  <row>
+    <Code>00XSEAS</Code>
+    <Description>Overall index excluding seasonal food</Description>
+  </row>
+  <row>
+    <Code>00XESEAS</Code>
+    <Description>Overall index excluding energy and seasonal food</Description>
+  </row>
+  <row>
+    <Code>ENRGYSEAS</Code>
+    <Description>Energy and seasonal food</Description>
+  </row>
+  <row>
+    <Code>FUELS</Code>
+    <Description>Liquid fuels and fuels and lubricants for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>00XFUELS</Code>
+    <Description>Overall index excluding liquid fuels and lubricants for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>00XTOBAC</Code>
+    <Description>Overall index excluding tobacco</Description>
+  </row>
+  <row>
+    <Code>00XALCOTOB</Code>
+    <Description>Overall index excluding alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>EFOODUNP</Code>
+    <Description>Energy and unprocessed food</Description>
+  </row>
+  <row>
+    <Code>00XHOUSING</Code>
+    <Description>Overall index excluding housing, water, electricity, gas and other fuels</Description>
+  </row>
+  <row>
+    <Code>ELGAS</Code>
+    <Description>Electricity, gas, solid fuels and heat energy</Description>
+  </row>
+  <row>
+    <Code>EDUHEASOC</Code>
+    <Description>Education, health and social protection</Description>
+  </row>
+  <row>
+    <Code>00XEDUHEASOC</Code>
+    <Description>Overall index excluding Education, health and social protection</Description>
+  </row>
+  <row>
+    <Code>FROOPP</Code>
+    <Description>Frequent out-of-pocket purchases</Description>
+  </row>
+  <row>
+    <Code>00XFROOPP</Code>
+    <Description>Overall index excluding frequent out-of-pocket purchases</Description>
+  </row>
+  <row>
+    <Code>CP01_TO_12_X</Code>
+    <Description>Total COICOP 1-12 - (sum of divisions 01 to 12)</Description>
+  </row>
+  <row>
+    <Code>CP01_X</Code>
+    <Description>COICOP 01 - (sum of groups 011+012)</Description>
+  </row>
+  <row>
+    <Code>CP02_X</Code>
+    <Description>COICOP 02 - (sum of groups 021 to 023)</Description>
+  </row>
+  <row>
+    <Code>CP03_X</Code>
+    <Description>COICOP 03 - (sum of groups 031+032)</Description>
+  </row>
+  <row>
+    <Code>CP04_X</Code>
+    <Description>COICOP 04 - (sum of groups 041 to 045)</Description>
+  </row>
+  <row>
+    <Code>CP05_X</Code>
+    <Description>COICOP 05 - (sum of groups 051 to 056)</Description>
+  </row>
+  <row>
+    <Code>CP06_X</Code>
+    <Description>COICOP 06 - (sum of groups 061 to 063)</Description>
+  </row>
+  <row>
+    <Code>CP07_X</Code>
+    <Description>COICOP 07 - (sum of groups 071 to 073)</Description>
+  </row>
+  <row>
+    <Code>CP09_X</Code>
+    <Description>COICOP 09 - (sum of groups 091 to 096)</Description>
+  </row>
+  <row>
+    <Code>CP11_X</Code>
+    <Description>COICOP 11 - (sum of groups 111+112)</Description>
+  </row>
+  <row>
+    <Code>CP12_X</Code>
+    <Description>COICOP 12 - (sum of groups 121 to 127)</Description>
+  </row>
+  <row>
+    <Code>AP</Code>
+    <Description>Administered prices</Description>
+  </row>
+  <row>
+    <Code>APFULL</Code>
+    <Description>Fully administered prices</Description>
+  </row>
+  <row>
+    <Code>APMAIN</Code>
+    <Description>Mainly administered prices</Description>
+  </row>
+  <row>
+    <Code>00XAP</Code>
+    <Description>All-items excluding administered prices</Description>
+  </row>
+  <row>
+    <Code>00XAPFULL</Code>
+    <Description>All-items excluding fully administered prices</Description>
+  </row>
+  <row>
+    <Code>00XAPMAIN</Code>
+    <Description>All-items excluding mainly administered prices</Description>
+  </row>
+  <row>
+    <Code>TOT_X_CP041_042</Code>
+    <Description>Total except actual rents</Description>
+  </row>
+  <row>
+    <Code>CP01111A</Code>
+    <Description>Long-grain rice (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01112A</Code>
+    <Description>Wheat flour (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01112B</Code>
+    <Description>Cornflakes (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01113A</Code>
+    <Description>White bread, loaf (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01115A</Code>
+    <Description>Pizza, frozen (500 g)</Description>
+  </row>
+  <row>
+    <Code>CP01116</Code>
+    <Description>Pasta products and couscous</Description>
+  </row>
+  <row>
+    <Code>CP01116A</Code>
+    <Description>Pasta, without eggs (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01117</Code>
+    <Description>Breakfast cereals</Description>
+  </row>
+  <row>
+    <Code>CP01118</Code>
+    <Description>Other cereal products</Description>
+  </row>
+  <row>
+    <Code>CP01121A</Code>
+    <Description>Beef, minced (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01122A</Code>
+    <Description>Pork, cutlet (&quot;escalope&quot;) (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01122B</Code>
+    <Description>Pork, loin chop (B2) (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01124A</Code>
+    <Description>Whole chicken (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01124B</Code>
+    <Description>Chicken breast, fillets (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01126_01127</Code>
+    <Description>Dried, salted or smoked meat and edible meat offal</Description>
+  </row>
+  <row>
+    <Code>CP01127A</Code>
+    <Description>Sausage, Frankfurter/Wiener (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01127B</Code>
+    <Description>Sausage, salami type (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01128</Code>
+    <Description>Other meat preparations</Description>
+  </row>
+  <row>
+    <Code>CP01128A</Code>
+    <Description>Other preserved or processed meat and meat preparations</Description>
+  </row>
+  <row>
+    <Code>CP01128B</Code>
+    <Description>Other fresh, chilled or frozen edible meat</Description>
+  </row>
+  <row>
+    <Code>CP01131_01132</Code>
+    <Description>Fresh, chilled or frozen fish</Description>
+  </row>
+  <row>
+    <Code>CP01131A</Code>
+    <Description>Salmon, steak (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01133_01134</Code>
+    <Description>Fresh, chilled or frozen seafood</Description>
+  </row>
+  <row>
+    <Code>CP01135</Code>
+    <Description>Dried, smoked or salted fish and seafood</Description>
+  </row>
+  <row>
+    <Code>CP01136</Code>
+    <Description>Other preserved or processed fish and seafood and fish and seafood preparations</Description>
+  </row>
+  <row>
+    <Code>CP01136A</Code>
+    <Description>Tinned pink tuna (1 kg/net)</Description>
+  </row>
+  <row>
+    <Code>CP01136B</Code>
+    <Description>Fish fingers (500 g)</Description>
+  </row>
+  <row>
+    <Code>CP01141A</Code>
+    <Description>Milk, fresh, unskimmed (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP01144A</Code>
+    <Description>Natural yoghurt (1 kg/l)</Description>
+  </row>
+  <row>
+    <Code>CP01144B</Code>
+    <Description>Fruit yoghurt (1 kg/l)</Description>
+  </row>
+  <row>
+    <Code>CP01145A</Code>
+    <Description>Cheese, Camembert type (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01145B</Code>
+    <Description>Cheese, Gouda type (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01145C</Code>
+    <Description>Cream cheese (200 g)</Description>
+  </row>
+  <row>
+    <Code>CP01147A</Code>
+    <Description>Chicken eggs (10 eggs)</Description>
+  </row>
+  <row>
+    <Code>CP01151A</Code>
+    <Description>Butter, unsalted (250 g)</Description>
+  </row>
+  <row>
+    <Code>CP01152A</Code>
+    <Description>Margarine (250 g)</Description>
+  </row>
+  <row>
+    <Code>CP01153A</Code>
+    <Description>Olive oil (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP01154A</Code>
+    <Description>Vegetable oil (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP0116A</Code>
+    <Description>Citrus fruits (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0116B</Code>
+    <Description>Bananas (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0116C</Code>
+    <Description>Apples (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0116D</Code>
+    <Description>Pears (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0116E</Code>
+    <Description>Stone fruits (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0116F</Code>
+    <Description>Berries (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0116G</Code>
+    <Description>Other fresh, chilled or frozen fruits</Description>
+  </row>
+  <row>
+    <Code>CP01161A</Code>
+    <Description>Apples (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01161B</Code>
+    <Description>Fresh bananas (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01164A</Code>
+    <Description>Canned fruit (1 kg/net)</Description>
+  </row>
+  <row>
+    <Code>CP0117A</Code>
+    <Description>Leaf and stem vegetables (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0117B</Code>
+    <Description>Cabbages (fresh or chilled)</Description>
+  </row>
+  <row>
+    <Code>CP0117C</Code>
+    <Description>Vegetable grown for their fruit (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP0117D</Code>
+    <Description>Root crops, non-starchy bulbs and mushrooms (fresh, chilled or frozen)</Description>
+  </row>
+  <row>
+    <Code>CP01171A</Code>
+    <Description>Fresh carrots (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01171B</Code>
+    <Description>Fresh tomatoes, round (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01173A</Code>
+    <Description>Tinned sweet corn (500 g/net)</Description>
+  </row>
+  <row>
+    <Code>CP01173B</Code>
+    <Description>Dried vegetables</Description>
+  </row>
+  <row>
+    <Code>CP01173C</Code>
+    <Description>Other preserved or processed vegetables</Description>
+  </row>
+  <row>
+    <Code>CP01174A</Code>
+    <Description>Potatoes (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01174B</Code>
+    <Description>Frozen French fries (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01175A</Code>
+    <Description>Potato crisps, single pack (200 g)</Description>
+  </row>
+  <row>
+    <Code>CP01181A</Code>
+    <Description>White sugar (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01182A</Code>
+    <Description>Jam (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01183A</Code>
+    <Description>Chocolate, milk (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01184A</Code>
+    <Description>Chewing gum (1 package)</Description>
+  </row>
+  <row>
+    <Code>CP01185A</Code>
+    <Description>Ice cream (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP01186A</Code>
+    <Description>Other sugar products</Description>
+  </row>
+  <row>
+    <Code>CP01191A</Code>
+    <Description>Tomato ketchup (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01192A</Code>
+    <Description>Mineral salt (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01192B</Code>
+    <Description>Black pepper (100 g)</Description>
+  </row>
+  <row>
+    <Code>CP01193A</Code>
+    <Description>Baby food, meat base (500 g)</Description>
+  </row>
+  <row>
+    <Code>CP01199</Code>
+    <Description>Other food products n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP01199A</Code>
+    <Description>Baker&apos;s yeast, dessert preparations, soups</Description>
+  </row>
+  <row>
+    <Code>CP01211A</Code>
+    <Description>Coffee (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01212A</Code>
+    <Description>Black tea (25 bags)</Description>
+  </row>
+  <row>
+    <Code>CP01213A</Code>
+    <Description>Cocoa instant drink, powder (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP01221A</Code>
+    <Description>Mineral water, carbonated (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP01221B</Code>
+    <Description>Mineral water, still (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP01222A</Code>
+    <Description>Carbonated drink, orange flavoured (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP01223A</Code>
+    <Description>Fruit juices</Description>
+  </row>
+  <row>
+    <Code>CP01223B</Code>
+    <Description>Orange juice (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP01223C</Code>
+    <Description>Vegetable juices</Description>
+  </row>
+  <row>
+    <Code>CP02111</Code>
+    <Description>Spirits and liqueurs</Description>
+  </row>
+  <row>
+    <Code>CP02111A</Code>
+    <Description>Vodka (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP02112</Code>
+    <Description>Alcoholic soft drinks</Description>
+  </row>
+  <row>
+    <Code>CP02121A</Code>
+    <Description>Red wine (0.75 l)</Description>
+  </row>
+  <row>
+    <Code>CP02121B</Code>
+    <Description>White wine (0.75 l)</Description>
+  </row>
+  <row>
+    <Code>CP02123</Code>
+    <Description>Fortified wines</Description>
+  </row>
+  <row>
+    <Code>CP02124</Code>
+    <Description>Wine-based drinks</Description>
+  </row>
+  <row>
+    <Code>CP02131</Code>
+    <Description>Lager beer</Description>
+  </row>
+  <row>
+    <Code>CP02131A</Code>
+    <Description>Beer (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP02132</Code>
+    <Description>Other alcoholic beer</Description>
+  </row>
+  <row>
+    <Code>CP02133</Code>
+    <Description>Low and non-alcoholic beer</Description>
+  </row>
+  <row>
+    <Code>CP02134</Code>
+    <Description>Beer-based drinks</Description>
+  </row>
+  <row>
+    <Code>CP0220</Code>
+    <Description>Tobacco</Description>
+  </row>
+  <row>
+    <Code>CP02201</Code>
+    <Description>Cigarettes</Description>
+  </row>
+  <row>
+    <Code>CP02201A</Code>
+    <Description>Cigarettes (20 cigarettes)</Description>
+  </row>
+  <row>
+    <Code>CP02202</Code>
+    <Description>Cigars</Description>
+  </row>
+  <row>
+    <Code>CP02203</Code>
+    <Description>Other tobacco products</Description>
+  </row>
+  <row>
+    <Code>CP0230</Code>
+    <Description>Narcotics</Description>
+  </row>
+  <row>
+    <Code>CP02300</Code>
+    <Description>Narcotics</Description>
+  </row>
+  <row>
+    <Code>CP03110</Code>
+    <Description>Clothing materials</Description>
+  </row>
+  <row>
+    <Code>CP03110A</Code>
+    <Description>Cotton (1 m2)</Description>
+  </row>
+  <row>
+    <Code>CP03121A</Code>
+    <Description>Men&apos;s suit, wool (1 suit)</Description>
+  </row>
+  <row>
+    <Code>CP03121B</Code>
+    <Description>Men&apos;s trousers (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03121C</Code>
+    <Description>Men&apos;s blue jeans (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03121D</Code>
+    <Description>Men&apos;s shirt (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03121E</Code>
+    <Description>Men&apos;s T-shirt, short sleeves (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03121F</Code>
+    <Description>Men&apos;s boxer briefs (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122A</Code>
+    <Description>Ladies&apos; top coat (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122B</Code>
+    <Description>Ladies&apos; blazer, woolmix (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122C</Code>
+    <Description>Ladies&apos; straight trousers, synthetic (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122D</Code>
+    <Description>Ladies&apos; jeans (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122E</Code>
+    <Description>Ladies&apos; skirt (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122F</Code>
+    <Description>Ladies&apos; blouse (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122G</Code>
+    <Description>Ladies&apos; T-shirt (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122H</Code>
+    <Description>Ladies&apos; pullover (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122I</Code>
+    <Description>Brassiere, push-up (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122J</Code>
+    <Description>Tights (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03122K</Code>
+    <Description>Ladies bikini (1 set)</Description>
+  </row>
+  <row>
+    <Code>CP03123A</Code>
+    <Description>Children&apos; s jeans trousers (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03123B</Code>
+    <Description>Children&apos; T-shirt, long sleeves (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03123C</Code>
+    <Description>Girls&apos; skirt (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03123D</Code>
+    <Description>Girls&apos; tights (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP03123E</Code>
+    <Description>Boys&apos; socks (1 pair)</Description>
+  </row>
+  <row>
+    <Code>CP03131</Code>
+    <Description>Other articles of clothing</Description>
+  </row>
+  <row>
+    <Code>CP03132</Code>
+    <Description>Clothing accessories</Description>
+  </row>
+  <row>
+    <Code>CP03141</Code>
+    <Description>Cleaning of clothing</Description>
+  </row>
+  <row>
+    <Code>CP03141A</Code>
+    <Description>Dry cleaning (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP03142</Code>
+    <Description>Repair and hire of clothing</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Shoes and other footwear</Description>
+  </row>
+  <row>
+    <Code>CP03211A</Code>
+    <Description>Men&apos;s lace-up shoes (1 pair)</Description>
+  </row>
+  <row>
+    <Code>CP03211B</Code>
+    <Description>Men&apos;s street shoes (1 pair)</Description>
+  </row>
+  <row>
+    <Code>CP03212A</Code>
+    <Description>Ladies&apos; conventional court shoes (1 pair)</Description>
+  </row>
+  <row>
+    <Code>CP03212B</Code>
+    <Description>Ladies&apos; long boots (1 pair)</Description>
+  </row>
+  <row>
+    <Code>CP03213A</Code>
+    <Description>Children&apos;s sport shoes (1 pair)</Description>
+  </row>
+  <row>
+    <Code>CP03220</Code>
+    <Description>Repair and hire of footwear</Description>
+  </row>
+  <row>
+    <Code>CP03220A</Code>
+    <Description>Services, Cobbler (1 service)</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Actual rentals paid by tenants</Description>
+  </row>
+  <row>
+    <Code>CP04110</Code>
+    <Description>Actual rentals paid by tenants</Description>
+  </row>
+  <row>
+    <Code>CP04121</Code>
+    <Description>Actual rentals paid by tenants for secondary residences</Description>
+  </row>
+  <row>
+    <Code>CP04122</Code>
+    <Description>Garage rentals and other rentals paid by tenants</Description>
+  </row>
+  <row>
+    <Code>CP04210</Code>
+    <Description>Imputed rentals of owner-occupiers</Description>
+  </row>
+  <row>
+    <Code>CP04220</Code>
+    <Description>Other imputed rentals</Description>
+  </row>
+  <row>
+    <Code>CP04310</Code>
+    <Description>Materials for the maintenance and repair of the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP04310A</Code>
+    <Description>Paint, indoor use (10 l)</Description>
+  </row>
+  <row>
+    <Code>CP04310B</Code>
+    <Description>Silicone (300 ml)</Description>
+  </row>
+  <row>
+    <Code>CP04310C</Code>
+    <Description>Cement (25 kg)</Description>
+  </row>
+  <row>
+    <Code>CP04321</Code>
+    <Description>Services of plumbers</Description>
+  </row>
+  <row>
+    <Code>CP04322</Code>
+    <Description>Services of electricians</Description>
+  </row>
+  <row>
+    <Code>CP04323</Code>
+    <Description>Maintenance services for heating systems</Description>
+  </row>
+  <row>
+    <Code>CP04324</Code>
+    <Description>Services of painters</Description>
+  </row>
+  <row>
+    <Code>CP04325</Code>
+    <Description>Services of carpenters</Description>
+  </row>
+  <row>
+    <Code>CP04329</Code>
+    <Description>Other services for maintenance and repair of the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP04410</Code>
+    <Description>Water supply</Description>
+  </row>
+  <row>
+    <Code>CP04420</Code>
+    <Description>Refuse collection</Description>
+  </row>
+  <row>
+    <Code>CP04430</Code>
+    <Description>Sewerage collection</Description>
+  </row>
+  <row>
+    <Code>CP04441</Code>
+    <Description>Maintenance charges in multi-occupied buildings</Description>
+  </row>
+  <row>
+    <Code>CP04442</Code>
+    <Description>Security services</Description>
+  </row>
+  <row>
+    <Code>CP04449</Code>
+    <Description>Other services related to dwelling</Description>
+  </row>
+  <row>
+    <Code>CP04510</Code>
+    <Description>Electricity</Description>
+  </row>
+  <row>
+    <Code>CP04530</Code>
+    <Description>Liquid fuels</Description>
+  </row>
+  <row>
+    <Code>CP04541</Code>
+    <Description>Coal</Description>
+  </row>
+  <row>
+    <Code>CP04549</Code>
+    <Description>Other solid fuels</Description>
+  </row>
+  <row>
+    <Code>CP04550</Code>
+    <Description>Heat energy</Description>
+  </row>
+  <row>
+    <Code>CP05111</Code>
+    <Description>Household furniture</Description>
+  </row>
+  <row>
+    <Code>CP05111A</Code>
+    <Description>Double bed frame, pressboard (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05111B</Code>
+    <Description>Sofa set (1 set)</Description>
+  </row>
+  <row>
+    <Code>CP05112</Code>
+    <Description>Garden furniture</Description>
+  </row>
+  <row>
+    <Code>CP05113</Code>
+    <Description>Lighting equipment</Description>
+  </row>
+  <row>
+    <Code>CP05119</Code>
+    <Description>Other furniture and furnishings</Description>
+  </row>
+  <row>
+    <Code>CP05121</Code>
+    <Description>Carpet and rugs</Description>
+  </row>
+  <row>
+    <Code>CP05122</Code>
+    <Description>Other floor coverings</Description>
+  </row>
+  <row>
+    <Code>CP05123</Code>
+    <Description>Services of laying of fitted carpets and floor coverings</Description>
+  </row>
+  <row>
+    <Code>CP05130</Code>
+    <Description>Repair of furniture, furnishings and floor coverings</Description>
+  </row>
+  <row>
+    <Code>CP0520</Code>
+    <Description>Household textiles</Description>
+  </row>
+  <row>
+    <Code>CP05201</Code>
+    <Description>Furnishings fabrics and curtains</Description>
+  </row>
+  <row>
+    <Code>CP05202</Code>
+    <Description>Bed linen</Description>
+  </row>
+  <row>
+    <Code>CP05203</Code>
+    <Description>Table linen and bathroom linen</Description>
+  </row>
+  <row>
+    <Code>CP05203A</Code>
+    <Description>Towel (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05209</Code>
+    <Description>Other household textiles</Description>
+  </row>
+  <row>
+    <Code>CP0531_0532</Code>
+    <Description>Major household appliances whether electric or not and small electric household appliances</Description>
+  </row>
+  <row>
+    <Code>CP05311A</Code>
+    <Description>Refrigerator, undercounter, with freezer (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05311B</Code>
+    <Description>Fridge-freezer (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05312A1</Code>
+    <Description>Washing machine, 4.5-5 kg (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05312A2</Code>
+    <Description>Washing machine, 6-7 kg, energy efficiency A/A+ (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05313A</Code>
+    <Description>Microwave oven (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05315A1</Code>
+    <Description>Vacuum cleaner, 1400-1600 W (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05315A2</Code>
+    <Description>Vacuum cleaner, 1600-2000 W (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05319</Code>
+    <Description>Other major household appliances</Description>
+  </row>
+  <row>
+    <Code>CP05321</Code>
+    <Description>Food processing appliances</Description>
+  </row>
+  <row>
+    <Code>CP05322</Code>
+    <Description>Coffee machines, tea-makers and similar appliances</Description>
+  </row>
+  <row>
+    <Code>CP05322A1</Code>
+    <Description>Kettle, 1.5l (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05322A2</Code>
+    <Description>Kettle, 1.7l (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05323</Code>
+    <Description>Irons</Description>
+  </row>
+  <row>
+    <Code>CP05324</Code>
+    <Description>Toasters and grills</Description>
+  </row>
+  <row>
+    <Code>CP05329</Code>
+    <Description>Other small electric household appliances</Description>
+  </row>
+  <row>
+    <Code>CP05330</Code>
+    <Description>Repair of household appliances</Description>
+  </row>
+  <row>
+    <Code>CP0540</Code>
+    <Description>Glassware, tableware and household utensils</Description>
+  </row>
+  <row>
+    <Code>CP05401</Code>
+    <Description>Glassware, crystal-ware, ceramic ware and chinaware</Description>
+  </row>
+  <row>
+    <Code>CP05401A</Code>
+    <Description>Glass for water (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05401B</Code>
+    <Description>Flat plate (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05401C</Code>
+    <Description>Cup and saucer (1 set)</Description>
+  </row>
+  <row>
+    <Code>CP05402</Code>
+    <Description>Cutlery, flatware and silverware</Description>
+  </row>
+  <row>
+    <Code>CP05403</Code>
+    <Description>Non-electric kitchen utensils and articles</Description>
+  </row>
+  <row>
+    <Code>CP05403A</Code>
+    <Description>Cooking pot, stainless steel (1 set)</Description>
+  </row>
+  <row>
+    <Code>CP05404</Code>
+    <Description>Repair of glassware, tableware and household utensils</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Major tools and equipment</Description>
+  </row>
+  <row>
+    <Code>CP05511</Code>
+    <Description>Motorized major tools and equipment</Description>
+  </row>
+  <row>
+    <Code>CP05512</Code>
+    <Description>Repair, leasing and rental of major tools and equipment</Description>
+  </row>
+  <row>
+    <Code>CP05521</Code>
+    <Description>Non-motorised small tools</Description>
+  </row>
+  <row>
+    <Code>CP05522</Code>
+    <Description>Miscellaneous small tool accessories</Description>
+  </row>
+  <row>
+    <Code>CP05522A</Code>
+    <Description>Battery (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05522B</Code>
+    <Description>Light bulb, standard (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05522C</Code>
+    <Description>Light bulb energy saving type (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05523</Code>
+    <Description>Repair of non-motorised small tools and miscellaneous accessories</Description>
+  </row>
+  <row>
+    <Code>CP05611A</Code>
+    <Description>Dish washer tablets (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP05611B</Code>
+    <Description>Detergent for washing machine, concentrated (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP05611C</Code>
+    <Description>Detergent for washing machine, unconcentrated (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP05611D</Code>
+    <Description>All-purposes household cleaner (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP05611E</Code>
+    <Description>Cleaner for WC (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP05611F</Code>
+    <Description>Cleaning liquid for windows (1 l)</Description>
+  </row>
+  <row>
+    <Code>CP05612A</Code>
+    <Description>Scourer sponge (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05623</Code>
+    <Description>Hire of furniture and furnishings</Description>
+  </row>
+  <row>
+    <Code>CP05629</Code>
+    <Description>Other domestic services and household services</Description>
+  </row>
+  <row>
+    <Code>CP06110</Code>
+    <Description>Pharmaceutical products</Description>
+  </row>
+  <row>
+    <Code>CP0612_0613</Code>
+    <Description>Other medical products, therapeutic appliances and equipment</Description>
+  </row>
+  <row>
+    <Code>CP06121</Code>
+    <Description>Pregnancy tests and mechanical contraceptive devices</Description>
+  </row>
+  <row>
+    <Code>CP06129</Code>
+    <Description>Other medical products n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP06131</Code>
+    <Description>Corrective eye-glasses and contact lenses</Description>
+  </row>
+  <row>
+    <Code>CP06132</Code>
+    <Description>Hearing aids</Description>
+  </row>
+  <row>
+    <Code>CP06133</Code>
+    <Description>Repair of therapeutic appliances and equipment</Description>
+  </row>
+  <row>
+    <Code>CP06139</Code>
+    <Description>Other therapeutic appliances and equipment</Description>
+  </row>
+  <row>
+    <Code>CP0621_0623</Code>
+    <Description>Medical services and paramedical services</Description>
+  </row>
+  <row>
+    <Code>CP06211</Code>
+    <Description>General practice</Description>
+  </row>
+  <row>
+    <Code>CP06212</Code>
+    <Description>Specialist practice</Description>
+  </row>
+  <row>
+    <Code>CP06220</Code>
+    <Description>Dental services</Description>
+  </row>
+  <row>
+    <Code>CP06239</Code>
+    <Description>Other paramedical services</Description>
+  </row>
+  <row>
+    <Code>CP0630</Code>
+    <Description>Hospital services</Description>
+  </row>
+  <row>
+    <Code>CP06300</Code>
+    <Description>Hospital services</Description>
+  </row>
+  <row>
+    <Code>CP0712-0714</Code>
+    <Description>Motor cycles, bicycles and animal drawn vehicles</Description>
+  </row>
+  <row>
+    <Code>CP07120</Code>
+    <Description>Motor cycles</Description>
+  </row>
+  <row>
+    <Code>CP07130</Code>
+    <Description>Bicycles</Description>
+  </row>
+  <row>
+    <Code>CP07140</Code>
+    <Description>Animal drawn vehicles</Description>
+  </row>
+  <row>
+    <Code>CP07211</Code>
+    <Description>Tyres</Description>
+  </row>
+  <row>
+    <Code>CP07212</Code>
+    <Description>Spare parts for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP07213</Code>
+    <Description>Accessories for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP07221</Code>
+    <Description>Diesel</Description>
+  </row>
+  <row>
+    <Code>CP07222</Code>
+    <Description>Petrol</Description>
+  </row>
+  <row>
+    <Code>CP07223</Code>
+    <Description>Other fuels for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP07224</Code>
+    <Description>Lubricants</Description>
+  </row>
+  <row>
+    <Code>CP07230</Code>
+    <Description>Maintenance and repair of personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP07241</Code>
+    <Description>Hire of garages, parking spaces and personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>CP07241A</Code>
+    <Description>Car hire (7 days)</Description>
+  </row>
+  <row>
+    <Code>CP07242</Code>
+    <Description>Toll facilities and parking meters</Description>
+  </row>
+  <row>
+    <Code>CP07243</Code>
+    <Description>Driving lessons, tests, licences and road worthiness tests</Description>
+  </row>
+  <row>
+    <Code>CP07311</Code>
+    <Description>Passenger transport by train</Description>
+  </row>
+  <row>
+    <Code>CP07311A</Code>
+    <Description>Rail travel, single ticket (1 ticket)</Description>
+  </row>
+  <row>
+    <Code>CP07312</Code>
+    <Description>Passenger transport by underground and tram</Description>
+  </row>
+  <row>
+    <Code>CP07321</Code>
+    <Description>Passenger transport by bus and coach</Description>
+  </row>
+  <row>
+    <Code>CP07321A</Code>
+    <Description>Urban bus transport, single ticket (1 ticket)</Description>
+  </row>
+  <row>
+    <Code>CP07322</Code>
+    <Description>Passenger transport by taxi and hired car with driver</Description>
+  </row>
+  <row>
+    <Code>CP07322A</Code>
+    <Description>Taxi (1 trip)</Description>
+  </row>
+  <row>
+    <Code>CP07331</Code>
+    <Description>Domestic flights</Description>
+  </row>
+  <row>
+    <Code>CP07332</Code>
+    <Description>International flights</Description>
+  </row>
+  <row>
+    <Code>CP07341</Code>
+    <Description>Passenger transport by sea</Description>
+  </row>
+  <row>
+    <Code>CP07342</Code>
+    <Description>Passenger transport by inland waterway</Description>
+  </row>
+  <row>
+    <Code>CP07350</Code>
+    <Description>Combined passenger transport</Description>
+  </row>
+  <row>
+    <Code>CP07361</Code>
+    <Description>Funicular, cable-car and chair-lift transport</Description>
+  </row>
+  <row>
+    <Code>CP07362</Code>
+    <Description>Removal and storage services</Description>
+  </row>
+  <row>
+    <Code>CP07369</Code>
+    <Description>Other purchased transport services n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP0810</Code>
+    <Description>Postal services</Description>
+  </row>
+  <row>
+    <Code>CP08101</Code>
+    <Description>Letter handling services</Description>
+  </row>
+  <row>
+    <Code>CP08109</Code>
+    <Description>Other postal services</Description>
+  </row>
+  <row>
+    <Code>CP082_083</Code>
+    <Description>Telephone and telefax equipment and services</Description>
+  </row>
+  <row>
+    <Code>CP0820_0830</Code>
+    <Description>Telephone and telefax equipment and services</Description>
+  </row>
+  <row>
+    <Code>CP0820</Code>
+    <Description>Telephone and telefax equipment</Description>
+  </row>
+  <row>
+    <Code>CP08201</Code>
+    <Description>Fixed telephone equipment</Description>
+  </row>
+  <row>
+    <Code>CP08202</Code>
+    <Description>Mobile telephone equipment</Description>
+  </row>
+  <row>
+    <Code>CP08203</Code>
+    <Description>Other equipment of telephone and telefax equipment</Description>
+  </row>
+  <row>
+    <Code>CP08204</Code>
+    <Description>Repair of telephone or telefax equipment</Description>
+  </row>
+  <row>
+    <Code>CP0830</Code>
+    <Description>Telephone and telefax services</Description>
+  </row>
+  <row>
+    <Code>CP08301</Code>
+    <Description>Wired telephone services</Description>
+  </row>
+  <row>
+    <Code>CP08302</Code>
+    <Description>Wireless telephone services</Description>
+  </row>
+  <row>
+    <Code>CP08303</Code>
+    <Description>Internet access provision services</Description>
+  </row>
+  <row>
+    <Code>CP08304</Code>
+    <Description>Bundled telecommunication services</Description>
+  </row>
+  <row>
+    <Code>CP08305</Code>
+    <Description>Other information transmission services</Description>
+  </row>
+  <row>
+    <Code>CP09112A</Code>
+    <Description>Television (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09112B</Code>
+    <Description>DVD player (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09112C1</Code>
+    <Description>DVD recorder with hard disc, 160-250 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09112C2</Code>
+    <Description>DVD recorder with hard disc, 200-300 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09113</Code>
+    <Description>Portable sound and vision devices</Description>
+  </row>
+  <row>
+    <Code>CP09113A1</Code>
+    <Description>Portable MP3 player, 4 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09113A2</Code>
+    <Description>Portable MP3 player, 16 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09119</Code>
+    <Description>Other equipment for the reception, recording and reproduction of sound and picture</Description>
+  </row>
+  <row>
+    <Code>CP09121A</Code>
+    <Description>Compact digital camera, 12 Mpx (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09121B</Code>
+    <Description>Camcorder, HDD (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09123</Code>
+    <Description>Optical instruments</Description>
+  </row>
+  <row>
+    <Code>CP09131</Code>
+    <Description>Personal computers</Description>
+  </row>
+  <row>
+    <Code>CP09131A1</Code>
+    <Description>Laptop, Hard Disc 320 GB, RAM 4 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09131A2</Code>
+    <Description>Laptop, Hard Disc 640 GB, RAM 4 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09131B</Code>
+    <Description>Monitor, Full HD (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09132</Code>
+    <Description>Accessories for information processing equipment</Description>
+  </row>
+  <row>
+    <Code>CP09133</Code>
+    <Description>Software</Description>
+  </row>
+  <row>
+    <Code>CP09134</Code>
+    <Description>Calculators and other information processing equipment</Description>
+  </row>
+  <row>
+    <Code>CP09141</Code>
+    <Description>Pre-recorded recording media</Description>
+  </row>
+  <row>
+    <Code>CP09141A</Code>
+    <Description>Music CD - Pop Chart (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09141B</Code>
+    <Description>Movie DVD (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09142</Code>
+    <Description>Unrecorded recording media</Description>
+  </row>
+  <row>
+    <Code>CP09142A</Code>
+    <Description>Blank compact disc (CD-R) (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09142B</Code>
+    <Description>Blank DVDs (R), slim cases (10 pieces)</Description>
+  </row>
+  <row>
+    <Code>CP09149</Code>
+    <Description>Other recording media</Description>
+  </row>
+  <row>
+    <Code>CP09150</Code>
+    <Description>Repair of audio-visual, photographic and information processing equipment</Description>
+  </row>
+  <row>
+    <Code>CP0921_0922</Code>
+    <Description>Major durables for indoor and outdoor recreation including musical instruments</Description>
+  </row>
+  <row>
+    <Code>CP09211</Code>
+    <Description>Camper vans, caravans and trailers</Description>
+  </row>
+  <row>
+    <Code>CP09212</Code>
+    <Description>Aeroplanes, microlight aircraft, gliders, hang-gliders and hot-air balloons</Description>
+  </row>
+  <row>
+    <Code>CP09213</Code>
+    <Description>Boats, outboard motors and fitting out of boats</Description>
+  </row>
+  <row>
+    <Code>CP09214</Code>
+    <Description>Horses, ponies and accessories</Description>
+  </row>
+  <row>
+    <Code>CP09215</Code>
+    <Description>Major items for games and sport</Description>
+  </row>
+  <row>
+    <Code>CP09230</Code>
+    <Description>Maintenance and repair of other major durables for recreation and culture</Description>
+  </row>
+  <row>
+    <Code>CP09311</Code>
+    <Description>Games and hobbies</Description>
+  </row>
+  <row>
+    <Code>CP09311A</Code>
+    <Description>Board game, Monopoly (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09311B</Code>
+    <Description>Video game, PlayStation 3 (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09312</Code>
+    <Description>Toys and celebration articles</Description>
+  </row>
+  <row>
+    <Code>CP09321</Code>
+    <Description>Equipment for sport</Description>
+  </row>
+  <row>
+    <Code>CP09322</Code>
+    <Description>Equipment for camping and open-air recreation</Description>
+  </row>
+  <row>
+    <Code>CP09323</Code>
+    <Description>Repair of equipment for sport, camping and open-air recreation</Description>
+  </row>
+  <row>
+    <Code>CP09331</Code>
+    <Description>Garden products</Description>
+  </row>
+  <row>
+    <Code>CP09331A</Code>
+    <Description>Potting soil (10 l)</Description>
+  </row>
+  <row>
+    <Code>CP09332</Code>
+    <Description>Plants and flowers</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Pets and related products</Description>
+  </row>
+  <row>
+    <Code>CP09341</Code>
+    <Description>Purchase of pets</Description>
+  </row>
+  <row>
+    <Code>CP09342</Code>
+    <Description>Products for pets</Description>
+  </row>
+  <row>
+    <Code>CP09342A</Code>
+    <Description>Dog food, meat (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP09342B</Code>
+    <Description>Dog food dry (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP09350</Code>
+    <Description>Veterinary and other services for pets</Description>
+  </row>
+  <row>
+    <Code>CP09411</Code>
+    <Description>Recreational and sporting services - Attendance</Description>
+  </row>
+  <row>
+    <Code>CP09412</Code>
+    <Description>Recreational and sporting services - Participation</Description>
+  </row>
+  <row>
+    <Code>CP09421A</Code>
+    <Description>Cinema ticket (1 ticket)</Description>
+  </row>
+  <row>
+    <Code>CP09425</Code>
+    <Description>Photographic services</Description>
+  </row>
+  <row>
+    <Code>CP09425A</Code>
+    <Description>Digital photo print service (30 photos)</Description>
+  </row>
+  <row>
+    <Code>CP09429</Code>
+    <Description>Other cultural services</Description>
+  </row>
+  <row>
+    <Code>CP09430</Code>
+    <Description>Games of chance</Description>
+  </row>
+  <row>
+    <Code>CP09511</Code>
+    <Description>Fiction books</Description>
+  </row>
+  <row>
+    <Code>CP09511A</Code>
+    <Description>Novel, Top 5 (1 book)</Description>
+  </row>
+  <row>
+    <Code>CP09512</Code>
+    <Description>Educational text books</Description>
+  </row>
+  <row>
+    <Code>CP09513</Code>
+    <Description>Other non-fiction books</Description>
+  </row>
+  <row>
+    <Code>CP09514</Code>
+    <Description>Binding services and E-book downloads</Description>
+  </row>
+  <row>
+    <Code>CP09521</Code>
+    <Description>Newspapers</Description>
+  </row>
+  <row>
+    <Code>CP09521A</Code>
+    <Description>Daily newspaper (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09522</Code>
+    <Description>Magazines and periodicals</Description>
+  </row>
+  <row>
+    <Code>CP09522A</Code>
+    <Description>Magazine, weekly, gossip (1 copy)</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Miscellaneous printed matter</Description>
+  </row>
+  <row>
+    <Code>CP09530</Code>
+    <Description>Miscellaneous printed matter</Description>
+  </row>
+  <row>
+    <Code>CP09541</Code>
+    <Description>Paper products</Description>
+  </row>
+  <row>
+    <Code>CP09541A</Code>
+    <Description>Paper, DIN A4 (500 sheets)</Description>
+  </row>
+  <row>
+    <Code>CP09541B</Code>
+    <Description>Pencil (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09549</Code>
+    <Description>Other stationery and drawing materials</Description>
+  </row>
+  <row>
+    <Code>CP0960</Code>
+    <Description>Package holidays</Description>
+  </row>
+  <row>
+    <Code>CP09601</Code>
+    <Description>Package domestic holidays</Description>
+  </row>
+  <row>
+    <Code>CP09602</Code>
+    <Description>Package international holidays</Description>
+  </row>
+  <row>
+    <Code>CP101-105</Code>
+    <Description>Pre-primary and primary, secondary, post-secondary non-tertiary, tertiary education, and education not definable by level</Description>
+  </row>
+  <row>
+    <Code>CP1010-1050</Code>
+    <Description>Pre-primary and primary, secondary, post-secondary non-tertiary, tertiary education, and education not definable by level</Description>
+  </row>
+  <row>
+    <Code>CP1010</Code>
+    <Description>Pre-primary and primary education</Description>
+  </row>
+  <row>
+    <Code>CP10101</Code>
+    <Description>Pre-primary education</Description>
+  </row>
+  <row>
+    <Code>CP10102</Code>
+    <Description>Primary education</Description>
+  </row>
+  <row>
+    <Code>CP1020</Code>
+    <Description>Secondary education</Description>
+  </row>
+  <row>
+    <Code>CP10200</Code>
+    <Description>Secondary education</Description>
+  </row>
+  <row>
+    <Code>CP1030</Code>
+    <Description>Post-secondary non-tertiary education</Description>
+  </row>
+  <row>
+    <Code>CP10300</Code>
+    <Description>Post-secondary non-tertiary education</Description>
+  </row>
+  <row>
+    <Code>CP1040</Code>
+    <Description>Tertiary education</Description>
+  </row>
+  <row>
+    <Code>CP10400</Code>
+    <Description>Tertiary education</Description>
+  </row>
+  <row>
+    <Code>CP1050</Code>
+    <Description>Education not definable by level</Description>
+  </row>
+  <row>
+    <Code>CP10500</Code>
+    <Description>Education not definable by level</Description>
+  </row>
+  <row>
+    <Code>CP11111A</Code>
+    <Description>Menu of the day (1 menu)</Description>
+  </row>
+  <row>
+    <Code>CP11111B</Code>
+    <Description>Red house wine, 0.12 l (1 glass)</Description>
+  </row>
+  <row>
+    <Code>CP11111C1</Code>
+    <Description>Beer (lager), domestic, 0.2-0.35 l (1 glass)</Description>
+  </row>
+  <row>
+    <Code>CP11111C2</Code>
+    <Description>Beer (lager), domestic, 0.5 l (1 glass)</Description>
+  </row>
+  <row>
+    <Code>CP11111D</Code>
+    <Description>Cup of coffee (1 cup)</Description>
+  </row>
+  <row>
+    <Code>CP11120</Code>
+    <Description>Canteens</Description>
+  </row>
+  <row>
+    <Code>CP1120</Code>
+    <Description>Accommodation services</Description>
+  </row>
+  <row>
+    <Code>CP11201</Code>
+    <Description>Hotels, motels, inns and similar accommodation services</Description>
+  </row>
+  <row>
+    <Code>CP11201A</Code>
+    <Description>Hotel weekend (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP11202</Code>
+    <Description>Holiday centres, camping sites, youth hostels and similar accommodation services</Description>
+  </row>
+  <row>
+    <Code>CP11203</Code>
+    <Description>Accommodation services of other establishments</Description>
+  </row>
+  <row>
+    <Code>CP12111</Code>
+    <Description>Hairdressing for men and children</Description>
+  </row>
+  <row>
+    <Code>CP12111A</Code>
+    <Description>Men&apos;s scissors cuts, wet (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP12112</Code>
+    <Description>Hairdressing for women</Description>
+  </row>
+  <row>
+    <Code>CP12112A</Code>
+    <Description>Ladies - haircut (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP12113</Code>
+    <Description>Personal grooming treatments</Description>
+  </row>
+  <row>
+    <Code>CP12121</Code>
+    <Description>Electric appliances for personal care</Description>
+  </row>
+  <row>
+    <Code>CP12121A</Code>
+    <Description>Electric razor (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP12121B</Code>
+    <Description>Electric toothbrush (1 set)</Description>
+  </row>
+  <row>
+    <Code>CP12122</Code>
+    <Description>Repair of electric appliances for personal care</Description>
+  </row>
+  <row>
+    <Code>CP12131</Code>
+    <Description>Non-electrical appliances</Description>
+  </row>
+  <row>
+    <Code>CP12131A</Code>
+    <Description>Cartridges for safety razor, men (5 cartridges)</Description>
+  </row>
+  <row>
+    <Code>CP12132</Code>
+    <Description>Articles for personal hygiene and wellness, esoteric products and beauty products</Description>
+  </row>
+  <row>
+    <Code>CP12132A</Code>
+    <Description>Shampoo (400 ml)</Description>
+  </row>
+  <row>
+    <Code>CP12132B</Code>
+    <Description>Tooth paste (100 ml)</Description>
+  </row>
+  <row>
+    <Code>CP12132C</Code>
+    <Description>Toilet soap, liquid (200 ml)</Description>
+  </row>
+  <row>
+    <Code>CP12132D</Code>
+    <Description>Shower gel (300 ml)</Description>
+  </row>
+  <row>
+    <Code>CP12132E</Code>
+    <Description>Deodorant (50 ml)</Description>
+  </row>
+  <row>
+    <Code>CP12132F</Code>
+    <Description>Tampons (10 pieces)</Description>
+  </row>
+  <row>
+    <Code>CP12132G</Code>
+    <Description>Disposable nappies (50 pieces)</Description>
+  </row>
+  <row>
+    <Code>CP12132H</Code>
+    <Description>Cotton buds (100 pieces)</Description>
+  </row>
+  <row>
+    <Code>CP12132I</Code>
+    <Description>Manual toothbrush (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP12132J</Code>
+    <Description>Toilet paper (10 rolls)</Description>
+  </row>
+  <row>
+    <Code>CP1220</Code>
+    <Description>Prostitution</Description>
+  </row>
+  <row>
+    <Code>CP12200</Code>
+    <Description>Prostitution</Description>
+  </row>
+  <row>
+    <Code>CP12311</Code>
+    <Description>Jewellery</Description>
+  </row>
+  <row>
+    <Code>CP12312</Code>
+    <Description>Clocks and watches</Description>
+  </row>
+  <row>
+    <Code>CP12313</Code>
+    <Description>Repair of jewellery, clocks and watches</Description>
+  </row>
+  <row>
+    <Code>CP12323</Code>
+    <Description>Repair of other personal effects</Description>
+  </row>
+  <row>
+    <Code>CP12329</Code>
+    <Description>Other personal effects n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP1240</Code>
+    <Description>Social protection</Description>
+  </row>
+  <row>
+    <Code>CP12401</Code>
+    <Description>Child care services</Description>
+  </row>
+  <row>
+    <Code>CP12402</Code>
+    <Description>Retirement homes for elderly persons and residences for disabled persons</Description>
+  </row>
+  <row>
+    <Code>CP12403</Code>
+    <Description>Services to maintain people in their private homes</Description>
+  </row>
+  <row>
+    <Code>CP12404</Code>
+    <Description>Counselling</Description>
+  </row>
+  <row>
+    <Code>CP12510</Code>
+    <Description>Life insurance</Description>
+  </row>
+  <row>
+    <Code>CP12520</Code>
+    <Description>Insurance connected with the dwelling</Description>
+  </row>
+  <row>
+    <Code>CP12531</Code>
+    <Description>Public insurance connected with health</Description>
+  </row>
+  <row>
+    <Code>CP12532</Code>
+    <Description>Private insurance connected with health</Description>
+  </row>
+  <row>
+    <Code>CP12541</Code>
+    <Description>Motor vehicle insurance</Description>
+  </row>
+  <row>
+    <Code>CP12542</Code>
+    <Description>Travel insurance</Description>
+  </row>
+  <row>
+    <Code>CP12550</Code>
+    <Description>Other insurance</Description>
+  </row>
+  <row>
+    <Code>CP12610</Code>
+    <Description>FISIM</Description>
+  </row>
+  <row>
+    <Code>CP12621</Code>
+    <Description>Charges by banks and post offices</Description>
+  </row>
+  <row>
+    <Code>CP12622</Code>
+    <Description>Fees and service charges of brokers, investment counsellors</Description>
+  </row>
+  <row>
+    <Code>CP1270</Code>
+    <Description>Other services n.e.c.</Description>
+  </row>
+  <row>
+    <Code>CP12701</Code>
+    <Description>Administrative fees</Description>
+  </row>
+  <row>
+    <Code>CP12702</Code>
+    <Description>Legal services and accountancy</Description>
+  </row>
+  <row>
+    <Code>CP12703</Code>
+    <Description>Funeral services</Description>
+  </row>
+  <row>
+    <Code>CP12704</Code>
+    <Description>Other fees and services</Description>
+  </row>
+  <row>
+    <Code>GD</Code>
+    <Description>Goods (overall index excluding services)</Description>
+  </row>
+  <row>
+    <Code>IGD</Code>
+    <Description>Industrial goods</Description>
+  </row>
+  <row>
+    <Code>IGD_NNRG</Code>
+    <Description>Non-energy industrial goods</Description>
+  </row>
+  <row>
+    <Code>IGD_NNRG_D</Code>
+    <Description>Non-energy industrial goods, durables only</Description>
+  </row>
+  <row>
+    <Code>IGD_NNRG_SD</Code>
+    <Description>Non-energy industrial goods, semi-durables only</Description>
+  </row>
+  <row>
+    <Code>IGD_NNRG_ND</Code>
+    <Description>Non-energy industrial goods, non-durables only</Description>
+  </row>
+  <row>
+    <Code>NRG</Code>
+    <Description>Energy</Description>
+  </row>
+  <row>
+    <Code>FOOD_NP</Code>
+    <Description>Unprocessed food</Description>
+  </row>
+  <row>
+    <Code>FOOD_P</Code>
+    <Description>Processed food including alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>SERV_COM</Code>
+    <Description>Services related to communication</Description>
+  </row>
+  <row>
+    <Code>SERV_HOUS</Code>
+    <Description>Services related to housing</Description>
+  </row>
+  <row>
+    <Code>SERV_REC</Code>
+    <Description>Services related to recreation, including repairs and personal care</Description>
+  </row>
+  <row>
+    <Code>SERV_REC_X_HOA</Code>
+    <Description>Services related to recreation and personal care, excluding package holidays and accommodation</Description>
+  </row>
+  <row>
+    <Code>SERV_REC_HOA</Code>
+    <Description>Services related to package holidays and accommodation</Description>
+  </row>
+  <row>
+    <Code>SERV_TRA</Code>
+    <Description>Services related to transport</Description>
+  </row>
+  <row>
+    <Code>SERV_MSC</Code>
+    <Description>Services - miscellaneous</Description>
+  </row>
+  <row>
+    <Code>TOT_X_NRG</Code>
+    <Description>Overall index excluding energy</Description>
+  </row>
+  <row>
+    <Code>TOT_X_NRG_FOOD</Code>
+    <Description>Overall index excluding energy, food, alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>TOT_X_NRG_FOOD_NP</Code>
+    <Description>Overall index excluding energy and unprocessed food</Description>
+  </row>
+  <row>
+    <Code>FOOD_S</Code>
+    <Description>Seasonal food</Description>
+  </row>
+  <row>
+    <Code>TOT_X_FOOD_S</Code>
+    <Description>Overall index excluding seasonal food</Description>
+  </row>
+  <row>
+    <Code>TOT_X_NRG_FOOD_S</Code>
+    <Description>Overall index excluding energy and seasonal food</Description>
+  </row>
+  <row>
+    <Code>NRG_FOOD_S</Code>
+    <Description>Energy and seasonal food</Description>
+  </row>
+  <row>
+    <Code>FUEL</Code>
+    <Description>Liquid fuels and fuels and lubricants for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>TOT_X_FUEL</Code>
+    <Description>Overall index excluding liquid fuels and lubricants for personal transport equipment</Description>
+  </row>
+  <row>
+    <Code>TOT_X_TBC</Code>
+    <Description>Overall index excluding tobacco</Description>
+  </row>
+  <row>
+    <Code>TOT_X_ALC_TBC</Code>
+    <Description>Overall index excluding alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>NRG_FOOD_NP</Code>
+    <Description>Energy and unprocessed food</Description>
+  </row>
+  <row>
+    <Code>TOT_X_HOUS</Code>
+    <Description>Overall index excluding housing, water, electricity, gas and other fuels</Description>
+  </row>
+  <row>
+    <Code>ELC_GAS</Code>
+    <Description>Electricity, gas, solid fuels and heat energy</Description>
+  </row>
+  <row>
+    <Code>EDUC_HLTH_SPR</Code>
+    <Description>Education, health and social protection</Description>
+  </row>
+  <row>
+    <Code>TOT_X_EDUC_HLTH_SPR</Code>
+    <Description>Overall index excluding education, health and social protection</Description>
+  </row>
+  <row>
+    <Code>TOT_X_FROOPP</Code>
+    <Description>Overall index excluding frequent out-of-pocket purchases</Description>
+  </row>
+  <row>
+    <Code>APF</Code>
+    <Description>Fully administered prices</Description>
+  </row>
+  <row>
+    <Code>APM</Code>
+    <Description>Mainly administered prices</Description>
+  </row>
+  <row>
+    <Code>TOT_X_AP</Code>
+    <Description>Overall index excluding administered prices</Description>
+  </row>
+  <row>
+    <Code>TOT_X_APF</Code>
+    <Description>Overall index excluding fully administered prices</Description>
+  </row>
+  <row>
+    <Code>TOT_X_APM</Code>
+    <Description>Overall index excluding mainly administered prices</Description>
+  </row>
+  <row>
+    <Code>CP05111C</Code>
+    <Description>Kitchen table (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05111D</Code>
+    <Description>Kitchen chair (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05111E</Code>
+    <Description>Pocket spring mattress (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05111F</Code>
+    <Description>Wardrobe (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05111G</Code>
+    <Description>Armchair (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05111H</Code>
+    <Description>Coffee table (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05111I</Code>
+    <Description>Bookcase (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05113A</Code>
+    <Description>Table lamp (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05201A</Code>
+    <Description>Curtain material (1 m2)</Description>
+  </row>
+  <row>
+    <Code>CP05202A</Code>
+    <Description>Duvet (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05202B</Code>
+    <Description>Bedlinen (1 set)</Description>
+  </row>
+  <row>
+    <Code>CP05202C</Code>
+    <Description>Blanket (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP06110A</Code>
+    <Description>Acetylsalicylic acid (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110B</Code>
+    <Description>Aciclovir (2 g)</Description>
+  </row>
+  <row>
+    <Code>CP06110C</Code>
+    <Description>Alprazolam (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110D</Code>
+    <Description>Atorvastatin (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110E</Code>
+    <Description>Cetirizine (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110F</Code>
+    <Description>Ciprofloxacin (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110G</Code>
+    <Description>Clopidogrel (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110H</Code>
+    <Description>Diclofenac (100 g)</Description>
+  </row>
+  <row>
+    <Code>CP06110I</Code>
+    <Description>Enalapril-Hydrochlorothiazide/HCTZ (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110J</Code>
+    <Description>Esomeprazole (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110K</Code>
+    <Description>Latanoprost (10 ml)</Description>
+  </row>
+  <row>
+    <Code>CP06110L</Code>
+    <Description>Montelukast (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110M</Code>
+    <Description>Paracetamol (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06110N</Code>
+    <Description>Risedronate (10 tablets)</Description>
+  </row>
+  <row>
+    <Code>CP06121A</Code>
+    <Description>Pregnancy test (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP06121B</Code>
+    <Description>Condoms (3 pieces)</Description>
+  </row>
+  <row>
+    <Code>CP06129A</Code>
+    <Description>Plaster strips (10 strips)</Description>
+  </row>
+  <row>
+    <Code>CP06129B</Code>
+    <Description>Joint bandage (1 m)</Description>
+  </row>
+  <row>
+    <Code>CP06129C</Code>
+    <Description>Knee support (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP06129D</Code>
+    <Description>Digital stick thermometer (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP06211A</Code>
+    <Description>General practioner (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP06212A</Code>
+    <Description>Eye specialist, Ophthalmologist (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP06220A</Code>
+    <Description>Dentist, plastic filling (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP06231A</Code>
+    <Description>Thorax X-ray (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP07211A</Code>
+    <Description>Summer tyres (4 tyres)</Description>
+  </row>
+  <row>
+    <Code>CP07211B</Code>
+    <Description>Winter tyres (4 tyres)</Description>
+  </row>
+  <row>
+    <Code>CP07212A</Code>
+    <Description>Car battery (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP07230A</Code>
+    <Description>Replacement of brake pads (1 hour)</Description>
+  </row>
+  <row>
+    <Code>CP07230B</Code>
+    <Description>Change of oil (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP07230C</Code>
+    <Description>Car wash (1 service)</Description>
+  </row>
+  <row>
+    <Code>CP09112D</Code>
+    <Description>Blu-ray disc player (1 piece)</Description>
+  </row>
+  <row>
+    <Code></Code>
+    <Description>Prostitution</Description>
+  </row>
+  <row>
+    <Code>CP03123F</Code>
+    <Description>Children&apos; socks (1 pair)</Description>
+  </row>
+  <row>
+    <Code>CP05311B1</Code>
+    <Description>Fridge-freezer, energy efficiency A (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05311B2</Code>
+    <Description>Fridge-freezer, energy efficiency A+ (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05315A3</Code>
+    <Description>Vacuum cleaner, 1600-2200 W (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05611G1</Code>
+    <Description>Detergent for washing machine, powder, 70-90 g/wash (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP05611G2</Code>
+    <Description>Detergent for washing machine, powder, &gt; 90 g/wash (1 kg)</Description>
+  </row>
+  <row>
+    <Code>CP09112A1</Code>
+    <Description>Television, screen size 32&apos;&apos; (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09112A2</Code>
+    <Description>Television, screen size 42&apos;&apos; (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09131A3</Code>
+    <Description>Laptop, Hard Disc 750 GB, RAM 8 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09142A1</Code>
+    <Description>Blank compact disc (CD-R) (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09142A2</Code>
+    <Description>Blank compact disc (CD-R) (10 pieces)</Description>
+  </row>
+  <row>
+    <Code>CP11111B1</Code>
+    <Description>Red house wine, 0.12 l (1 glass)</Description>
+  </row>
+  <row>
+    <Code>CP11111B2</Code>
+    <Description>Red house wine, 0.10 l (1 glass)</Description>
+  </row>
+  <row>
+    <Code>SPRT</Code>
+    <Description>Sports goods and services</Description>
+  </row>
+  <row>
+    <Code>CLT</Code>
+    <Description>Cultural goods and services</Description>
+  </row>
+  <row>
+    <Code>CP09121_09122</Code>
+    <Description>Cameras and accessories for photographic and cinematographic equipment</Description>
+  </row>
+  <row>
+    <Code>CP09423_09424</Code>
+    <Description>Television and radio licence fees, subscriptions, hire of equipment and accessories for culture</Description>
+  </row>
+  <row>
+    <Code>EQ_SOUND</Code>
+    <Description>Equipment for the reception, recording and reproduction of sound (including earphones)</Description>
+  </row>
+  <row>
+    <Code>CI_TH_CO</Code>
+    <Description>Cinemas, theatres, concerts (excluding services of musicians, clowns, performers for private entertainments)</Description>
+  </row>
+  <row>
+    <Code>PERF_PHOT</Code>
+    <Description>Services of musicians, clowns, performers for private entertainers, and photographers</Description>
+  </row>
+  <row>
+    <Code>FOOD_P_X_ALC_TBC</Code>
+    <Description>Processed food excluding alcohol and tobacco</Description>
+  </row>
+  <row>
+    <Code>CP05311A1</Code>
+    <Description>Refrigerator, undercounter, with freezer, energy efficiency A/A+ (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05311A2</Code>
+    <Description>Refrigerator, undercounter, with freezer, energy efficiency A+/A++ (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05312A3</Code>
+    <Description>Washing machine, 6-7 kg, energy efficiency A++/A+++ (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05315A4</Code>
+    <Description>Vacuum cleaner, 1400 W (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP09131A4</Code>
+    <Description>Laptop, Hard Disc 750 GB - 1 TB, RAM 8 GB (1 piece)</Description>
+  </row>
+  <row>
+    <Code>CP05204</Code>
+    <Description>Repair of household textiles</Description>
+  </row>
+  <row>
+    <Code>AP_NRG</Code>
+    <Description>Administered prices, energy</Description>
+  </row>
+  <row>
+    <Code>AP_NNRG</Code>
+    <Description>Administered prices, non-energy</Description>
+  </row>
+  <row>
+    <Code>CP09112-09119</Code>
+    <Description>Equipment for the reception, recording and reproduction of sound, vision and picture</Description>
+  </row>
+  <row>
+    <Code>CP09221_09429</Code>
+    <Description>Musical instruments (incl. rental and leasing services)</Description>
+  </row>
+  <row>
+    <Code>CP0934_0935</Code>
+    <Description>Pets and related products; veterinary and other services for pets</Description>
+  </row>
+  <row>
+    <Code>CP0953_0954</Code>
+    <Description>Miscellaneous printed matter; stationery and drawing materials</Description>
+  </row>
+  <row>
+    <Code>CP1212_1213</Code>
+    <Description>Electrical appliances for personal care; other appliances articles and products for personal care</Description>
+  </row>
+</root>

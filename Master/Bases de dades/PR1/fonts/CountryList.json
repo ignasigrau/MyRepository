@@ -1,0 +1,397 @@
+[
+	{
+		"name": "Albania",
+		"code": "AL",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Andorra",
+		"code": "AD",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Argentina",
+		"code": "AR",
+		"region": "South America"
+	},
+	{
+		"name": "Armenia",
+		"code": "AM",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Austria",
+		"code": "AT",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Azerbaijan",
+		"code": "AZ",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Belarus",
+		"code": "BY",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Belgium",
+		"code": "BE",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Belize",
+		"code": "BZ",
+		"region": "Central America"
+	},
+	{
+		"name": "Bermuda",
+		"code": "BM",
+		"region": "North America"
+	},
+	{
+		"name": "Bolivia",
+		"code": "BO",
+		"region": "South America"
+	},
+	{
+		"name": "Bosnia and Herzegovina",
+		"code": "BA",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Brazil",
+		"code": "BR",
+		"region": "South America"
+	},
+	{
+		"name": "Bulgaria",
+		"code": "BG",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Canada",
+		"code": "CA",
+		"region": "North America"
+	},
+	{
+		"name": "Chile",
+		"code": "CL",
+		"region": "South America"
+	},
+	{
+		"name": "Colombia",
+		"code": "CO",
+		"region": "South America"
+	},
+	{
+		"name": "Costa Rica",
+		"code": "CR",
+		"region": "Central America"
+	},
+	{
+		"name": "Croatia",
+		"code": "HR",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Cuba",
+		"code": "CU",
+		"region": "North America"
+	},
+	{
+		"name": "Cyprus",
+		"code": "CY",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Czech Republic",
+		"code": "CZ",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Denmark",
+		"code": "DK",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "Dominican Republic",
+		"code": "DO",
+		"region": "North America"
+	},
+	{
+		"name": "Ecuador",
+		"code": "EC",
+		"region": "South America"
+	},
+	{
+		"name": "El Salvador",
+		"code": "SV",
+		"region": "Central America"
+	},
+	{
+		"name": "Estonia",
+		"code": "EE",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "Finland",
+		"code": "FI",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "France",
+		"code": "FR",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Georgia",
+		"code": "GE",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Germany",
+		"code": "DE",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Greece",
+		"code": "GR",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Greenland",
+		"code": "GL",
+		"region": "North America"
+	},
+	{
+		"name": "Guatemala",
+		"code": "GT",
+		"region": "South America"
+	},
+	{
+		"name": "Haiti",
+		"code": "HT",
+		"region": "North America"
+	},
+	{
+		"name": "Holy See (Vatican City State)",
+		"code": "VA",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Honduras",
+		"code": "HN",
+		"region": "South America"
+	},
+	{
+		"name": "Hungary",
+		"code": "HU",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Iceland",
+		"code": "IS",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "Ireland",
+		"code": "IE",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Italy",
+		"code": "IT",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Jamaica",
+		"code": "JM",
+		"region": "North America"
+	},
+	{
+		"name": "Latvia",
+		"code": "LV",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "Liechtenstein",
+		"code": "LI",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Lithuania",
+		"code": "LT",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "Luxembourg",
+		"code": "LU",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Malta",
+		"code": "MT",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Mexico",
+		"code": "MX",
+		"region": "North America"
+	},
+	{
+		"name": "Moldova, Republic of",
+		"code": "MD",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Monaco",
+		"code": "MC",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Montenegro",
+		"code": "ME",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Netherlands",
+		"code": "NL",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Nicaragua",
+		"code": "NI",
+		"region": "South America"
+	},
+	{
+		"name": "North Macedonia",
+		"code": "MK",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Norway",
+		"code": "NO",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "Panama",
+		"code": "PA",
+		"region": "South America"
+	},
+	{
+		"name": "Paraguay",
+		"code": "PY",
+		"region": "South America"
+	},
+	{
+		"name": "Peru",
+		"code": "PE",
+		"region": "South America"
+	},
+	{
+		"name": "Poland",
+		"code": "PL",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Portugal",
+		"code": "PT",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Puerto Rico",
+		"code": "PR",
+		"region": "North America"
+	},
+	{
+		"name": "Romania",
+		"code": "RO",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Russia",
+		"code": "RU",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Saint Pierre and Miquelon",
+		"code": "PM",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "San Marino",
+		"code": "SM",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Serbia",
+		"code": "RS",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Slovakia",
+		"code": "SK",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Slovenia",
+		"code": "SI",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "Spain",
+		"code": "ES",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Suriname",
+		"code": "SR",
+		"region": "South America"
+	},
+	{
+		"name": "Sweden",
+		"code": "SE",
+		"region": "Northern Europe"
+	},
+	{
+		"name": "Switzerland",
+		"code": "CH",
+		"region": "Western Europe"
+	},
+	{
+		"name": "Trinidad and Tobago",
+		"code": "TT",
+		"region": "North America"
+	},
+	{
+		"name": "Turkey",
+		"code": "TR",
+		"region": "Southern Europe"
+	},
+	{
+		"name": "Ukraine",
+		"code": "UA",
+		"region": "Central and Eastern Europe"
+	},
+	{
+		"name": "United Kingdom",
+		"code": "GB",
+		"region": "Western Europe"
+	},
+	{
+		"name": "United States",
+		"code": "US",
+		"region": "North America"
+	},
+	{
+		"name": "Uruguay",
+		"code": "UY",
+		"region": "South America"
+	},
+	{
+		"name": "Venezuela",
+		"code": "VE",
+		"region": "South America"
+	}
+]
