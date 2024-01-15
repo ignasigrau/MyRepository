@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Autor: Nom estudiant" />
+<meta name="author" content="Autor: Ignasi Grau" />
 
 
 <title>Mineria de dades: PRA1 - Selecció i preparació d’un joc de dades</title>
@@ -387,7 +387,7 @@ display: none;
 
 <h1 class="title toc-ignore">Mineria de dades: PRA1 - Selecció i
 preparació d’un joc de dades</h1>
-<h4 class="author">Autor: Nom estudiant</h4>
+<h4 class="author">Autor: Ignasi Grau</h4>
 <h4 class="date">Novembre 2023</h4>
 
 </div>
@@ -396,6 +396,8 @@ preparació d’un joc de dades</h1>
 <ul>
 <li><a href="#enunciat" id="toc-enunciat"><span class="toc-section-number">1</span> Enunciat</a></li>
 <li><a href="#recursos-de-programació" id="toc-recursos-de-programació"><span class="toc-section-number">2</span> Recursos de programació</a></li>
+<li><a href="#r-libraryggplot2-librarycluster-librarydplyr-aplicar-k-means-con-por-ejemplo-3-clusters-num_clusters---11-propertyprices-propertyprices_numeric---propertyprices-select_ifis.numeric-modelo_kmeans---kmeanspropertyprices_numericprice-centers-num_clusters-agregar-información-de-clusters-a-los-datos-propertyprices_numericcluster---as.factorpropertyprices_numericcluster-visualización-de-los-clusters-vs.-valores-reales-ggplotpropertyprices_numeric-aesx-price-color-cluster-geom_point-labstitle-clusters-vs.-valores-reales-x-precio-y-frecuencia-theme_minimal" id="toc-r-libraryggplot2-librarycluster-librarydplyr-aplicar-k-means-con-por-ejemplo-3-clusters-num_clusters---11-propertyprices-propertyprices_numeric---propertyprices-select_ifis.numeric-modelo_kmeans---kmeanspropertyprices_numericprice-centers-num_clusters-agregar-información-de-clusters-a-los-datos-propertyprices_numericcluster---as.factorpropertyprices_numericcluster-visualización-de-los-clusters-vs.-valores-reales-ggplotpropertyprices_numeric-aesx-price-color-cluster-geom_point-labstitle-clusters-vs.-valores-reales-x-precio-y-frecuencia-theme_minimal"><span class="toc-section-number">3</span>
+<code>{r} # library(ggplot2) # library(cluster) # library(dplyr) #  #  # # Aplicar K-means con, por ejemplo, 3 clusters # num_clusters &lt;- 11 #  # PropertyPrices #  # PropertyPrices_numeric &lt;- PropertyPrices %&gt;% select_if(is.numeric) #  # modelo_kmeans &lt;- kmeans(PropertyPrices_numeric$price, centers = num_clusters) #  # # Agregar información de clusters a los datos # PropertyPrices_numeric$cluster &lt;- as.factor(PropertyPrices_numeric$cluster) #  # # Visualización de los clusters vs. valores reales # ggplot(PropertyPrices_numeric, aes(x = price, color = cluster)) + #   geom_point() + #   labs(title = &quot;Clusters vs. Valores Reales&quot;, #        x = &quot;Precio&quot;, #        y = &quot;Frecuencia&quot;) + #   theme_minimal() #  #</code></a></li>
 </ul>
 </div>
 
@@ -526,6 +528,1183 @@ de cheatsheets en R</a></li>
 </ul></li>
 </ul>
 <hr />
+<ol style="list-style-type: decimal">
+<li><p>Un dels grans problemes dels joves és la dificultat de comprar
+una propietat degut als alts preus de compra i de lloguer. L’objectiu
+d’aquesta pràctica serà identificar les variables més determinants a
+l’hora de fixar el preu a una casa i posteriorment fer una predicció
+dels preus segons les variables de les que disposem. Es treballara amb
+un algoritme supervisat i un no supervisat per comparar els
+resultas.</p></li>
+<li><p>El joc de dades seleccionat és el següent:
+belgian_property_prices.csv. Aquest joc de dades conta amb més de 4000
+observacions i més de 50 variables, complint els requisits de variables
+categòriques, nùmeriques i binàries. Un dels grans problemes que em
+trobo jo com a jove es el gran preu dels lloguers i de les propietats
+per aixó he decidit fer aquest estudi. Primer de tot vaig buscar un joc
+de dades de la ciutat de Barcelona però no vaig trobar cap joc de dades
+prou complet per fer l’estudi però vaig trobar aquest joc del preu de
+les propietats a Bélgica que complia els requisits.</p></li>
+</ol>
+<pre class="r"><code>PropertyPrices &lt;- read.csv(&quot;belgian_property_prices.csv&quot;)
+
+head(PropertyPrices)</code></pre>
+<pre><code>##   as_built_plan        available_as_of basement bathrooms bedroom_1_surface
+## 1             0 After signing the deed        1         1                12
+## 2             0 After signing the deed        1         1                15
+## 3            NA After signing the deed        1         3                22
+## 4             0                              NA         3                33
+## 5             0 After signing the deed       NA        NA                19
+## 6            NA After signing the deed        1         1                13
+##   bedroom_2_surface bedroom_3_surface bedrooms building_condition co2_emission
+## 1                10                10        3               Good         9802
+## 2                11                11        4               Good           NA
+## 3                22                22        5             As new           NA
+## 4                30                23        5             As new           NA
+## 5                NA                NA        1     Just renovated           58
+## 6                 9                NA        2             As new         1029
+##   cadastral_income connection_to_sewer_network construction_year
+## 1              991                           1              1953
+## 2               NA                          NA              1987
+## 3             1115                           1              1887
+## 4             2391                          NA              1833
+## 5              230                          NA              1850
+## 6              538                           0              2008
+##   covered_parking_spaces dining_room double_glazing energy_class
+## 1                      1          NA              1            F
+## 2                     NA          NA              1            C
+## 3                     NA          NA              1            D
+## 4                      1          NA              1            D
+## 5                     NA          NA              1            D
+## 6                     NA          NA             NA            C
+##   external_reference flood_zone_type furnished garden_surface
+## 1            5596472               0         0            350
+## 2         162 - 1390               0        NA           6000
+## 3            5596323               0         0             33
+## 4           spir1515               0        NA            466
+## 5     2051 - 2051/08               0        NA             NA
+## 6            5573952              NA         0            300
+##   gas_water__electricity heating_type kitchen_surface  kitchen_type
+## 1                     NA     Fuel oil              NA     Installed
+## 2                      1     Fuel oil              10 Semi equipped
+## 3                      1          Gas              32     Installed
+## 4                     NA          Gas              NA     Installed
+## 5                      1          Gas               8     Installed
+## 6                     NA       Pellet              12     Installed
+##                 latest_land_use_designation living_area living_room_surface
+## 1 Living area (residential, urban or rural)         156                  NA
+## 2 Living area (residential, urban or rural)         209                  NA
+## 3                                                   281                  32
+## 4                                                   439                  45
+## 5 Living area (residential, urban or rural)          70                  19
+## 6 Living area (residential, urban or rural)          90                  31
+##   number_of_frontages office outdoor_parking_spaces
+## 1                   3     NA                      3
+## 2                   4     NA                     NA
+## 3                   2     NA                     NA
+## 4                   2      1                     NA
+## 5                   3      1                     NA
+## 6                   2     NA                      2
+##   planning_permission_obtained possible_priority_purchase_right
+## 1                           NA                                1
+## 2                            1                                0
+## 3                           NA                               NA
+## 4                           NA                                1
+## 5                           NA                                0
+## 6                            1                               NA
+##   primary_energy_consumption proceedings_for_breach_of_planning_regulations
+## 1                        737                                              0
+## 2                        263                                             NA
+## 3                        383                                             NA
+## 4                        389                                              0
+## 5                        317                                             NA
+## 6                        219                                             NA
+##   reference_number_of_the_epc_report street_frontage_width subdivision_permit
+## 1          20230316-0002839163-RES-1                     6                  0
+## 2                            2238286                    13                  0
+## 3                      Not specified                    NA                 NA
+## 4          20230220-0002513997-RES-2                    19                  0
+## 5                         2.0231E+13                     5                 NA
+## 6                        2.02303E+13                     5                  0
+##   surface_of_the_plot                         surroundings_type tv_cable
+## 1                 555 Living area (residential, urban or rural)        1
+## 2                6416                                                 NA
+## 3                 130                                     Urban        1
+## 4                 735                                     Urban       NA
+## 5                  40                                     Urban        1
+## 6                 405                               Countryside       NA
+##   tenement_building toilets                      website
+## 1                 0       2                             
+## 2                 0       1                             
+## 3                 0       4                             
+## 4                 0       4      http://www.huysnoord.be
+## 5                 0       2            http://www.ppr.be
+## 6                 0       2 http://www.immodemarneffe.be
+##   width_of_the_lot_on_the_street yearly_theoretical_total_energy_consumption
+## 1                             11                                          NA
+## 2                             NA                                          NA
+## 3                              6                                          NA
+## 4                             19                                          NA
+## 5                              5                                       24263
+## 6                             NA                                       23142
+##   housenumber             street      city postal           state      lat
+## 1          30     Stationsstraat     Ronse   9600   Vlaams Gewest 50.74337
+## 2          52    Wingenesteenweg   Wingene   8750   Vlaams Gewest 51.04215
+## 3         157   Mechelsesteenweg Antwerpen   2018   Vlaams Gewest 51.20503
+## 4          66    Noordzandstraat    Brugge   8000   Vlaams Gewest 51.20683
+## 5          15    Rue de l&#39;Etoile     Wavre   1301 Région Wallonne 50.71706
+## 6          15 Chau. de Tirlemont   Braives   4260 Région Wallonne 50.63610
+##        lng   price
+## 1 3.601306  275000
+## 2 3.302600  430000
+## 3 4.410943  949000
+## 4 3.219186 2200000
+## 5 4.577550  195000
+## 6 5.156102  260000</code></pre>
+<pre class="r"><code>structure = str(PropertyPrices)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    4770 obs. of  54 variables:
+##  $ as_built_plan                                 : int  0 0 NA 0 0 NA NA NA 0 0 ...
+##  $ available_as_of                               : chr  &quot;After signing the deed&quot; &quot;After signing the deed&quot; &quot;After signing the deed&quot; &quot;&quot; ...
+##  $ basement                                      : int  1 1 1 NA NA 1 1 1 1 NA ...
+##  $ bathrooms                                     : int  1 1 3 3 NA 1 2 2 1 2 ...
+##  $ bedroom_1_surface                             : int  12 15 22 33 19 13 15 15 NA 17 ...
+##  $ bedroom_2_surface                             : int  10 11 22 30 NA 9 15 15 NA 16 ...
+##  $ bedroom_3_surface                             : int  10 11 22 23 NA NA NA NA NA 15 ...
+##  $ bedrooms                                      : int  3 4 5 5 1 2 2 2 4 6 ...
+##  $ building_condition                            : chr  &quot;Good&quot; &quot;Good&quot; &quot;As new&quot; &quot;As new&quot; ...
+##  $ co2_emission                                  : int  9802 NA NA NA 58 1029 71 71 NA 103 ...
+##  $ cadastral_income                              : int  991 NA 1115 2391 230 538 770 770 1396 1598 ...
+##  $ connection_to_sewer_network                   : int  1 NA 1 NA NA 0 1 1 NA 0 ...
+##  $ construction_year                             : int  1953 1987 1887 1833 1850 2008 1930 1930 2006 1995 ...
+##  $ covered_parking_spaces                        : int  1 NA NA 1 NA NA 2 2 3 1 ...
+##  $ dining_room                                   : int  NA NA NA NA NA NA NA NA NA 1 ...
+##  $ double_glazing                                : int  1 1 1 1 1 NA 1 1 1 1 ...
+##  $ energy_class                                  : chr  &quot;F&quot; &quot;C&quot; &quot;D&quot; &quot;D&quot; ...
+##  $ external_reference                            : chr  &quot;5596472&quot; &quot;162 - 1390&quot; &quot;5596323&quot; &quot;spir1515&quot; ...
+##  $ flood_zone_type                               : int  0 0 0 0 0 NA NA NA NA 0 ...
+##  $ furnished                                     : int  0 NA 0 NA NA 0 0 0 NA 0 ...
+##  $ garden_surface                                : int  350 6000 33 466 NA 300 NA NA 3133 2049 ...
+##  $ gas_water__electricity                        : int  NA 1 1 NA 1 NA NA NA 1 NA ...
+##  $ heating_type                                  : chr  &quot;Fuel oil&quot; &quot;Fuel oil&quot; &quot;Gas&quot; &quot;Gas&quot; ...
+##  $ kitchen_surface                               : int  NA 10 32 NA 8 12 9 9 NA 35 ...
+##  $ kitchen_type                                  : chr  &quot;Installed&quot; &quot;Semi equipped&quot; &quot;Installed&quot; &quot;Installed&quot; ...
+##  $ latest_land_use_designation                   : chr  &quot;Living area (residential, urban or rural)&quot; &quot;Living area (residential, urban or rural)&quot; &quot;&quot; &quot;&quot; ...
+##  $ living_area                                   : int  156 209 281 439 70 90 167 167 260 287 ...
+##  $ living_room_surface                           : int  NA NA 32 45 19 31 NA NA NA NA ...
+##  $ number_of_frontages                           : int  3 4 2 2 3 2 2 2 4 4 ...
+##  $ office                                        : int  NA NA NA 1 1 NA NA NA NA 1 ...
+##  $ outdoor_parking_spaces                        : int  3 NA NA NA NA 2 NA NA 2 3 ...
+##  $ planning_permission_obtained                  : int  NA 1 NA NA NA 1 1 1 1 1 ...
+##  $ possible_priority_purchase_right              : int  1 0 NA 1 0 NA 0 0 0 0 ...
+##  $ primary_energy_consumption                    : int  737 263 383 389 317 219 286 286 314 410 ...
+##  $ proceedings_for_breach_of_planning_regulations: int  0 NA NA 0 NA NA NA NA 0 0 ...
+##  $ reference_number_of_the_epc_report            : chr  &quot;20230316-0002839163-RES-1&quot; &quot;2238286&quot; &quot;Not specified&quot; &quot;20230220-0002513997-RES-2&quot; ...
+##  $ street_frontage_width                         : int  6 13 NA 19 5 5 6 6 NA 16 ...
+##  $ subdivision_permit                            : int  0 0 NA 0 NA 0 0 0 1 1 ...
+##  $ surface_of_the_plot                           : int  555 6416 130 735 40 405 95 95 3133 2245 ...
+##  $ surroundings_type                             : chr  &quot;Living area (residential, urban or rural)&quot; &quot;&quot; &quot;Urban&quot; &quot;Urban&quot; ...
+##  $ tv_cable                                      : int  1 NA 1 NA 1 NA 1 1 NA 1 ...
+##  $ tenement_building                             : int  0 0 0 0 0 0 1 1 0 0 ...
+##  $ toilets                                       : int  2 1 4 4 2 2 3 3 2 2 ...
+##  $ website                                       : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;http://www.huysnoord.be&quot; ...
+##  $ width_of_the_lot_on_the_street                : int  11 NA 6 19 5 NA 7 7 NA 45 ...
+##  $ yearly_theoretical_total_energy_consumption   : int  NA NA NA NA 24263 23142 15060 15060 81227 112946 ...
+##  $ housenumber                                   : chr  &quot;30&quot; &quot;52&quot; &quot;157&quot; &quot;66&quot; ...
+##  $ street                                        : chr  &quot;Stationsstraat&quot; &quot;Wingenesteenweg&quot; &quot;Mechelsesteenweg&quot; &quot;Noordzandstraat&quot; ...
+##  $ city                                          : chr  &quot;Ronse&quot; &quot;Wingene&quot; &quot;Antwerpen&quot; &quot;Brugge&quot; ...
+##  $ postal                                        : int  9600 8750 2018 8000 1301 4260 6990 6990 9860 6900 ...
+##  $ state                                         : chr  &quot;Vlaams Gewest&quot; &quot;Vlaams Gewest&quot; &quot;Vlaams Gewest&quot; &quot;Vlaams Gewest&quot; ...
+##  $ lat                                           : num  50.7 51 51.2 51.2 50.7 ...
+##  $ lng                                           : num  3.6 3.3 4.41 3.22 4.58 ...
+##  $ price                                         : int  275000 430000 949000 2200000 195000 260000 275000 275000 480000 425000 ...</code></pre>
+<pre class="r"><code>summary = summary(PropertyPrices)
+
+print(structure)</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>print(summary)</code></pre>
+<pre><code>##  as_built_plan    available_as_of       basement      bathrooms    
+##  Min.   :0.0000   Length:4770        Min.   :1      Min.   : 1.00  
+##  1st Qu.:0.0000   Class :character   1st Qu.:1      1st Qu.: 1.00  
+##  Median :0.0000   Mode  :character   Median :1      Median : 1.00  
+##  Mean   :0.0624                      Mean   :1      Mean   : 1.62  
+##  3rd Qu.:0.0000                      3rd Qu.:1      3rd Qu.: 2.00  
+##  Max.   :1.0000                      Max.   :1      Max.   :13.00  
+##  NA&#39;s   :2381                        NA&#39;s   :2687   NA&#39;s   :247    
+##  bedroom_1_surface bedroom_2_surface bedroom_3_surface    bedrooms     
+##  Min.   :   1.00   Min.   :   1.00   Min.   :   1.00   Min.   : 1.000  
+##  1st Qu.:  14.00   1st Qu.:  12.00   1st Qu.:  11.00   1st Qu.: 3.000  
+##  Median :  16.00   Median :  14.00   Median :  14.00   Median : 3.000  
+##  Mean   :  18.35   Mean   :  16.17   Mean   :  17.78   Mean   : 3.747  
+##  3rd Qu.:  20.00   3rd Qu.:  17.00   3rd Qu.:  17.00   3rd Qu.: 4.000  
+##  Max.   :1492.00   Max.   :1529.00   Max.   :2867.00   Max.   :25.000  
+##  NA&#39;s   :1607      NA&#39;s   :1665      NA&#39;s   :2147      NA&#39;s   :30      
+##  building_condition  co2_emission     cadastral_income
+##  Length:4770        Min.   :    1.0   Min.   :     1  
+##  Class :character   1st Qu.:   49.0   1st Qu.:   567  
+##  Mode  :character   Median :   76.0   Median :   929  
+##                     Mean   :  536.7   Mean   :  1364  
+##                     3rd Qu.:  115.0   3rd Qu.:  1507  
+##                     Max.   :56557.0   Max.   :336965  
+##                     NA&#39;s   :2833      NA&#39;s   :1078    
+##  connection_to_sewer_network construction_year covered_parking_spaces
+##  Min.   :0.0000              Min.   :1764      Min.   : 1.00         
+##  1st Qu.:1.0000              1st Qu.:1930      1st Qu.: 1.00         
+##  Median :1.0000              Median :1960      Median : 1.00         
+##  Mean   :0.9276              Mean   :1954      Mean   : 1.61         
+##  3rd Qu.:1.0000              3rd Qu.:1987      3rd Qu.: 2.00         
+##  Max.   :1.0000              Max.   :2025      Max.   :80.00         
+##  NA&#39;s   :2740                NA&#39;s   :1326      NA&#39;s   :2052          
+##   dining_room   double_glazing   energy_class       external_reference
+##  Min.   :1      Min.   :0.0000   Length:4770        Length:4770       
+##  1st Qu.:1      1st Qu.:1.0000   Class :character   Class :character  
+##  Median :1      Median :1.0000   Mode  :character   Mode  :character  
+##  Mean   :1      Mean   :0.9541                                        
+##  3rd Qu.:1      3rd Qu.:1.0000                                        
+##  Max.   :1      Max.   :1.0000                                        
+##  NA&#39;s   :3431   NA&#39;s   :651                                           
+##  flood_zone_type    furnished     garden_surface    gas_water__electricity
+##  Min.   :0.0000   Min.   :0.000   Min.   :    1.0   Min.   :0.000         
+##  1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:  100.0   1st Qu.:0.000         
+##  Median :0.0000   Median :0.000   Median :  273.0   Median :1.000         
+##  Mean   :0.0323   Mean   :0.037   Mean   :  778.8   Mean   :0.723         
+##  3rd Qu.:0.0000   3rd Qu.:0.000   3rd Qu.:  724.0   3rd Qu.:1.000         
+##  Max.   :1.0000   Max.   :1.000   Max.   :87000.0   Max.   :1.000         
+##  NA&#39;s   :1987     NA&#39;s   :2661    NA&#39;s   :2589      NA&#39;s   :1546          
+##  heating_type       kitchen_surface   kitchen_type      
+##  Length:4770        Min.   :   1.00   Length:4770       
+##  Class :character   1st Qu.:  10.00   Class :character  
+##  Mode  :character   Median :  13.00   Mode  :character  
+##                     Mean   :  15.97                     
+##                     3rd Qu.:  18.00                     
+##                     Max.   :2932.00                     
+##                     NA&#39;s   :2095                        
+##  latest_land_use_designation  living_area     living_room_surface
+##  Length:4770                 Min.   :  15.0   Min.   :   1.00    
+##  Class :character            1st Qu.: 142.0   1st Qu.:  25.00    
+##  Mode  :character            Median : 190.0   Median :  33.00    
+##                              Mean   : 223.4   Mean   :  36.41    
+##                              3rd Qu.: 260.0   3rd Qu.:  42.00    
+##                              Max.   :1600.0   Max.   :3558.00    
+##                              NA&#39;s   :68       NA&#39;s   :1755       
+##  number_of_frontages     office     outdoor_parking_spaces
+##  Min.   : 1.000      Min.   :0.00   Min.   :  1.000       
+##  1st Qu.: 2.000      1st Qu.:1.00   1st Qu.:  1.000       
+##  Median : 3.000      Median :1.00   Median :  2.000       
+##  Mean   : 3.005      Mean   :0.95   Mean   :  3.099       
+##  3rd Qu.: 4.000      3rd Qu.:1.00   3rd Qu.:  4.000       
+##  Max.   :10.000      Max.   :1.00   Max.   :100.000       
+##  NA&#39;s   :315         NA&#39;s   :3326   NA&#39;s   :2415          
+##  planning_permission_obtained possible_priority_purchase_right
+##  Min.   :1                    Min.   :0.000                   
+##  1st Qu.:1                    1st Qu.:0.000                   
+##  Median :1                    Median :0.000                   
+##  Mean   :1                    Mean   :0.126                   
+##  3rd Qu.:1                    3rd Qu.:0.000                   
+##  Max.   :1                    Max.   :1.000                   
+##  NA&#39;s   :3230                 NA&#39;s   :2572                    
+##  primary_energy_consumption proceedings_for_breach_of_planning_regulations
+##  Min.   :       1           Min.   :0.0000                                
+##  1st Qu.:     216           1st Qu.:0.0000                                
+##  Median :     322           Median :0.0000                                
+##  Mean   :    4791           Mean   :0.0023                                
+##  3rd Qu.:     450           3rd Qu.:0.0000                                
+##  Max.   :20230412           Max.   :1.0000                                
+##  NA&#39;s   :199                NA&#39;s   :3028                                  
+##  reference_number_of_the_epc_report street_frontage_width subdivision_permit
+##  Length:4770                        Min.   :   0.0        Min.   :0.0000    
+##  Class :character                   1st Qu.:   6.0        1st Qu.:0.0000    
+##  Mode  :character                   Median :   8.0        Median :0.0000    
+##                                     Mean   :  13.5        Mean   :0.2519    
+##                                     3rd Qu.:  12.0        3rd Qu.:1.0000    
+##                                     Max.   :1597.0        Max.   :1.0000    
+##                                     NA&#39;s   :2674          NA&#39;s   :2956      
+##  surface_of_the_plot surroundings_type     tv_cable    tenement_building
+##  Min.   :     1.0    Length:4770        Min.   :1      Min.   :0.000    
+##  1st Qu.:   202.5    Class :character   1st Qu.:1      1st Qu.:0.000    
+##  Median :   466.0    Mode  :character   Median :1      Median :0.000    
+##  Mean   :  1186.6                       Mean   :1      Mean   :0.111    
+##  3rd Qu.:  1000.0                       3rd Qu.:1      3rd Qu.:0.000    
+##  Max.   :110000.0                       Max.   :1      Max.   :1.000    
+##  NA&#39;s   :207                            NA&#39;s   :3310   NA&#39;s   :47       
+##     toilets         website          width_of_the_lot_on_the_street
+##  Min.   : 1.000   Length:4770        Min.   :   1.00               
+##  1st Qu.: 1.000   Class :character   1st Qu.:   6.00               
+##  Median : 2.000   Mode  :character   Median :  11.00               
+##  Mean   : 2.215                      Mean   :  18.71               
+##  3rd Qu.: 3.000                      3rd Qu.:  20.00               
+##  Max.   :20.000                      Max.   :1814.00               
+##  NA&#39;s   :422                         NA&#39;s   :2780                  
+##  yearly_theoretical_total_energy_consumption housenumber       
+##  Min.   :      1                             Length:4770       
+##  1st Qu.:  37897                             Class :character  
+##  Median :  55619                             Mode  :character  
+##  Mean   :  64996                                               
+##  3rd Qu.:  81153                                               
+##  Max.   :2980302                                               
+##  NA&#39;s   :2957                                                  
+##     street              city               postal        state          
+##  Length:4770        Length:4770        Min.   :1000   Length:4770       
+##  Class :character   Class :character   1st Qu.:1780   Class :character  
+##  Mode  :character   Mode  :character   Median :4500   Mode  :character  
+##                                        Mean   :4880                     
+##                                        3rd Qu.:8200                     
+##                                        Max.   :9991                     
+##                                        NA&#39;s   :33                       
+##       lat             lng            price        
+##  Min.   :49.56   Min.   :2.706   Min.   :  29000  
+##  1st Qu.:50.62   1st Qu.:3.977   1st Qu.: 265000  
+##  Median :50.81   Median :4.409   Median : 395000  
+##  Mean   :50.76   Mean   :4.457   Mean   : 535088  
+##  3rd Qu.:50.96   3rd Qu.:5.076   3rd Qu.: 583975  
+##  Max.   :51.36   Max.   :5.963   Max.   :8350000  
+##  NA&#39;s   :33      NA&#39;s   :33</code></pre>
+<p>Joc de dades de la pàgina web NYC Open Data. Aquest joc de dades
+mostra les ofertes de feina a la ciutat de NYC.</p>
+<ol style="list-style-type: decimal">
+<li>as_built_plan: Si hi ha un pla com a construït disponible.</li>
+<li>available_as_of: Data en què la propietat va estar disponible per
+comprar.</li>
+<li>basement: Presència d’un soterrani.</li>
+<li>bathrooms: Número de banys.</li>
+<li>bedroom_1_surface: Superfície del primer dormitori.</li>
+<li>bedroom_2_surface: Superfície del segon dormitori.</li>
+<li>bedroom_3_surface: Superfície del tercer dormitori.</li>
+<li>bedrooms: Número de dormitoris.</li>
+<li>building_condition: Condició del edifici.</li>
+<li>co2_emission: Informació d’emissió de CO2.</li>
+<li>cadastral_income: Renda cadastral de la propietat.</li>
+<li>connection_to_sewer_network: Informació sobre la connexió a la xarxa
+d’aigües residuals.</li>
+<li>construction_year: Any de construcció.</li>
+<li>covered_parking_spaces: Nombre d’aparcaments coberts.</li>
+<li>dining_room: Presència de menjador.</li>
+<li>double_glazing: Presència de vidres dobles.</li>
+<li>energy_class: Classe d’eficiència energètica de la propietat.</li>
+<li>external_reference: Informació de referència externa.</li>
+<li>flood_zone_type: Tipus de zona d’inundació.</li>
+<li>furnished: Si la propietat està amoblada.</li>
+<li>garden_surface: Superfície del jardí.</li>
+<li>gas_water__electricity: Disponibilitat de gas, aigua i
+electricitat.</li>
+<li>heating_ewtype: Tipus de sistema de calefacció.</li>
+<li>kitchen_surface: Superfície de la cuina.</li>
+<li>kitchen_type: Tipus de cuina.</li>
+<li>latest_land_use_designation: Informació sobre la destinació d’ús del
+sòl.</li>
+<li>living_area: Superfície habitable total de la propietat.</li>
+<li>living_room_surface: Superfície de la sala d’estar.</li>
+<li>number_of_frontages: Nombre de façanes.</li>
+<li>office: Presència d’una oficina.</li>
+<li>outdoor_parking_spaces: Nombre d’aparcaments a l’aire lliure.</li>
+<li>planning_permission_obtained: Informació sobre el permís d’urbanisme
+obtingut.</li>
+<li>possible_priority_purchase_right: Informació sobre el dret de compra
+prioritari.</li>
+<li>price: Preu de la propietat.</li>
+<li>primary_energy_consumption: Informació sobre el consum d’energia
+primària.</li>
+<li>proceedings_for_breach_of_planning_regulations: Informació sobre
+procediments per incompliment de normatives d’urbanisme.</li>
+<li>reference_number_of_the_epc_report: Número de referència de
+l’informe EPC (Certificat d’Eficiència Energètica).</li>
+<li>street_frontage_width: Ample de la façana de la via.</li>
+<li>subdivision_permit: Informació sobre un permís de subdivisió.</li>
+<li>surface_of_the_plot: Superfície de la parcel·la.</li>
+<li>surroundings_type: Tipus d’entorn.</li>
+<li>tv_cable: Disponibilitat de cable de televisió.</li>
+<li>tenement_building: Informació sobre edificis en coopropietat.</li>
+<li>toilets: Nombre de lavabos.</li>
+<li>website: Informació sobre el lloc web associat a la propietat.</li>
+<li>width_of_the_lot_on_the_street: Ample de la parcel·la al
+carrer.</li>
+<li>yearly_theoretical_total_energy_consumption: Consum d’energia teòric
+total anual.</li>
+<li>housenumber: Número de casa.</li>
+<li>street: Nom del carrer.</li>
+<li>city: Ciutat on es troba la propietat.</li>
+<li>postal: Codi postal.</li>
+<li>state: Informació sobre l’estat o la regió.</li>
+<li>lat: Latitud.</li>
+<li>lng: Longitud.</li>
+</ol>
+<pre class="r"><code>#primer de tot borrarem algunes variables que sembla que no influeixen a la predicció
+info_eliminar &lt;- c(&quot;available_as_of&quot;, &quot;lat&quot;, &quot;lng&quot;, &quot;postal&quot;, &quot;street&quot;, &quot;housenumber&quot;,&quot;website&quot;, &quot;external_reference&quot;, &quot;possible_priority_purchase_right&quot;,
+                   &quot;reference_number_of_the_epc_report&quot;, &quot;proceedings_for_breach_of_planning_regulations&quot;, &quot;tenement_building&quot;, &quot;planning_permission_obtained&quot;)
+PropertyPrices &lt;- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]</code></pre>
+<pre class="r"><code>#seguidament arreglarem els valors nuls dels data set
+print(&#39;NA&#39;)</code></pre>
+<pre><code>## [1] &quot;NA&quot;</code></pre>
+<pre class="r"><code>colSums(is.na(PropertyPrices))</code></pre>
+<pre><code>##                               as_built_plan 
+##                                        2381 
+##                                    basement 
+##                                        2687 
+##                                   bathrooms 
+##                                         247 
+##                           bedroom_1_surface 
+##                                        1607 
+##                           bedroom_2_surface 
+##                                        1665 
+##                           bedroom_3_surface 
+##                                        2147 
+##                                    bedrooms 
+##                                          30 
+##                          building_condition 
+##                                           0 
+##                                co2_emission 
+##                                        2833 
+##                            cadastral_income 
+##                                        1078 
+##                 connection_to_sewer_network 
+##                                        2740 
+##                           construction_year 
+##                                        1326 
+##                      covered_parking_spaces 
+##                                        2052 
+##                                 dining_room 
+##                                        3431 
+##                              double_glazing 
+##                                         651 
+##                                energy_class 
+##                                           0 
+##                             flood_zone_type 
+##                                        1987 
+##                                   furnished 
+##                                        2661 
+##                              garden_surface 
+##                                        2589 
+##                      gas_water__electricity 
+##                                        1546 
+##                                heating_type 
+##                                           0 
+##                             kitchen_surface 
+##                                        2095 
+##                                kitchen_type 
+##                                           0 
+##                 latest_land_use_designation 
+##                                           0 
+##                                 living_area 
+##                                          68 
+##                         living_room_surface 
+##                                        1755 
+##                         number_of_frontages 
+##                                         315 
+##                                      office 
+##                                        3326 
+##                      outdoor_parking_spaces 
+##                                        2415 
+##                  primary_energy_consumption 
+##                                         199 
+##                       street_frontage_width 
+##                                        2674 
+##                          subdivision_permit 
+##                                        2956 
+##                         surface_of_the_plot 
+##                                         207 
+##                           surroundings_type 
+##                                           0 
+##                                    tv_cable 
+##                                        3310 
+##                                     toilets 
+##                                         422 
+##              width_of_the_lot_on_the_street 
+##                                        2780 
+## yearly_theoretical_total_energy_consumption 
+##                                        2957 
+##                                        city 
+##                                           0 
+##                                       state 
+##                                           0 
+##                                       price 
+##                                           0</code></pre>
+<pre class="r"><code>print(&#39;Blancs&#39;)</code></pre>
+<pre><code>## [1] &quot;Blancs&quot;</code></pre>
+<pre class="r"><code>colSums(PropertyPrices==&quot;&quot;)</code></pre>
+<pre><code>##                               as_built_plan 
+##                                          NA 
+##                                    basement 
+##                                          NA 
+##                                   bathrooms 
+##                                          NA 
+##                           bedroom_1_surface 
+##                                          NA 
+##                           bedroom_2_surface 
+##                                          NA 
+##                           bedroom_3_surface 
+##                                          NA 
+##                                    bedrooms 
+##                                          NA 
+##                          building_condition 
+##                                         285 
+##                                co2_emission 
+##                                          NA 
+##                            cadastral_income 
+##                                          NA 
+##                 connection_to_sewer_network 
+##                                          NA 
+##                           construction_year 
+##                                          NA 
+##                      covered_parking_spaces 
+##                                          NA 
+##                                 dining_room 
+##                                          NA 
+##                              double_glazing 
+##                                          NA 
+##                                energy_class 
+##                                           0 
+##                             flood_zone_type 
+##                                          NA 
+##                                   furnished 
+##                                          NA 
+##                              garden_surface 
+##                                          NA 
+##                      gas_water__electricity 
+##                                          NA 
+##                                heating_type 
+##                                         634 
+##                             kitchen_surface 
+##                                          NA 
+##                                kitchen_type 
+##                                         810 
+##                 latest_land_use_designation 
+##                                        2525 
+##                                 living_area 
+##                                          NA 
+##                         living_room_surface 
+##                                          NA 
+##                         number_of_frontages 
+##                                          NA 
+##                                      office 
+##                                          NA 
+##                      outdoor_parking_spaces 
+##                                          NA 
+##                  primary_energy_consumption 
+##                                          NA 
+##                       street_frontage_width 
+##                                          NA 
+##                          subdivision_permit 
+##                                          NA 
+##                         surface_of_the_plot 
+##                                          NA 
+##                           surroundings_type 
+##                                        2496 
+##                                    tv_cable 
+##                                          NA 
+##                                     toilets 
+##                                          NA 
+##              width_of_the_lot_on_the_street 
+##                                          NA 
+## yearly_theoretical_total_energy_consumption 
+##                                          NA 
+##                                        city 
+##                                          49 
+##                                       state 
+##                                          42 
+##                                       price 
+##                                           0</code></pre>
+<pre class="r"><code>#posem a 0 els valors nuls de les següents variables:
+PropertyPrices$as_built_plan[is.na(PropertyPrices$as_built_plan)] &lt;- 0
+PropertyPrices$covered_parking_spaces[is.na(PropertyPrices$covered_parking_spaces)] &lt;- 0
+PropertyPrices$office[is.na(PropertyPrices$office)] &lt;- 0
+PropertyPrices$basement[is.na(PropertyPrices$basement)] &lt;- 0
+PropertyPrices$connection_to_sewer_network[is.na(PropertyPrices$connection_to_sewer_network)] &lt;- 0
+PropertyPrices$flood_zone_type[is.na(PropertyPrices$flood_zone_type)] &lt;- 0
+PropertyPrices$outdoor_parking_spaces[is.na(PropertyPrices$outdoor_parking_spaces)] &lt;- 0
+PropertyPrices$double_glazing[is.na(PropertyPrices$double_glazing)] &lt;- 0
+PropertyPrices$furnished[is.na(PropertyPrices$furnished)] &lt;- 0
+PropertyPrices$subdivision_permit[is.na(PropertyPrices$subdivision_permit)] &lt;- 0
+PropertyPrices$garden_surface[is.na(PropertyPrices$garden_surface)] &lt;- 0</code></pre>
+<pre class="r"><code>#posem a 1 les variables dining_room, gas_water__electricity, tv_cable i bedrooms, per la cosideració que casi totes les propietats conten amb aquetes caracteristiques
+PropertyPrices$dining_room[is.na(PropertyPrices$dining_room)] &lt;- 1
+PropertyPrices$gas_water__electricity[is.na(PropertyPrices$gas_water__electricity)] &lt;- 1
+PropertyPrices$tv_cable[is.na(PropertyPrices$tv_cable)] &lt;- 1
+PropertyPrices$bedrooms[is.na(PropertyPrices$bedrooms)] &lt;- 1</code></pre>
+<pre class="r"><code>#Ara omplirem els NA que queden amb els valors de la mitja i mitjana depen de la variable
+#MEAN
+PropertyPrices$living_area &lt;- ifelse(is.na(PropertyPrices$living_area),
+                                       mean(PropertyPrices$living_area, na.rm = TRUE),
+                                       PropertyPrices$living_area)
+
+PropertyPrices$cadastral_income &lt;- ifelse(is.na(PropertyPrices$cadastral_income),
+                                       mean(PropertyPrices$cadastral_income, na.rm = TRUE),
+                                       PropertyPrices$cadastral_income)
+
+PropertyPrices$bedroom_1_surface &lt;- ifelse(is.na(PropertyPrices$bedroom_1_surface),
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$kitchen_surface &lt;- ifelse(is.na(PropertyPrices$kitchen_surface),
+                                       mean(PropertyPrices$kitchen_surface, na.rm = TRUE),
+                                       PropertyPrices$kitchen_surface)
+
+PropertyPrices$yearly_theoretical_total_energy_consumption &lt;- ifelse(is.na(PropertyPrices$yearly_theoretical_total_energy_consumption),
+                                       mean(PropertyPrices$yearly_theoretical_total_energy_consumption, na.rm = TRUE),
+                                       PropertyPrices$yearly_theoretical_total_energy_consumption)
+
+PropertyPrices$living_room_surface &lt;- ifelse(is.na(PropertyPrices$living_room_surface),
+                                       mean(PropertyPrices$living_room_surface, na.rm = TRUE),
+                                       PropertyPrices$living_room_surface)
+
+PropertyPrices$primary_energy_consumption &lt;- ifelse(is.na(PropertyPrices$primary_energy_consumption),
+                                       mean(PropertyPrices$primary_energy_consumption, na.rm = TRUE),
+                                       PropertyPrices$primary_energy_consumption)
+
+PropertyPrices$street_frontage_width &lt;- ifelse(is.na(PropertyPrices$street_frontage_width),
+                                       mean(PropertyPrices$street_frontage_width, na.rm = TRUE),
+                                       PropertyPrices$street_frontage_width)
+
+PropertyPrices$toilets &lt;- ifelse(is.na(PropertyPrices$toilets),
+                                       mean(PropertyPrices$toilets, na.rm = TRUE),
+                                       PropertyPrices$toilets)
+
+PropertyPrices$bathrooms &lt;- ifelse(is.na(PropertyPrices$bathrooms),
+                                       mean(PropertyPrices$bathrooms, na.rm = TRUE),
+                                       PropertyPrices$bathrooms)
+
+PropertyPrices$co2_emission &lt;- ifelse(is.na(PropertyPrices$co2_emission),
+                                       mean(PropertyPrices$co2_emission, na.rm = TRUE),
+                                       PropertyPrices$co2_emission)
+
+PropertyPrices$width_of_the_lot_on_the_street &lt;- ifelse(is.na(PropertyPrices$width_of_the_lot_on_the_street),
+                                       mean(PropertyPrices$width_of_the_lot_on_the_street, na.rm = TRUE),
+                                       PropertyPrices$width_of_the_lot_on_the_street)
+
+PropertyPrices$width_of_the_lot_on_the_street &lt;- ifelse(is.na(PropertyPrices$width_of_the_lot_on_the_street),
+                                       mean(PropertyPrices$width_of_the_lot_on_the_street, na.rm = TRUE),
+                                       PropertyPrices$width_of_the_lot_on_the_street)
+
+PropertyPrices$garden_surface &lt;- ifelse(is.na(PropertyPrices$garden_surface),
+                                       mean(PropertyPrices$garden_surface, na.rm = TRUE),
+                                       PropertyPrices$garden_surface)
+
+PropertyPrices$surface_of_the_plot &lt;- ifelse(is.na(PropertyPrices$surface_of_the_plot),
+                                       mean(PropertyPrices$surface_of_the_plot, na.rm = TRUE),
+                                       PropertyPrices$surface_of_the_plot)
+
+
+#en aquestes tres variables només omplirem el valor si la variable habitacions és més gran o igual que l&#39;habitació que estem mirant
+PropertyPrices$bedroom_1_surface &lt;- ifelse(is.na(PropertyPrices$bedroom_1_surface) &amp; PropertyPrices$bedrooms &gt;= 1,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$bedroom_2_surface &lt;- ifelse(is.na(PropertyPrices$bedroom_1_surface) &amp; PropertyPrices$bedrooms &gt;= 2,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$bedroom_3_surface &lt;- ifelse(is.na(PropertyPrices$bedroom_1_surface) &amp; PropertyPrices$bedrooms &gt;= 3,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+
+
+#aquestes dos últimes variables he considerat que era millor omplirles amb la mitjana i na la mitja
+PropertyPrices$construction_year &lt;- ifelse(is.na(PropertyPrices$construction_year),
+                                       median(PropertyPrices$construction_year, na.rm = TRUE),
+                                       PropertyPrices$construction_year)
+
+PropertyPrices$number_of_frontages &lt;- ifelse(is.na(PropertyPrices$number_of_frontages),
+                                       median(PropertyPrices$number_of_frontages, na.rm = TRUE),
+                                       PropertyPrices$number_of_frontages)
+#comprobació que ja no queden valors nuls
+colSums(is.na(PropertyPrices))</code></pre>
+<pre><code>##                               as_built_plan 
+##                                           0 
+##                                    basement 
+##                                           0 
+##                                   bathrooms 
+##                                           0 
+##                           bedroom_1_surface 
+##                                           0 
+##                           bedroom_2_surface 
+##                                           0 
+##                           bedroom_3_surface 
+##                                           0 
+##                                    bedrooms 
+##                                           0 
+##                          building_condition 
+##                                           0 
+##                                co2_emission 
+##                                           0 
+##                            cadastral_income 
+##                                           0 
+##                 connection_to_sewer_network 
+##                                           0 
+##                           construction_year 
+##                                           0 
+##                      covered_parking_spaces 
+##                                           0 
+##                                 dining_room 
+##                                           0 
+##                              double_glazing 
+##                                           0 
+##                                energy_class 
+##                                           0 
+##                             flood_zone_type 
+##                                           0 
+##                                   furnished 
+##                                           0 
+##                              garden_surface 
+##                                           0 
+##                      gas_water__electricity 
+##                                           0 
+##                                heating_type 
+##                                           0 
+##                             kitchen_surface 
+##                                           0 
+##                                kitchen_type 
+##                                           0 
+##                 latest_land_use_designation 
+##                                           0 
+##                                 living_area 
+##                                           0 
+##                         living_room_surface 
+##                                           0 
+##                         number_of_frontages 
+##                                           0 
+##                                      office 
+##                                           0 
+##                      outdoor_parking_spaces 
+##                                           0 
+##                  primary_energy_consumption 
+##                                           0 
+##                       street_frontage_width 
+##                                           0 
+##                          subdivision_permit 
+##                                           0 
+##                         surface_of_the_plot 
+##                                           0 
+##                           surroundings_type 
+##                                           0 
+##                                    tv_cable 
+##                                           0 
+##                                     toilets 
+##                                           0 
+##              width_of_the_lot_on_the_street 
+##                                           0 
+## yearly_theoretical_total_energy_consumption 
+##                                           0 
+##                                        city 
+##                                           0 
+##                                       state 
+##                                           0 
+##                                       price 
+##                                           0</code></pre>
+<pre class="r"><code>#aqui podem veure els valors que pren la variable Price que va dels 30.000 fins als 2M aproximadament
+barplot(table(PropertyPrices$price), main = &quot;Preus&quot;, xlab = &quot;Preus&quot;, col = &quot;skyblue&quot;)</code></pre>
+<p><img src="data:image/png;base64,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IECAAAECBAgQEID6DRAgQIAAAQIECBAgQIAAAQIECBAgULECAtCKHVodI0CAAAECBAgQIECAAAECBAgQIEBAAOo3QIAAAQIECBAgQIAAAQIECBAgQIBAxQoIQCt2aHWMAAECBAgQIECAAAECBAgQIECAAAEBqN8AAQIECBAgQIAAAQIECBAgQIAAAQIVKyAArdih1TECBAgQIECAAAECBAgQIECAAAECBASgfgMECBAgQIAAAQIECBAgQIAAAQIECFSsgAC0YodWxwgQIECAAAECBAgQIECAAAECBAgQEID6DRAgQIAAAQIECBAgQIAAAQIECBAgULECAtCKHVodI0CAAAECBAgQIECAAAECBAgQIEBAAOo3QIAAAQIECBAgQIAAAQIECBAgQIBAxQoIQCt2aHWMAAECBAgQIECAAAECBAgQIECAAAEBqN8AAQIECBAgQIAAAQIECBAgQIAAAQIVKyAArdih1TECBAgQIECAAAECBAgQIECAAAECBASgfgMECBAgQIAAAQIECBAgQIAAAQIECFSsgAC0YodWxwgQIECAAAECBAgQIECAAAECBAgQEID6DRAgQIAAAQIECBAgQIAAAQIECBAgULECAtCKHVodI0CAAAECBAgQIECAAAECBAgQIEBAAOo3QIAAAQIECBAgQIAAAQIECBAgQIBAxQoIQCt2aHWMAAECBAgQIECAAAECBAgQIECAAAEBqN8AAQIECBAgQIAAAQIECBAgQIAAAQIVKyAArdih1TECBAgQIECAAAECBAgQIECAAAECBASgfgMECBAgQIAAAQIECBAgQIAAAQIECFSsgAC0YodWxwgQIECAAAECBAgQIECAAAECBAgQEID6DRAgQIAAAQIECBAgQIAAAQIECBAgULECAtCKHVodI0CAAAECBAgQIECAAAECBAgQIEBAAOo3QIAAAQIECBAgQIAAAQIECBAgQIBAxQoIQCt2aHWMAAECBAgQIECAAAECBAgQIECAAAEBqN8AAQIECBAgQIAAAQIECBAgQIAAAQIVKyAArdih1TECBAgQIECAAAECBAgQIECAAAECBASgfgMECBAgQIAAAQIECBAgQIAAAQIECFSsgAC0YodWxwgQIECAAAECBAgQIECAAAECBAgQEID6DRAgQIAAAQIECBAgQIAAAQIECBAgULECAtCKHVodI0CAAAECBAgQIECAAAECBAgQIEBAAOo3QIAAAQIECBAgQIAAAQIECBAgQIBAxQoIQCt2aHWMAAECBAgQIECAAAECBAgQIECAAAEBqN8AAQIECBAgQIAAAQIECBAgQIAAAQIVKyAArdih1TECBAgQIECAAAECBAgQIECAAAECBASgfgMECBAgQIAAAQIECBAgQIAAAQIECFSsgAC0YodWxwgQIECAAAECBAgQIECAAAECBAgQEID6DRAgQIAAAQIECBAgQIAAAQIECBAgULECAtCKHVodI0CAAAECBAgQIECAAAECBAgQIEBAAOo3QIAAAQIECBAgQIAAAQIECBAgQIBAxQoIQCt2aHWMAAECBAgQIECAAAECBAgQIECAAAEBqN8AAQIECBAgQIAAAQIECBAgQIAAAQIVK9CpYnumYwQIECBAgAABAkUXeP311+OWW27ZbD0dO3aMbbbZJrbddtvYfvvto1evXjFgwIAYNmxYdOvWbbPfdwMBAgQIECBAgACBLRXoUPO/25Z+2fcIECBAgAABAgSqW2DWrFmx7777bjHCjjvuGN/61rfi+9//fvTr12+Ly/FFAgQIECBAgAABAvkELIHPJ+M8AQIECBAgQIBA0QWWLVsWl19+eQwfPjzmzp1b9PpUQIAAAQIECBAgUH0CAtDqG3M9JkCAAAECBAi0O4G33norvvCFL8Rzzz3X7tqmQQQIECBAgAABAuUtIAAt7/HTegIECBAgQIBAxQi899578YMf/KBi+qMjBAgQIECAAAEC7UPAS5DaxzhoBQECBAgQIECgogSuuOKKGDNmTNanTZs2xfr162Pt2rWRZnrec8898ctf/jI2btzYqM/Tpk2LJ554YqueK9qoUCcIECBAgAABAgSqWkAAWtXDr/MECBAgQIAAgeII7L777vGpT32qycKPOuqomDBhQnz1q1+NZ555ptE9d999twC0kYoTBAgQIECAAAECWyogAN1SOd8jQIAAAQIECBDYYoFPf/rTcfPNN8dnP/vZRmW8/PLLjc41dyLNJJ05c2asWLEiPvnJT8bHPvax5m7Prq1bty7mzZsXixcvzoLaj3/849GxY/t9OlR6WdSrr74aixYtymbO7rrrrtG3b9/o169fdO3adbP9dQMBAgQIECBAoJoF2u+/5VXzqOg7AQIECBAgQKAKBPbbb7/o3r17o542DECvvfbaSIFf3c8tt9wSNTU1ccEFF0Tv3r3jwAMPzJbcDx48OD7/+c9n4WbDglNQ+m//9m8xYsSIrN6RI0fGl770pSw07dGjR3zuc5/Lrje1NL9uWb/97W/rtSW1KwW6zW3pTfd125/2U93NbemZqKl/vXr1ip122in23nvvOProo+PLX/5y1scU9Pbs2TOOO+64eOCBBzKP5spzjQABAgQIECBQrQJmgFbryOs3AQIECBAgQKCNBdasWRMbNmxo1IqGAeTq1auzZ4fWvfHDDz+Mc889N9KzRhtuaTZow2A1zZ488cQT469//WvD27PjVatWZbNI03f/8Ic/xJQpU2LgwIFN3pvanZ5l2prtgw8+aPSd999/P28Rd9xxR3znO9+JlStX5r0nXUgzWadOnZp9TjnllPjFL37RrmeyNtsZFwkQIECAAAECRRIwA7RIsIolQIAAAQIECBBoXuDBBx+MFCY23HbbbbeGpxod//GPf4xJkyY1Op9OpBmggwYNyl17/PHHs9mT+cLP3I3/t5PuS7MtH3744YaXSnKcXgJ12mmnbTb8bNiYyZMnxxlnnNHwtGMCBAgQIECAQNULmAFa9T8BAAQIECBAgACB0gukGZkXXnhhkxXne3lS3ZvT2+LzbWmmZ+2W3kD/7W9/O9IzNBtu6fmZQ4cOjSVLlsTzzz8f6d7aLd0/bty47CVNpX426EknnRRr166tbUr2Ny13P/LII7PnfqbZpI888kikYDfNAK27/fznP4/vfve7Wb/qnrdPgAABAgQIEKhmAQFoNY++vhMgQIAAAQIEiiSQAry0TD1tKVhM+2kp+9KlS7Pg7uKLL4533nmnydpPOOGEJs83dXLHHXfMnouZnic6e/bsbCn4sccem7s1zYp86qmncsdpp0uXLtns0RRw1m4zZsyIVG96yVDt9uyzz8Zdd92Vna89V+y/r7/+erz44ov1qtlrr72yIHabbbapdz4FtynAbRju/sd//Ee2FL7ezQ4IECBAgAABAlUsIACt4sHXdQIECBAgQIBAsQROPvnkSJ/WbukFP8OHD2/R1/r06RNPPvlkDBgwIHd/WhafXgyUtjRTMr1EqOGWztUNP9P19AKkX/3qV3HAAQfUe5nQRRddFClQbRg+NiyzUMezZs1qVFR6yVNT9e++++5x/fXXZ88rTUv20yfZpTfa2wgQIECAAAECBD4SEIB+ZGGPAAECBAgQIECgDQX23XffSC//aemWXhJUN/xM36sNP9N+mhHa8GVF3bp1i4kTJ6bLjbYUgn7xi1+MP//5z7lrL7zwQvzlL3/JzudOFnGnf//+jUr/n//5nxg1alQWKI8ePTrqPiM1zVptzYzZRoU7QYAAAQIECBCoAgEvQaqCQdZFAgQIECBAgEB7F0gvLbr33ntju+22a3FTv/KVrzR77/z58xtdT8/SbK6OYcOGNfpO3WXxjS4W+ESaxdnwDfapivTMz1NPPTVSQJqekfqtb30rfvOb38SKFSsK3ALFESBAgAABAgQqT8AM0MobUz0iQIAAAQIECJSNwB577BHjx4/Pwr3tt9++xe3u0KFDDBkypNn7Gz5LM9389ttvx3HHHZf3e01957XXXst7f0sv1NTUtOjWtNT9G9/4RlxzzTV5708vbEqfm2++OTp37hwHH3xwjB07NjPcdttt837PBQIECBAgQIBAtQoIQKt15PWbAAECBAgQIFBEgYMOOihSuFm7derUKbp27Zq9gKhHjx4xcODASLMx031NPd+y9nv5/u60006xubCvqRmgaUn81KlT8xXb5PmWBKCbCzgbvq29yYr+7+RVV12VvSwqzfDc3LZ+/fp44IEHss9Pf/rT+MlPfhL/9E//tLmvuU6AAAECBAgQqCoBAWhVDbfOEiBAgAABAgRKI5BeMtTcTMutbUUKUTe3LV++fHO3tOh6SwLQ9Kb75ra1a9c2d7netY4dO2YvNkpveL/66qvj/fffr3c938HChQvjn//5n7Ol8WlGqI0AAQIECBAgQOD/CwhA/RIIECBAgAABAgTKTqAly+XTc0UbbnvuuWf84z/+Y8PTzR7/3d/9XbPX08U0E7O5rTUBaConzW790Y9+FOedd15MmzYt7r777vjjH//Y6KVOTdV52mmnxaGHHho77rhjU5edI0CAAAECBAhUnYAAtOqGXIcJECBAgAABAuUvkJbUb26ruwS/9t7evXtnsyprj7fkb3r+aMNt9erVDU/VO3799dfrHbf0IAWh6WVP6ZOW2T/99NPx17/+NdKb4dPb6dMzTRtuy5YtiyeffDILQRtec0yAAAECBAgQqEYBb4GvxlHXZwIECBAgQIBAmQu05Lmh6RmjDbdnn302mnse58yZM+Pll1/OwsaG3609bmr5/YYNGyIFj/m25557Lt+lJs+/++678eijj8bkyZOzFx6lm1LwOnz48DjzzDPjrrvuijfeeCPv80znzp3bZLlOEiBAgAABAgSqUUAAWo2jrs8ECBAgQIAAgTIXaGoWZsMuHXbYYbHddtvVO71ixYq48sor652rPUizKUeNGhWDBw+O7t27xz777BMnn3xyPPbYY7W3ZH979epV77j24MEHH6zdrff3+uuvjwULFtQ719TBxo0b4x/+4R9i5513zj4HHHBA9kb4b37zm03dHulZoemZn7vttluj602da3STEwQIECBAgACBKhEQgFbJQOsmAQIECBAgQKDaBFKQePrppzfq9sUXX5y9ZKjuhQ8//DDSszNrZ4emJe1pGflvf/vbem+zT99JAWlT23e+853s7e2119JzQdP3x48fX3uq2b9pVuuQIUMizf6su6Ul77fddlvdU7n99HzQpUuX5o5rdz7/+c/X7vpLgAABAgQIEKh6gc0/PKnqiQAQIECAAAECBAiUq8DEiRMjzcCsDTZTP1K4edJJJ8W1114b++23XxYg3n///dn5hv1My8132WWXeqd33XXXbCn6nDlz6p1/8803Y+DAgfG5z30um5X5pz/9qdll8fW+/H8HKSxN7U1L6utuaSbq1KlT48ADD8zak2arzpo1K3s5Ut370v7BBx8cu+++e8PTjgkQIECAAAECVSsgAK3aoddxAgQIECBAgEDlC/Tv3z9+9rOfRVPLyNPS9obL2+uKHHTQQfHDH/6w7qncfgoqv/71r+eOa3fSMvY0Y7Pu1qVLl7jwwgvzllX33vTipjvvvDOOP/74RiHofffdF+nT3JaWvqfng9oIECBAgAABAgQ+ErAE/iMLewQIECBAgAABAhUokJa233TTTY2eB9pcVw855JBIs0LTs0Cb2tKMzDSLdHPbTjvtFGkmaAo0W7qNHTs2CzG33377ln4lu+9Tn/pU3HPPPdG3b99Wfc/NBAgQIECAAIFKFxCAVvoI6x8BAgQIECBAgED2LND0JvYUXKZQMt+WlsT/5je/if/+7/+OzQWQt99+e1x33XUxYMCARsWlFxSlFxpNnz49W5Le6IbNnPjKV74SS5Ysicsvv3yzy9nT2+5/+ctfRnrze3pxk40AAQIECBAgQKC+QIea/93qn3JEgAABAgQIECBAoHIF0vM10/MzU8D41ltvZUFnWno+aNCg7Bmere35pk2bYubMmfHyyy/HypUrs8DyM5/5TKTl94XYUvmvvfZaLF68OPu888472TNGU3vTp7lAtxD1K4MAAQIECBAgUO4CAtByH0HtJ0CAAAECBAgQIECAAAECBAgQIEAgr4Al8HlpXCBAgAABAgQIECBAgAABAgQIECBAoNwFBKDlPoLaT4AAAQIECBAgQIAAAQIECBAgQIBAXgEBaF4aFwgQIECAAAECBAgQIECAAAECBAgQKHcBAWi5j6D2EyBAgAABAgQIECBAgAABAgQIECCQV0AAmpfGBQIECBAgQIAAAQIECBAgQIAAAQIEyl1AAFruI6j9BAgQIECAAAECBAgQIECAAAECBAjkFRCA5qVxgQABAgQIECBAgAABAgQIECBAgACBchcQgJb7CGo/AQIECBAgQIAAAQIECBAgQIAAAQJ5BQSgeWlcIECAAAECBAgQIECAAAECBAgQIECg3AUEoOU+gtpPgAABAgQIECBAgAABAgQIECBAgEBeAQFoXhoXCBAgQIAAAQIECBAgQIAAAQIECBAodwEBaLmPoPYTIECAAAECBAgQIECAAAECBAgQIJBXQACal8YFAgQIECBAgAABAgQIECBAgAABAgTKXUAAWu4jqP0ECBAgQIAAAQIECBAgQIAAAQIECOQVEIDmpXGBAAECBAgQIECAAAECBAgQIECAAIFyFxCAlvsIaj8BAgQIECBAgAABAgQIECBAgAABAnkFBKB5aVwgQIAAAQIECBAgQIAAAQIECBAgQKDcBQSg5T6C2k+AAAECBAgQIECAAAECBAgQIECAQF4BAWheGhcIECBAgAABAgQIECBAgAABAgQIECh3AQFouY+g9hMgQIAAAQIECBAgQIAAAQIECBAgkFdAAJqXxgUCBAgQIECAAAECBAgQIECAAAECBMpdQABa7iOo/QQIECBAgAABAgQIECBAgAABAgQI5BUQgOalcYEAAQIECBAgQIAAAQIECBAgQIAAgXIXEICW+whqPwECBAgQIECAAAECBAgQIECAAAECeQUEoHlpXCBAgAABAgQIECBAgAABAgQIECBAoNwFBKDlPoLaT4AAAQIECBAgQIAAAQIECBAgQIBAXgEBaF4aFwgQIECAAAECBAgQIECAAAECBAgQKHcBAWi5j6D2EyBAgAABAgQIECBAgAABAgQIECCQV0AAmpfGBQIECBAgQIAAAQIECBAgQIAAAQIEyl1AAFruI6j9BAgQIECAAAECBAgQIECAAAECBAjkFRCA5qVxgQABAgQIECBAgAABAgQIECBAgACBchcQgJb7CGo/AQIECBAgQIAAAQIECBAgQIAAAQJ5BQSgeWlcIECAAAECBAgQIECAAAECBAgQIECg3AUEoOU+gtpPgAABAgQIECBAgAABAgQIECBAgEBeAQFoXhoXCBAgQIAAAQIECBAgQIAAAQIECBAodwEBaLmPoPYTIECAAAECBAgQIECAAAECBAgQIJBXQACal8YFAgQIECBAgAABAgQIECBAgAABAgTKXUAAWu4jqP0ECBAgQIAAAQIECBAgQIAAAQIECOQVEIDmpXGBAAECBAgQIECAAAECBAgQIECAAIFyFxCAlvsIaj8BAgQIECBAgAABAgQIECBAgAABAnkFBKB5aVwgQIAAAQIECBAgQIAAAQIECBAgQKDcBQSg5T6C2k+AAAECBAgQIECAAAECBAgQIECAQF4BAWheGhcIECBAgAABAgQIECBAgAABAgQIECh3AQFouY+g9hMgQIAAAQIECBAgQIAAAQIECBAgkFdAAJqXxgUCBAgQIECAAAECBAgQIECAAAECBMpdQABa7iOo/QQIECBAgAABAgQIECBAgAABAgQI5BUQgOalcYEAAQIECBAgQIAAAQIECBAgQIAAgXIXEICW+whqPwECBAgQIECAAAECBAgQIECAAAECeQUEoHlpXCBAgAABAgQIECBAgAABAgQIECBAoNwFBKDlPoLaT4AAAQIECBAgQIAAAQIECBAgQIBAXgEBaF4aFwgQIECAAAECBAgQIECAAAECBAgQKHcBAWi5j6D2EyBAgAABAgQIECBAgAABAgQIECCQV0AAmpfGBQIECBAgQIAAAQIECBAgQIAAAQIEyl1AAFruI6j9BAgQIECAAAECBAgQIECAAAECBAjkFRCA5qVxgQABAgQIECBAgAABAgQIECBAgACBchcQgJb7CGo/AQIECBAgQIAAAQIECBAgQIAAAQJ5BQSgeWlcIECAAAECBAgQIECAAAECBAgQIECg3AUEoOU+gtpPgAABAgQIECBAgAABAgQIECBAgEBeAQFoXhoXCBAgQIAAAQIECBAgQIAAAQIECBAodwEBaLmPoPYTIECAAAECBAgQIECAAAECBAgQIJBXQACal8YFAgQIECBAgAABAgQIECBAgAABAgTKXaBTuXdA+wkQIECAQDkLvPzyy3HDDTdETU1NnHbaaTFkyJBy7o62EyBAgAABAgQIECBAoN0JCEDb3ZBoEAECBAhUk8DVV18d1157bdbld999NyZPnlxN3ddXAgQIECBAgAABAgQIFF3AEviiE6uAAAECBAjkF1i/fn3u4rp163L7dggQIECAAAECBAgQIECgMAIC0MI4KoUAAQIECBAgQIAAAQIECBAgQIAAgXYoIABth4OiSQQIECBAgAABAgQIECBAgAABAgQIFEZAAFoYR6UQIECAAAECBAgQIECAAAECBAgQINAOBQSg7XBQNIkAAQIECBAgQIAAAQIECBAgQIAAgcIICEAL46gUAgQIECBAgAABAgQIECBAgAABAgTaoYAAtB0OiiYRIECAAAECBAgQIECAAAECBAgQIFAYAQFoYRyVQoAAAQIECBAgQIAAAQIECBAgQIBAOxQQgLbDQdEkAgQIECBAgAABAgQIECBAgAABAgQKIyAALYyjUggQIECAAAECBAgQIECAAAECBAgQaIcCAtB2OCiaRIAAAQIECBAgQIAAAQIECBAgQIBAYQQEoIVxVAoBAgQIECBAgAABAgQIECBAgAABAu1QQADaDgdFkwgQIECAAAECBAgQIECAAAECBAgQKIyAALQwjkohQIAAAQIECBAgQIAAAQIECBAgQKAdCghA2+GgaBIBAgQIECBAgAABAgQIECBAgAABAoUREIAWxlEpBAgQIECAAAECBAgQIECAAAECBAi0QwEBaDscFE0iQIAAAQIECBAgQIAAAQIECBAgQKAwAgLQwjgqhQABAgQIECBAgAABAgQIECBAgACBdiggAG2Hg6JJBAgQIECAAAECBAgQIECAAAECBAgURkAAWhhHpRAgQIAAAQIECBAgQIAAAQIECBAg0A4FBKDtcFA0iQABAgQIECBAgAABAgQIECBAgACBwggIQAvjqBQCBAgQIECAAAECBAgQIECAAAECBNqhgAC0HQ6KJhEgQIAAAQIESiHwzjvvxIEHHhhDhgyJcePGlaJKdRAgQIAAAQIECBAouYAAtOTkKiRAgAABAgQItA+B2bNnx/Tp0+OFF16IX/7yl+2jUVpBgAABAgQIECBAoMACAtACgyqOAAECBAgQIFAuAjU1Nbmm1t3PnbRDgAABAgQIECBAoAIEBKAVMIi6QIAAAQIECBAgQIAAAQIECBAgQIBA0wIC0KZdnCVAgAABAgQIECBAgAABAgQIECBAoAIEBKAVMIi6QIAAAQIECBAgQIAAAQIECBAgQIBA0wIC0KZdnCVAgAABAgQIECBAgAABAgQIECBAoAIEBKAVMIi6QIAAAQIECBAgQIAAAQIECBAgQIBA0wKdmj7tbKkEli5dGu+9916sXr06+3Tt2jV69uwZPXr0iN69e0c6thEgQIAAAQIECBAgQIAAAQIECBAgsGUCAtAtc9vib61cuTJuu+22mDJlSsybNy/Scb6tU6dOMXTo0Nh///3jyCOPjDFjxkSHDh3y3e48AQIECBAgQIAAAQIECBAgQIAAAQINBCyBbwBSrMM333wzxo0bF/37948zzzwzZsyY0Wz4mdqxYcOGmD17dtx4441ZADps2LC47777itVE5RIgQIAAAQIECBAgQIAAAQIECBCoOAEzQEswpO+//34cdthhMXfu3FxtaSZnv379YuDAgdGnT5/o1q1bdOnSJQs916xZEytWrIjFixfHokWLYu3atdn30ozRo48+OiZNmhTjx4/PlWWHAAECBAgQIECAAAECBAgQIECAAIGmBQSgTbsU7OyqVaviiCOOyIWf++67b5x11llx6KGHZsHn5ipav359PP7449my+cmTJ0c6njBhQuy5557ZkvjNfd91AgQIECBAgAABAgQIECBAgAABAtUsYAl8kUd/6tSp2XL3VM3xxx8fM2fOzP6mWZ8t2Tp37hwHHHBA3HTTTXH33XdHOk7beeedF5s2bWpJEe4hQIAAAQIECBAgQIAAAQIECBAgULUCAtAiD/2jjz6a1ZCe35leftSx45aTp5cgXXHFFVl5aTn9woULi9x6xRMgQIAAAQIECBAgQIAAAQIECBAob4EtT+PKu98la/306dOzuo466qjc7M2tqXzs2LG5r7/44ou5fTsECBAgQIAAAQIECBAgQIAAAQIECDQWEIA2NinomSVLlmTlDRgwoCDl9u7dOxekfvjhhwUpUyEECBAgQIAAAQIECBAgQIAAAQIEKlVAAFrkkR08eHBWw4wZMwpSU1pSn16ElLYRI0YUpEyFECBAgAABAgQIECBAgAABAgQIEKhUAQFokUd25MiRWQ133XVXPPzww1tV27Jly+Lss8/OyujVq1fsscceW1WeLxMgQIAAAQIECBAgQIAAAQIECBCodAEBaJFH+Pzzz8+WrK9ZsyaOOeaY7G3u69ata3Wtc+bMicMPPzzS37SdccYZrS7DFwgQIECAAAECBAgQIECAAAECBAhUm0CnautwqfublsBfdtllcc4558Ty5cuz4DLtjxo1KoYPH57N4tx1112jW7du0bVr19iwYUOksHTFihWxePHiWLBgQTzyyCMxb968XNNTEHrxxRfnju0QIECAAAECBAgQIECAAAECBAgQINC0gAC0aZeCnp04cWKklxeNGzcu0ouLVq5cGdOmTcs+ra1o9OjRMWXKlOjY0eTd1tq5nwABAgQIECBAgAABAgQIECBAoPoEpGglGvNTTjklFi1aFBdccEH07du3VbV26dIlWz5/7733xv333x/p+Z82AgQIECBAgAABAgQIECBAgAABAgQ2L2AG6OaNCnZHnz594tJLL80+r7zySsycOTPmz5+fLXdPy+PTzNDOnTtH9+7do0ePHpGWz++1116x9957Z+cK1pBWFrRx48Z49dVXo6amppXfbPr21atXx9///d83fdFZAgQIECBAgAABAgQIECBAgAABAgUUEIAWELM1RQ0aNCjSpxy2b37zmzF58uSCNvWHP/yh55gWVFRhBAgQIECAAAECBAgQIECAAAECTQkIQJtSca6eQHpZ08c//vHYtGlTvfNbcvDOO+9kM17Ti55sBAgQIECAAAECBAgQIECAAAECBIotIAAtsvATTzwRL730UvYSpMMOO6zItRWn+O9973uRPoXYJkyYEFdffXX079+/EMUpgwABAgQIECBAgAABAgQIECBAgECzAl6C1CzP1l+8+eab44QTTojDDz88Tj/99Fi3bt3WF6oEAgQIECBAgAABAgQIECBAgAABAgRaJCAAbRFTYW76+c9/Hl/4whdi6dKlhSlQKQQIECBAgAABAgQIECBAgAABAgQINCsgAG2Wp/AXZ8yYkb3Z/frrry/IMzUL30IlEiBAgAABAgQIECBAgAABAgQIEKgcAQFoCcfyq1/9albb8uXLY9y4cfH5z38+5syZU8IWqIoAAQIECBAgQIAAAQIECBAgQIBAdQkIQEs43pMmTYo777wzunfvntX62GOPxciRIyMFo88++2wJW6IqAgQIECBAgAABAgQIECBAgAABAtUhIAAt8Tgfd9xxMWvWrDj44IOzmjdt2hS/+tWvYujQoTF27Nh46qmnStwi1REgQIAAAQIECBAgQIAAAQIECBCoXAEBaBuM7Sc/+cl4+OGH44477oh+/fplLaipqYnf/e532YzQ4cOHx09+8pN49dVX26B1qiRAgAABAgQIECBAgAABAgQIECBQOQIC0DYcyxNPPDFeeOGFuOiii2LnnXfOteTpp5+OH/zgBzFo0KA48MAD4+yzz47JkyfHE088EatWrcrdZ4cAAQIECBAgQIAAAQIECBAgQIAAgeYFBKDN+xT96g477BA/+tGPYtGiRXHttdfGHnvskaszzQqdPn16XHnllfGNb3wj9ttvv0j3Dx48OI455pjcfXYIECBAgAABAgQIECBAgAABAgQIEGhaQADatEvJz2633XZx5plnxoIFC7Ll8d/97nejf//+jdqRQtGXX345fv/73ze65gQBAgQIECBAgAABAgQIECBAgAABAvUFBKD1Pdr8qGPHjtkLkq655ppYvHhxpDfFpxmgxx57bAwcOLDN26cBBAgQIECAAAECBAgQIECAAAECBMpJoFM5Nbba2tqhQ4ds2Xta+l67rV69Ot544414/fXXa0/5S4AAAQIECBAgQIAAAQIECBAgQIBAHgEBaB6Y9no6LZX/2Mc+ln3aaxu1iwABAgQIECBAgAABAgQIECBAgEB7EbAEvr2MhHYQIECAAAECBAgQIECAAAECBAgQIFBwATNAC05av8AvfelLMWjQoOxkeoO7jQABAgQIECBAgAABAgQIECBAgACB0gkIQItsfcQRR0T62AgQIECAAAECBAgQIECAAAECBAgQKL2AJfClN1cjAQIECBAgQIAAAQIECBAgQIAAAQIlEhCAlghaNQQIECBAgAABAgQIECBAgAABAgQIlF5AAFp6czUSIECAAAECBAgQIECAAAECBAgQIFAiAQFoiaBVQ4AAAQIECBAgQIAAAQIECBAgQIBA6QUEoKU3VyMBAgQIECBAgAABAgQIECBAgAABAiUSEICWCFo1BAgQIECAAAECBAgQIECAAAECBAiUXkAAWnpzNRIgQIAAAQIECBAgQIAAAQIECBAgUCIBAWiJoFVDgAABAgQIECBAgAABAgQIECBAgEDpBQSgpTdXIwECBAgQIECAAAECBAgQIECAAAECJRIQgJYIWjUECBAgQIAAAQIECBAgQIAAAQIECJReQABaenM1EiBAgAABAgQIECBAgAABAgQIECBQIgEBaImgVUOAAAECBAgQIECAAAECBAgQIECAQOkFBKClN1cjAQIECBAgQIAAAQIECBAgQIAAAQIlEhCAlghaNQQIECBAgAABAgQIECBAgAABAgQIlF5AAFp6czUSIECAAAECBAgQIECAAAECBAgQIFAiAQFoiaBVQ4AAAQIECBAgQIAAAQIECBAgQIBA6QUEoKU3VyMBAgQIECBAgAABAgQIECBAgAABAiUSEICWCFo1BAgQIECAAAECBAgQIECAAAECBAiUXkAAWnpzNRIgQIAAAQIECBAgQIAAAQIECBAgUCIBAWiJoFVDgAABAgQIECBAgAABAgQIECBAgEDpBQSgpTdXIwECBAgQIECAAAECBAgQIECAAAECJRIQgJYIWjUECBAgQIAAAQIECBAgQIAAAQIECJReQABaenM1EiBAgAABAgQIECBAgAABAgQIECBQIgEBaImgVUOAAAECBAgQIECAAAECBAgQIECAQOkFBKClN1cjAQIECBAgQIAAAQIECBAgQIAAAQIlEhCAlghaNQQIECBAgAABAgQIECBAgAABAgQIlF5AAFp6czUSIECAAAECBAgQIECAAAECBAgQIFAiAQFoiaBVQ4AAAQIECBAgQIAAAQIECBAgQIBA6QUEoKU3VyMBAgQI/J/Az372szjiiCPixBNPjPfee48LAQIECBAgQIAAAQIECBAouECngpeoQAIECBAg0EKByy67LJYuXZrdPXbs2PjKV77Swm+6jQABAgQIECBAgAABAgQItEzADNCWObmLAAECBIogsHHjxlypmzZtyu3bIUCAAAECBAgQIECAAAEChRIQgBZKUjkECBAgQIAAAQIECBAgQIAAAQIECLQ7AQFouxsSDSJAgAABAgQIECBAgAABAgQIECBAoFACAtBCSSqHAAECBAgQIECAAAECBAgQIECAAIF2JyAAbXdDokEECBAgQIAAAQIECBAgQIAAAQIECBRKQABaKEnlECBAgAABAgQIECBAgAABAgQIECDQ7gQEoO1uSDSIAAECBAgQuPrqq2PkyJFx0EEHxfz584EQIECAAAECBAgQIEBgiwU6bfE3fZEAAQIECBAgUCSBW2+9NebOnZuV/sADD8QnPvGJItWkWAIECBAgQIAAAQIEKl3ADNBKH2H9I0CAAAECZShQU1OTa3Xd/dxJOwQIECBAgAABAgQIEGihgAC0hVBuI0CAAAECBAgQIECAAAECBAgQIECg/AQEoOU3ZlpMgAABAgQIECBAgAABAgQIECBAgEALBQSgLYRyGwECBAgQIECAAAECBAgQIECAAAEC5ScgAC2/MdNiAgQIECBAgAABAgQIECBAgAABAgRaKCAAbSGU2wgQIECAAAECBAgQIECAAAECBAgQKD+BTuXX5Mpq8dKlS+O9996L1atXZ5+uXbtGz549o0ePHtG7d+9IxzYCBAgQIECAQGsEJk+eHBdeeGF07Ngxrr/++jjyyCNb83X3EiBAgAABAgQIEKgoAQFoiYdz5cqVcdttt8WUKVNi3rx5kY7zbZ06dYqhQ4fG/vvvn/2Hy5gxY6JDhw75bneeAAECBAgQIJAJ3H///fHaa69l+3/+858FoH4XBAgQIECAAAECVS1gCXyJhv/NN9+McePGRf/+/ePMM8+MGTNmNBt+pmZt2LAhZs+eHTfeeGP2Hy7Dhg2L++67r0QtVg0BAgQIECBQCQI1NTWV0A19IECAAAECBAgQILDFAmaAbjFdy7/4/vvvx2GHHRZz587NfSnN5OzXr18MHDgw+vTpE926dYsuXbpkoeeaNWtixYoVsXjx4li0aFGsXbs2+16aMXr00UfHpEmTYvz48bmy7BAgQIAAAQIECBAgQIAAAQIECBAg0LSAALRpl4KdXbVqVRxxxBG58HPfffeNs846Kw499NAs+NxcRevXr4/HH388WzafnueVjidMmBB77rlnpCXxNgIECBAgQIAAAQIECBAgQIAAAQIE8gtYAp/fpiBXpk6dmi13T4Udf/zxMXPmzOxvmvXZkq1z585xwAEHxE033RR33313pOO0nXfeebFp06aWFOEeAgQIECBAgAABAgQIECBAgAABAlUrIAAt8tA/+uijWQ3p+Z3p5UfpbaxbuqUZn1dccUX29bScfuHChVtalO8RIECAAAECBAgQIECAAAECBAgQqAqBLU/jqoJn6zs5ffr0rJCjjjoqN3tza0odO3Zs7usvvvhibt8OAQIECBAgQIAAAQIECBAgQIAAAQKNBQSgjU0KembJkiVZeQMGDChIub17984FqR9++GFBylQIAQIECBAgQIAAAQIECBAgQIAAgUoVEIAWeWQHDx6c1TBjxoyC1JSW1KcXIaVtxIgRBSlTIQQIECBAgAABAgQIECBAgAABAgQqVUAAWuSRHTlyZFbDXXfdFQ8//PBW1bZs2bI4++yzszJ69eoVe+yxx1aV58sECBAgQIAAAQIECBAgQIAAAQIEKl1AAFrkET7//POzJetr1qyJY445Jnub+7p161pd65w5c+Lwww+P9DdtZ5xxRqvL8AUCBAgQIECAAAECBAgQIECAAAEC1SbQqdo6XOr+piXwl112WZxzzjmxfPnyLLhM+6NGjYrhw4dnszh33XXX6NatW3Tt2jU2bNgQKSxdsWJFLF68OBYsWBCPPPJIzJs3L9f0FIRefPHFuWM7BAgQIECAAAECBAgQIECAAAECBAg0LSAAbdqloGcnTpwY6eVF48aNi/TiopUrV8a0adOyT2srGj16dEyZMiU6djR5t7V27idAgAABAgQIECBAgAABAgQIEKg+ASlaicb8lFNOiUWLFsUFF1wQffv2bVWtXbp0yZbP33vvvXH//fdHev6njQABAgQIECBAgAABAgQIECBAgACBzQuYAbp5o4Ld0adPn7j00kuzzyuvvBIzZ86M+fPnZ8vd0/L4NDO0c+fO0b179+jRo0ek5fN77bVX7L333tm5gjWklQXV1NTE22+/HZs2bWrlNxvfvmrVqsYnnSFAIBOo/d/atttuGzvuuCMVAgQIECBAgAABAgQIECBAoAACAtACIG5JEYMGDYr0KYctvXDp5ptvLmhT//a3vxW0PIURqASB008/PX7xi19kXbn77ruzmd+V0C99IECAAAECBAgQIECAAAECbSkgAG1L/TKpO81E7devX6TZaVu7pZc7rV69OrbffvutLcr3CVScQN3/YyDtH3PMMRXXRx0iQIAAAQIECBAgQIAAAQKlFhCAllq8BfVt3LgxXnrppewN8DvttFP2pvjWPje0BdW0+JZzzz030qcQ24QJE+Lqq6+OgQMHFqI4ZRAgQIAAAQIECBAgQIAAAQIECBBoVkAA2ixPYS8++OCDkZa1phmQtctc69Ywd+7cGD9+fEyfPj3Wrl1b91Lst99+cdppp8Wpp57qDfD1ZBwQIECAAAECBAgQIECAAAECBAgQyC/gLfD5bQp2Zc2aNZGe7XfooYfGtddeG7NmzWpU9oUXXhif+cxnIoWkDcPPdPPjjz+elTFq1KhYsmRJo+87QYAAAQIECBAgQIAAAQIECBAgQIBAYwEzQBubFPzMiSeeGL/73e9y5abnYNbd0mzQSy65JHdq5513juHDh8fHP/7xeP/997M3xc+ZMyd7C/tf//rXOOKII+LRRx/1HM2cmB0CBAgQIECAAAECBAgQIECAAAECTQuYAdq0S8HOPvDAA7nwc7fddovbb7890lL32m3BggXZsvd0vM0228QPf/jDWLRoUfz5z3+OG264Ie6888548skns8+BBx6Yfe2ZZ56JH//4x7VF+EuAAAECBAgQIECAAAECBAgQIECAQB4BAWgemEKdvv7667Oitttuu0hh6EknnVRv5uavf/3rWLVqVXZPWgZ/8cUXR7q34ZZmhKZQNP1N2y233JI9S7ThfY4JECBAgAABAgQIECBAgAABAgQIEPhIQAD6kUVR9p5//vms3PQCoyFDhjSqI83uTFta9p5mfza3de3aNa655prslmXLlkWaCWojQIAAAQIECBAgQIAAAQIECBAgQCC/gAA0v01BrqTl7GkbMWJEk+UtXLgwOz9y5MhsCXyTN9U5md4G37lz5+xMbdl1LtslQIAAAQIECBAgQIAAAQIECBAgQKCOgAC0DkYxdtOLjNJW97mfdevZZ5996h5udv+dd96J9evXZ/ftsssum73fDQQIECBAgAABAgQIECBAgAABAgSqWUAAWuTRrw04/+u//qvJmg4++ODs/FNPPRUbN25s8p66J6dNm5YddujQIT7zmc/UvWSfAAECBAgQIECAAAECBAgQIECAAIEGAgLQBiCFPkxL1tOWlrr/9Kc/bVT8oYceGj179oy33347/v3f/73R9bonXn311bjqqquyU2lmafqejQABAgQIECBAgAABAgQIECBAgACB/AIC0Pw2Bbly8sknx7777puVde6558aZZ54Z7777bq7svn37RprV2a1bt7joooviyiuvbHIm6GOPPRYpTH3hhRey7/7gBz/IlWGHAAECBAgQIECAAAECBAgQIECAAIGmBQSgTbsU7GyXLl3it7/9bfaW91Toz372sxg8eHB87Wtfi8mTJ8fs2bNj4MCB2X5NTU2cffbZ8elPfzpOPfXUuOSSS+Kkk07K7v/sZz8bb775ZtauFKqm6zYCBAgQIECAAAECBAgQIECAAAECBJoX6NT8ZVcLITBgwIBslmcKPefPnx/Lly+PO+64I/s0VX6a5Vk707Ph9fTM0Ouvv77haccECBAgQIAAAQIECBAgQIAAAQIECDQhYAZoEyjFOLX//vtnb4KfNGlS7L333q2u4lOf+lTccMMN8dBDD8V2223X6u/7AgECBAgQIECAAAECBAgQIECAAIFqFDADtISjnpbDn3XWWdnnxRdfjCeffDLmzZsXL7/8cqxYsSI++OCDWLduXWy//faxww47xO677x5Dhw6NFJ5uSWhawq6pigABAgQIECBAgAABAgQIECBAgEC7FBCAttGw7LnnnpE+NgIECBAgQIAAAQIECBAgQIAAAQIEiidgCXzxbJVMgAABAgQIECBAgAABAgQIECBAgEAbCwhA23gAVE+AAAECBAgQIECAAAECBAgQIECAQPEEBKDFs1UyAQIECBAgQIAAAQIECBAgQIAAAQJtLCAAbeMBUD0BAgQIECBAgAABAgQIECBAgAABAsUTEIAWz1bJBAgQIECAAAECBAgQIECAAAECBAi0sYAAtI0HQPUECBAgQIAAAQIECBAgQIAAAQIECBRPQABaPFslEyBAgAABAgQIECBAgAABAgQIECDQxgIC0DYeANUTIECAAAECBAgQIECAAAECBAgQIFA8AQFo8WyVTIAAAQIECBAgQIAAAQIECBAgQIBAGwsIQNt4AFRPgAABAgQIECBAgAABAgQIECBAgEDxBASgxbNVMgECBAgQIECAAAECBAgQIECAAAECbSwgAG3jAVA9AQIECBAgQIAAAQIECBAgQIAAAQLFExCAFs9WyQQIECBAgAABAgQIECBAgAABAgQItLGAALSNB0D1BAgQIECAAAECBAgQIECAAAECBAgUT0AAWjxbJRMgQIAAAQIECBAgQIAAAQIECBAg0MYCAtA2HgDVEyBAgAABAgQIECBAgAABAgQIECBQPAEBaPFslUyAAAECBAgQIECAAAECBAgQIECAQBsLCEDbeABUT4AAAQIECBAgQIAAAQIECBAgQIBA8QQEoMWzVTIBAgQIECBAgAABAgQIECBAgAABAm0sIABt4wFQPQECBAgQIECAAAECBAgQIECAAAECxRMQgBbPVskECBAgQIAAAQIECBAgQIAAAQIECLSxgAC0jQdA9QQIECBAgAABAgQIECBAgAABAgQIFE9AAFo8WyUTIECAAAECBAgQIECAAAECBAgQINDGAgLQNh4A1RMgQIAAAQIECBAgQIAAAQIECBAgUDwBAWjxbJVMgAABAgQIECBAgAABAgQIECBAgEAbCwhA23gAVE+AAAECBAgQIECAAAECBAgQIECAQPEEBKDFs1UyAQIECBAgQIAAAQIECBAgQIAAAQJtLCAAbeMBUD0BAgQIECBAgAABAgQIECBAgAABAsUTEIAWz1bJBAgQIECAAAECBKpWYMqUKXHsscfGqaeeGu+8807VOug4AQIECBAg0PYCndq+CVpAgAABAgQIECBAgEClCVx00UUxf/78rFuHHHJInHTSSZXWRf0hQIAAAQIEykTADNAyGSjNJECAAAECBAgQIFBOAhs3bsw1t+5+7qQdAgQIECBAgECJBASgJYJWDQECBAgQIECAAAECBAgQIECAAAECpRcQgJbeXI0ECBAgQIAAAQIECBAgQIAAAQIECJRIQABaImjVECBAgAABAgQIECBAgAABAgQIECBQegEBaOnN1UiAAAECBAgQIECAAAECBAgQIECAQIkEBKAlglYNAQIECBAgQIAAAQIECBAgQIAAAQKlFxCAlt5cjQQIECBAgAABAgQIECBAgAABAgQIlEhAAFoiaNUQIECAAAECBAgQIECAAAECBAgQIFB6AQFo6c3VSIAAAQIECBAgQIAAAQIECBAgQIBAiQQEoCWCVg0BAgQIECBAgAABAgQIECBAgAABAqUXEICW3lyNBAgQIECAAAECBAgQIECAAAECBAiUSEAAWiJo1RAgQIAAAQIECBAgQIAAAQIECBAgUHoBAWjpzdVIgAABAgQIECBAgAABAgQIECBAgECJBASgJYJWDQECBAgQIECAAAECBAgQIECAAAECpRfoVPoq1VhXYOnSpfHee+/F6tWrs0/Xrl2jZ8+e0aNHj+jdu3ekYxsBAgQIECDQvgXeeOONOOaYY+Ldd9+N0aNHx3XXXde+G6x18f3vfz/uu+++6NWrV9x9992x2267USFAgAABAgQIEKhQAQFoiQd25cqVcdttt8WUKVNi3rx5kY7zbZ06dYqhQ4fG/vvvH0ceeWSMGTMmOnTokO925wkQIECAAIE2Enjqqafi8ccfz2q//fbbBaBtNA6tqfaOO+7I/k/ol156KWbNmhVHH310a77uXgIECBAgQIAAgTISsAS+RIP15ptvxrhx46J///5x5plnxowZM5oNP1OzNmzYELNnz44bb7wxC0CHDRuWzVQoUZNVQ4AAAQIECBCoWIGampqK7ZuOESBAgAABAgQI1BcwA7S+R1GO3n///TjssMNi7ty5ufLTTM5+/frFwIEDo0+fPtGtW7fo0qVLFnquWbMmVqxYEYsXL45FixbF2rVrs++lGaNpdsKkSZNi/PjxubLsECBAgAABAgQItE7AqprWebmbAAECBAgQIFDOAgLQIo/eqlWr4ogjjsiFn/vuu2+cddZZceihh2bB5+aqX79+fbakLi2bnzx5cqTjCRMmxJ577pktid/c910nQIAAAQIECBAgQIAAAQIECBAgUM0ClsAXefSnTp2aLXdP1Rx//PExc+bM7G+a9dmSrXPnznHAAQfETTfdlD2gPx2n7bzzzotNmza1pAj3ECBAgAABAgQIECBAgAABAgQIEKhaAQFokYf+0UcfzWpIz+9Mszg7dtxy8vQSpCuuuCIrLy2nX7hwYZFbr3gCBAgQIECAAAECBAgQIECAAAEC5S2w5Wlcefe7ZK2fPn16VtdRRx0VtbM3t6bysWPH5r7+4osv5vbtECBAgAABAgQIECBAgAABAgQIECCSub4QAABAAElEQVTQWEAA2tikoGeWLFmSlTdgwICClNu7d+9ckPrhhx8WpEyFECBAgAABAgTag8DNN98cPXv2jB133DHuvPPO9tCkdteGr33ta9G9e/fYfffdY8GCBe2ufRpEgAABAgQIEGiPAgLQIo/K4MGDsxpmzJhRkJrSkvr0IqS0jRgxoiBlKoQAAQIECBAg0B4EHnrooVixYkUsX748HnnkkfbQpHbXhj/96U+RXrL52muvxdNPP93u2qdBBAgQIECAAIH2KCAALfKojBw5Mqvhrrvuiocffniralu2bFmcffbZWRm9evWKPfbYY6vK82UCBAgQIECAAAECBAgQIECAAAEClS4gAC3yCJ9//vnZkvU1a9bEMccck73Nfd26da2udc6cOXH44YdH+pu2M844o9Vl+AIBAgQIECBAgAABAgQIECBAgACBahPoVG0dLnV/0xL4yy67LM4555xsOVcKLtP+qFGjYvjw4dkszl133TW6desWXbt2jQ0bNkQKS9Pyr8WLF2fPdkpLwObNm5dregpCL7744tyxHQIECBAgQIAAAQIECBAgQIAAAQIEmhYQgDbtUtCzEydOjPTyonHjxkV6cdHKlStj2rRp2ae1FY0ePTqmTJkSHTuavNtaO/cTIECAAAECBAgQIECAAAECBAhUn4AUrURjfsopp8SiRYviggsuiL59+7aq1i5dumTL5++99964//77Iz3/00aAAAECBAgQIECAAAECBAgQIECAwOYFzADdvFHB7ujTp09ceuml2eeVV16JmTNnxvz583NvO00zQzt37hzdu3ePHj16RFo+v9dee8Xee++dnStYQ7agoA8++CBqamq24Jv1v7Ilzz+tX4IjAgQIECBAgAABAgQIECBAgAABAi0XEIC23Kqgdw4aNCjSpxy2733ve3HttdcWtKkvvPBCQctTGAECBAgQIECAAAECBAgQIECAAIGmBASgTak4V09g5513jp49e8amTZvqnd+Sg/SCp/Xr10da1m8jQIAAAQIECBAgQIAAAQIECBAgUGwBAWixhVtZ/qpVq+LZZ5+NuXPnxrvvvhuf+MQnYsiQIbHnnnvGNtts08rSCnP7j370o0ifQmwTJkyIq6++umxmvxaiz8ogQIAAAQIECBAgQIAAAQIECBBoOwEBaJHtH3zwwXjmmWeyWk4//fTYbrvtmqwxPRvzsssuyz5phmTD7ZOf/GRcfvnl2cuQGl5zTIAAAQIECBAgQIAAAQIECBAgQIBA0wIC0KZdCnb217/+ddx4441Zeccff3yTAWh6O/yRRx4Z8+bNy1tvembml770pRgzZkzcc8890amTocuL5QIBAgQIECBAgAABAgQIECBAgACB/xOQorXxTyG9Wf3rX/96vfBzxIgR2ZvfBw4cGCkcfe655+KJJ57IWvqHP/whzjrrrLjmmmvauOWqJ0CAAAECBAgQIECAAAECBAgQIND+BQSgbTxG1113XTz00ENZK/r27RvXX399fPnLX27Uqr/85S8xbty4+Nvf/pa9kX3kyJFx8sknN7rPCQIECBAgQIAAAQIECBAgQIAAAQIEPhLo+NGuvbYQuP3227NqO3ToEFOnTm0y/Ew3HHLIIVlQmkLStF155ZXZX/8gQIAAAQIECBAonEB6IeWLL74Yb7/9duEKVRIBAgQIECBAgECbCghA25B/48aN2dveUxOOPfbYOOigg5ptzS677JK9QT3dlJbFf/jhh83e7yIBAgQIECBAgEDrBPbee+9IL5/s379/vPTSS637srsJECBAgAABAgTapYAAtA2H5ZVXXok1a9ZkLdhvv/1a1JI0EzRtGzZsiDlz5rToO24iQIAAAQIECBBomcDLL7+c3bh+/fp47bXXWvYldxEgQIAAAQIECLRrAQFoGw7PrrvuGmnpe9rS7M6WbH369ImuXbtmt6YXJNkIECBAgAABAgQKJ1D772aFK1FJBAgQIECAAAECbS0gAG3DEejevXukN72nbcaMGS1qSd1Zo4MHD27Rd9xEgAABAgQIECBAgAABAgQIECBAoFoFBKAlHPmnn346t+S9ttpvfvOb2e6DDz4YNTU1tafz/p00aVLuWno+lY0AAQIECBAgQIAAAQIECBAgQIAAgfwCnfJfcqXQAqNHj45OnTrFpz/96Rg5cmTss88+8dnPfjZ69OgRzz//fEycODHqBpx160/h6FVXXRU33HBDdjo9CzR9z0aAAAECBAgQIECAAAECBAgQIECAQH4BAWh+m4JcafgcqfTyojQTNH1uvfXWenVceeWVkd48+i//8i+58++++25cd911cc8998Ts2bOz89tss03ubfC5G+0QIECAAAECBAgQIECAAAECBAgQINBIQADaiKSwJ1J4+b3vfS8LL9Nb22s/b731VpMVpTeO1t2WLFkS//qv/5o7lQLVSy65JIYNG5Y7Z4cAAQIECBAgQIAAAQIECBAgQIAAgaYFBKBNuxTsbMeOHWPIkCHZ54QTTsiVu3Tp0lwYmkLRNLvzpZdeij322CN3T9qp+3b43r17x2233RZjxoypd48DAgQIECBAgAABAgQIECBAgAABAgSaFhCANu1S9LO77bZbpE/dMHPlypWx7bbb1qu7T58+ce6558Zhhx0WBx54YHTt2rXedQcECBAgQIAAAQIECBAgQIAAAQIECOQXEIDmtyn5lR122KFRnemlSZdffnmj804QIECAAAECBAgQIECAAAECBAgQILB5gY6bv8UdBAgQIECAAAECBAgQIECAAAECBAgQKE8BAWh5jptWEyBAgAABAgQIECBAgAABAgQIECDQAgEBaAuQ3EKAAAECBAgQIECAAAECBAgQIECAQHkKCEDLc9y0mgABAgQIECBAgAABAgQIECBAgACBFgh4CVILkNxCgAABAgQIECBAoD0KbNiwIf7whz/E2rVr46CDDoq+ffu2aTMXL14cM2bMiO233z5qamratC0qJ0CAAAECBAjUCghAayX8JUCAAAECBAgQIFBmArfeemt861vfylo9evTouP/++9u0B8cff3w8+uijWRt22WWXNm2LygkQIECAAAECtQKWwNdK+EuAAAECBAgQIECgzASWL1+ea/GyZcty+221U7cNmzZtaqtmqJcAAQIECBAgUE9AAFqPwwEBAgQIECBAgAABAgQIECBAgAABApUkIACtpNHUFwIECBAgQIAAAQIECBAgQIAAAQIE6gkIQOtxOCBAgAABAgQIECBAgAABAgQIECBAoJIEBKCVNJr6QoAAAQIECBAgQIAAAQIECBAgQIBAPQEBaD0OBwQIECBAgAABAgQIECBAgAABAgQIVJKAALSSRlNfCBAgQIAAAQIECBAgQIAAAQIECBCoJyAArcfhgAABAgQIECBAgAABAgQIECBAgACBShIQgFbSaOoLAQIECBAgQIAAAQIECBAgQIAAAQL1BASg9TgcECBAgAABAgQIECBAgAABAgQIECBQSQIC0EoaTX0hQIAAAQIECBAgQIAAAQIECBAgQKCegAC0HocDAgQIECBAgAABAgQIECBAgAABAgQqSUAAWkmjqS8ECBAgQIAAAQIECBAgQIAAAQIECNQTEIDW43BAgAABAgQIECBAgAABAgQIECBAgEAlCXSqpM7oCwECBAgQIECAAAECBJ577rmYMmVKbLPNNvHtb387+vXrB4UAAQIECBCoYgEBaBUPvq4TIECAAAECBAgQqESBH//4x/Gb3/wm69rGjRvj0ksvrcRu6hMBAgQIECDQQgFL4FsI5TYCBAgQIECAAAECBMpDYN26dbmG1t3PnbRDgAABAgQIVJWAALSqhltnCRAgQIAAAQIECBAgQIAAAQIECFSXgAC0usZbbwkQIECAAAECBAgQIECAAAECBAhUlYAAtKqGW2cJECBAgAABAgQIECBAgAABAgQIVJeAALS6xltvCRAgQIAAAQIECBAgQIAAAQIECFSVgAC0qoZbZwkQIECAAAECBAgQIECAAAECBAhUl4AAtLrGW28JECBAgAABAgQIECBAgAABAgQIVJWAALSqhltnCRAgQIAAAQIECBAgQIAAAQIECFSXgAC0usZbbwkQIECAAAECBAgQIECAAAECBAhUlYAAtKqGW2cJECBAgAABAgQIECBAgAABAgQIVJeAALS6xltvCRAgQIAAAQIECBAgQIAAAQIECFSVgAC0qoZbZwkQIECAAAECBAgQIECAAAECBAhUl4AAtLrGW28JECBAgAABAgQIECBAgAABAgQIVJWAALSqhltnCRAgQIAAAQIECBAgQIAAAQIECFSXgAC0usZbbwkQIECAAAECBAgQIECAAAECBAhUlYAAtKqGW2cJECBAgAABAgQIECBAgAABAgQIVJeAALS6xltvCRAgQIAAAQIECBAgQIAAAQIECFSVgAC0qoZbZwkQIECAAAECBAgQIECAAAECBAhUl4AAtLrGW28JECBAgAABAgQIECBAgAABAgQIVJWAALSqhltnCRAgQIAAAQIECBAgQIAAAQIECFSXgAC0usZbbwkQIECAAAECBAgQIECAAAECBAhUlYAAtKqGW2cJECBAgAABAgQIECBAgAABAgQIVJdAp+rqbvvr7dKlS+O9996L1atXZ5+uXbtGz549o0ePHtG7d+9IxzYCBAgQKH+BRx99NL7//e/Hhg0bYuLEiXHiiSeWf6f0gAABAgQIECBAgAABAmUgIAAt8SCtXLkybrvttpgyZUrMmzcv0nG+rVOnTjF06NDYf//948gjj4wxY8ZEhw4d8t3uPAECBAi0Y4Fp06bFrFmzshb+6le/EoC247HSNAIECBAgQIAAAQIEKkvAEvgSjeebb74Z48aNi/79+8eZZ54ZM2bMaDb8TM1Ks4Rmz54dN954YxaADhs2LO67774StVg1BAgQIFBIgZqamlxxdfdzJ+0QIECAAAECBAgQIECAQFEEzAAtCmv9Qt9///047LDDYu7cubkLaSZnv379YuDAgdGnT5/o1q1bdOnSJQs916xZEytWrIjFixfHokWLYu3atdn30ozRo48+OiZNmhTjx4/PlWWHAAECBAgQIECAAAECBAgQIECAAIGmBQSgTbsU7OyqVaviiCOOyIWf++67b5x11llx6KGHZsHn5ipav359PP7449my+cmTJ0c6njBhQuy5557ZkvjNfd91AgQIECBAgAABAgQIECBAgAABAtUsYAl8kUd/6tSp2XL3VM3xxx8fM2fOzP6mWZ8t2Tp37hwHHHBA3HTTTXH33XdHOk7beeedF5s2bWpJEe4hQIAAAQIECBAgQIAAAQIECBAgULUCAtAiD31662/a0vM708uPOnbccvL0EqQrrrgiKy8tp1+4cGG27x8ECBAgQIAAAQIECBAgQIAAAQIECDQtsOVpXNPlOdtAYPr06dmZo446Kjd7s8EtrTocO3Zs7v4XX3wxt2+HAAECBAgQIECAAAECBAgQIECAAIHGAgLQxiYFPbNkyZKsvAEDBhSk3N69e+eC1A8//LAgZSqEAAECBD4SuOiii2LXXXeNQYMGxRNPPPHRBXsECBAgQKCdCyxYsCA+8YlPxC677BLjxo1r563VPAIECBAgUDoBAWiRrQcPHpzVMGPGjILUlJbUpxchpW3EiBEFKVMhBAgQIPCRwLRp0+Ktt96KRYsWRe0s/o+u2iNAgAABAu1XYNasWZFC0Lfffjt+//vft9+GahkBAgQIECixgAC0yOAjR47Marjrrrvi4Ycf3qrali1bFmeffXZWRq9evWKPPfbYqvJ8mQABAgQIECBAgACByhSoqampzI7pFQECBAgQ2AIBAegWoLXmK+eff362ZH3NmjVxzDHHZG9zX7duXWuKyO6dM2dOHH744ZH+pu2MM87I/voHAQIECBAgQIAAAQIECBAgQIAAAQL5BTrlv+RKIQTSEvjLLrsszjnnnFi+fHkWXKb9UaNGxfDhw7NZnOlZc926dYuuXbvGhg0bIoWlK1asiMWLF2dLWB555JGYN29erjkpCL344otzx3YIECBAgAABAgQIECBAgAABAgQIEGhaQADatEtBz06cODHSy4vSg8jTi4tWrlwZ6Rlz6dPabfTo0TFlypTo2NHk3dbauZ8AAQIECBAgQIAAAQIECBAgQKD6BKRoJRrzU045JXuhxgUXXBB9+/ZtVa1dunTJls/fe++9cf/990d6/qeNAAECBAgQIECAAAECBAgQIECAAIHNC5gBunmjgt3Rp0+fuPTSS7PPK6+8EjNnzoz58+dny93T8vg0M7Rz587RvXv36NGjR6Tl83vttVfsvffe2bmCNWQLCtq0aVMU4kHqqRwbAQIECBAgQIAAAQIECBAgQIAAgVIJCEBLJd2gnkGDBkX6lMN27rnnxk9/+tOCNnXBggUFLU9hBAgQIECAAAECBAgQIECAAAECBJoSEIA2peJcPYE0K7VTp05RiNmbtWV06NChXh0OCBAgQIAAAQIECBAgQIAAAQIECBRDwDNAi6FagDI3btwYDz30UPZZuHBhAUrc8iLSsv3169dHatPWfsaPH581JC3vtxEgQIAAAQIECBAgQIAAAQIECBAotoAAtNjCW1j+Bx98EIccckj2ueWWW7awFF8jQIAAAQIECBAgQIAAAQIECBAgUN0CAtDqHn+9J0CAAAECBAgQIECAAAECBAgQIFDRAp4BWuThTS/72bBhQ6trSW+Er93efffdeP7552sPc3+HDBmS27dDgAABAgQIECBAgAABAgQIECBAgEBjAQFoY5OCnjnooIPijTfe2Koyb7zxxkifhltNTU3DU44JECBAgAABAgQIECBAgAABAgQIEKgjYAl8HQy7BAgQIFAYgeXLl8drr72WvUCtMCUqhQABAgQIECBAgAABAgQIbJmAGaBb5tbib1144YVx9tlnx5o1a7Lv7LDDDjFmzJjo0KFDs2WsW7cufve732X37LXXXjFs2LBm73eRAAEC7UXg2WefjREjRmTh53777RePPfZYe2madhAgQIAAAQIECBAgQIBAFQoIQIs86N/5znfiC1/4Qpx44okxZ86cSM/2XLZsWdx6662x22675a09zZ6qDUC//OUvxyWXXJL3XhcIECDQngQWLlyYm/n5wgsvtKemaQsBAgQIECBAgAABAgQIVKGAJfAlGPQ0gzPNgDrnnHOiY8eO8cc//jGGDh0aU6dOLUHtqiBAgAABAgQIECBAgAABAgQIECBQvQIC0BKN/bbbbhs/+clP4oEHHogBAwbEe++9F8cdd1ycdNJJkWZ72ggQIECAAAECBAgQIECAAAECBAgQKLyAALTwps2WmJbDP/PMM3HCCSdk902ZMiWbDfrggw82+z0XCRAgQIAAAQIECBAgQIAAAQIECBBovYAAtPVmW/2NHXfcMf7zP/8z7rjjjujZs2csXrw4vvjFL8ZZZ52Ve1nSVleiAAIECBAgQIAAAQIECBAgQIAAAQIEQgDahj+C9GKkNBv04IMPjpqamrjqqqtin332idmzZ7dhq1RNgAABAgQIECBAgACB/8fevcDZVO6PH/9iNEgjt5DcE5VLJUlKRTmdkFJJnZPonKJUx7XTVSEOpyhdyK86ShFSyCVd5O8uuY9b4xbDuI/BmIuZMf/f9zm/vVvGXPaeWWvf1ud5vZi113rW93me97Ov373WXggggAACCCAQOQIkQIM8lzVr1pSFCxfKv/71LylZsqRs3rxZWrRoISNGjAhyz2geAQQQQAABBBBAAAEEnBDIysqS9evXm3+6TEEAAQQQQAABZwVIgDrr61N0vTL8Cy+8ICtXrpSGDRtKRkYGCVCf5KiEAAIIIIAAAggggED4CQwZMkSuvfZa8++1114LvwHQYwQQQAABBMJMgARoCE3YddddJ2vXrpXevXuHUK/oCgIIIIAAAggggAACCNgpsH//fm8467J3JQsIIIAAAgggYKtAlK3RCFZkgdKlS8v7778v7du3l1mzZpl4N9xwQ5HjEgABBBBAAAEEEEAAAQQQQAABBBBAAAE3CpAADdFZ//Of/yz6j4IAAggggAACCCCAAAIIIIAAAggggAAChRfgFPjC27EnAggggAACCCCAAAIIIIAAAggggAACCIS4AAnQEJ8guocAAggggAACCCCAAAIIIIAAAggggAAChRcgAVp4O/ZEAAEEEEAAAQQQQAABBBBAAAEEEEAAgRAX4DdAQ3yC6B4CCCCAAAIIIIAAAggg4DaBhIQEWbt2rcTExEjr1q3dNnzGiwACCCBgswAJUJtBCYcAAggggAACCCCAAAIIIFA0gY4dO5oEqEaZN28eF4gtGid7I4AAAq4X4BR4198FAEAAAQQQQAABBBBAAAEEQkvg2LFj3g5Zl70rWUAAAQQQQMAPARKgfmBRFQEEEEAAAQQQQAABBBBAAAEEEEAAAQTCS4AEaHjNF71FAAEEEEAAAQQQQAABBBBAAAEEEEAAAT8ESID6gUVVBBBAAAEEEEAAAQQQQAABBBBAAAEEEAgvARKg4TVf9BYBBBBAAAEEEEAAAQQQQAABBBBAAAEE/BAgAeoHFlURQAABBBBAAAEEEEAAAQQQQAABBBBAILwEosKru/QWAQQQQAABBNwokJWVJdOnT5dTp07JzTffLA0bNnQjA2NGICAChw4dkrlz50rx4sWlc+fOEhMTE5B2aQQBBBBAAAEEEHBKgASoU7LERQABBBBAAAHbBGbNmiVdu3Y18Zo0aSIbNmywLTaBEEDgXIHnn39eJk6caFbu2rVLhgwZcm4FbiGAAAIIIIAAAmEmwCnwYTZhdBcBBBBAAAE3CuiRn56SnJzsWeQvAgg4IGB9jFkfew40RUgEEEAAAQQQQCAgAiRAA8JMIwgggAACCCCAAAIIIIAAAggggAACCCAQDAESoMFQp00EEEAAAQQQQAABBBBAAAEEEEAAAQQQCIgACdCAMNMIAggggAACCCCAAAIIIIAAAggggAACCARDgARoMNRpEwEEEEAAAQQQQAABBBBAAAEEEEAAAQQCIkACNCDMNIIAAggggAACCCCAAAIIIIAAAggggAACwRCICkajtIkAAggggAACoSWgV3oeP368pKWlSceOHaVp06ah1UF6gwACCCCAQIgKrF69WubPny9lypSRXr16mb8h2lW6hQACCLhWgASoa6eegSOAAAIIIPCHwMSJE2XgwIFmxY8//iiLFi36YyNLCCCAAAIIIJCngCY916xZY7aXL19eevTokWddNiCAAAIIBEeAU+CD406rCCCAAAIIhJSAHvnpKdZlzzr+IoAAAggggEDuAtbXzfT09NwrsRYBBBBAIKgCJECDyk/jCCCAAAIIIIAAAggggAACCCCAAAIIIOCkAAlQJ3WJjQACCCCAAAIIIIAAAggggAACCCCAAAJBFSABGlR+GkcAAQQQQAABBBBAAAEEEEAAAQQQQAABJwVIgDqpS2wEEEAAAQQQQAABBBBAAAEEEEAAAQQQCKoACdCg8tM4AggggAACCCCAAAIIIIAAAggggAACCDgpEOVkcGIjgAAC4Shw+PBhGTlypOgVPbt06SK33nprOA7Drz7HxcXJ+++/L9nZ2dKzZ09p1KiRX/tTGQEEEEAAAQQQQAABBBBAAIFQFSABGqozQ78QQCBoApMnT5bRo0eb9jdu3ChLliwJWl8C1fB7771nEqDaXnJyskyYMCFQTdMOAggggAACCCCAAAIIIIAAAo4KcAq8o7wERwCBcBTIzMz0djsjI8O7HMkL1nFalyN5zIwNAQQQQAABBBBAAAEEEEDAHQIkQN0xz4wSAQQQQAABBBBAAAEEEEAAAQQQQAABVwqQAHXltDNoBBBAAAEEEEAAAQQQQAABBBBAAAEE3CFAAtQd88woEUAAAQQQQAABBBBAAAEEEEAAAQQQcKUACVBXTjuDRgABBBBAAAEEEEAAAQQQQAABBBBAwB0CJEDdMc+MEgEEEEAAAQQQQAABBBBAAAEEEEAAAVcKkAB15bQzaAQQQAABBBBAAAEEEEAAAQQQQAABBNwhQALUHfPMKBFAAAEEEEAAAQQQQAABBBBAAAEEEHClAAlQV047g0YAAQQQQAABBBBAAAEEEEAAAQQQQMAdAiRA3THPjBIBBBBAAAEEEEAAAQQQQAABBBBAAAFXCpAAdeW0M2gEEEAAAQQQQAABBBBAAAEEEEAAAQTcIUAC1B3zzCgRQAABBBBAAAEEEEAAAQQQQAABBBBwpQAJUFdOO4NGAAEEEEAAAQQQQAABBBBAAAEEEEDAHQIkQN0xz4wSAQQQQAABBBBAAAEEEEAAAQQQQAABVwqQAHXltDNoBBBAIDIElixZIq1bt5abb75Z5s6dGxmDYhQIIIAAAggggAACCCCAAAK2CkTZGo1gfgskJCRIYmKipKSkmH+lSpWScuXKSUxMjFSsWFH0NgUBBBBAIHeBr776SjQJquWLL76Q9u3b516RtQgggAACCCCAAAIIIIAAAq4VIAEa4Kk/deqUTJw4USZNmiSbNm0SvZ1XiYqKksaNG0uLFi2kQ4cOcvfdd0uxYsXyqs56BBBAwHUC2dnZ3jFbl70rWUAAAQQQQAABBBBAAAEEEHC9AKfAB+gucOjQIendu7dUr15dnnnmGVmxYkW+yU/tVmZmpqxbt04+/PBDkwBt0qQJp3gGaL5oBgEEEEAAAQQQQAABBBBAAAEEEEAgMgQ4AjQA83j8+HG58847JTY21tuaHslZrVo1qVmzplSuXFlKly4t0dHRJumZlpYmJ0+elPj4eNmzZ4+kp6eb/fSI0XvuuUdGjRolffr08cZiAQEEEEAAAQQQQAABBBBAAAEEEEAAAQRyFyABmruLbWtPnz5tfpPOk/xs3ry59OvXT9q2bWsSnwU1lJGRIatWrTKnzU+YMEH0dt++feWKK64wp8QXtD/bEUAAAQQQQAABBBBAAAEEEEAAAQQQcLMAp8A7PPvTpk0zp7trM127dpWVK1eav3rUpy+lZMmS0qpVKxk/frzMnDlT9LaWF154Qc6ePetLCOoggAACCCCAAAIIIIAAAggggAACCCDgWgESoA5P/fLly00L+vudevGj4sULT64XQXrrrbdMPD2idPfu3Q73nvAIIIAAAggggAACCCCAAAIIIIAAAgiEt0Dhs3HhPe6A9X7ZsmWmrY4dO3qP3ixK4/fff79397i4OO8yCwgggEBuAo899pjUqVNHWrRoIceOHcutCutsEFi/fr1cffXVUrduXRkxYoQNEQkRCQKvv/66efw1btxYtm7dGglDYgwIIIAAAggggAACCISlAAlQh6dt3759poUaNWrY0lLFihW9idTU1FRbYhIEAQQiV2DSpEny+++/m98S1gupUZwRWLRokWzZssUcmT99+nRnGiFq2Anoz+Do408fe0uXLg27/tNhBBBAAAEEEEAAAQQiRYAEqMMzWa9ePdPCihUrbGlJT6nXCyFpufbaa22JSRAEEHCHQHZ2tjsGGuRR4hzkCQjR5rlfhOjE0C0EEEAAAQQQQAABVwiQAHV4mps1a2ZamDp1qugRQkUpSUlJ0r9/fxOiQoUK5rS6osRjXwQQQAABBBBAAAEEEEAAAQQQQAABBCJdgASowzP84osvmlPW09LSpFOnTuZq7mfOnPG7Vf19uXbt2on+1dKrVy+/Y7ADAggggAACCCCAAAIIIIAAAggggAACbhOIctuAAz1ePQV++PDhMnDgQDlx4oRJXOryrbfeKtdcc405irNKlSpSunRpKVWqlGRmZoomS0+ePCnx8fGyY8cOWbx4sfn9ME/fNRE6dOhQz03+IoAAAggggAACCCCAAAIIIIAAAggggEAeAiRA84Cxc/WAAQNEL17Uu3dv0QsXnTp1SubMmWP++dvOXXfdJXpRk+LFOXjXXzvqI4AAAggggAACCCCAAAIIIIAAAgi4T4AsWoDmvEePHrJnzx556aWXpGrVqn61Gh0dbU6fnz17tnz33Xeiv/9JQQABBBBAAAEEEEAAAQQQQAABBBBAAIGCBTgCtGAj22pUrlxZhg0bZv79/vvvsnLlStm+fbs53V1Pj9cjQ0uWLClly5aVmJgY0dPnr7rqKmnatKlZZ1tH/Aw0aNAgefPNN8WOK9jqKf5adu3a5WcvqI4AAoES0J/e0OchLR988IE89thjtjb9+OOPy+TJk83z3NmzZ22NbQ12+vRpuf7662X37t1y9dVXy6pVq6REiRLWKgUuf/PNN6K/5VymTBmZP3++NG/evMB9qIAAAgjkJXDo0CG54YYbRP/ecsst8uOPP+ZVlfUIIIAAAggggAACNgqQALUR059QtWvXFv0XDkWTCPq7pHaWrKwsO8MRCwEEbBQ4fPiw6ONey5IlS2xPgP7888+Snp4uR44cMUlQG7t+Tqh9+/bJtm3bzLq1a9fK8ePHpVKlSufUKeiGfkmlz3/6b82aNSRACwJjOwII5CsQFxcne/fuNXUWLFiQb102IoAAAggggAACCNgnwCnw9lnaGunAgQMm8aBHHB08eNDW2P4GGzVqlElWeJIARfn7zDPPmObr16/vbzeojwACCCCAAAIIIIAAAggggAACCCCAgN8CHAHqN1nRdtCjnvT0dz0dPrff8oyNjTWnW86dO/echi699FLp37+/9O3bV4oVK3bOtkDcuOCCC2xpJiqKu5wtkARBAAEEEEAAAQQQQAABBBBAAAEEEPBJgCNAfWIqeiU99bJnz55Svnx5adiwoVxyySXmt5/GjRvnDa7Jz9atW0vO5KdWSEhIMAnQdu3aBf2IUG+HWUAAAQQQQAABBBBAAAEEEEAAAQQQQCDEBTgcLwATlJqaKh07dpRly5Z5W9PfwFy6dKn5pyufeuopeeSRRyQpKcnU0QtuNG7cWKpUqSKbN282Fw3SixD99NNP8uijj/Kj+V5JFhBAAAEEEEAAAQQQQAABBBBAAAEEEMhbgCNA87axZYsmOh966CFv8vPiiy+W2267TZo1a2au+K6NPPfcc+bK8Js2bTJtaiI0Pj7eXCV+1qxZoldkXrFihTlyVCtoEvTzzz83dfkPAQQQQAABBBBAAAEEEEAAAQQQQAABBPIWIAGat40tWyZPniyzZ882sbp162YSmwsXLpTVq1eb5euuu04yMzPllVdeMXXuvvtumTRp0nm/D9qiRQtZvny56G+BannxxRfNX/5DAAEEEPBf4MyZM+aq8PolFQUBj8CpU6dE/1EQQAABBBBAAAEEEEAgsgRIgDo8n5rM1NK0aVP55JNPpGzZst4W9fR2vcq7nu7uKXrF9byK/n7o22+/bTbv379fDh8+nFdV1iOAAAII5CFw4MAB74Xo9KdGKAiogL6+xsTEmH/vvPMOKAgggAACCCCAAAIIIBBBAiRAHZ5M/f1OLQ8//LDkdgV0vRr8X//6V1PnoosukgYNGpjlvP67/fbbvZs8sb0rWEAAAQQQKFBg7969cvLkSVNv69at5ij8AneiQsQLbNy40TtGvSghBQEEEEAAAQQQQAABBCJHgASow3N59OhR08Jll12WZ0vXX3+92XbhhRdKsWLF8qynGzRhWqpUKVNHjwKlIIAAAggggEDRBQp6/S16C0RAAAEEEEAAAQQQQACBYAmQAHVYvnbt2qYFvZBRXkWP+qxWrZocOnRITpw4kVc1s16PXEpLSzPL9erVy7cuGxFAAAEEEEAAAQQQQAABBBBAAAEEEHC7AAlQh+8BDRs2NC3o738mJyfn2lrr1q0lISFBUlJSzvmN0Nwqv/vuu97VV111lXeZBQQQQAABBBBAAAEEEEAAAQQQQAABBBA4X4AE6Pkmtq557LHHTLz4+Hjp1KmT5Hfaup7aXqJEiTzb1+TnmDFjzPY77rhDypUrl2ddNiCAAAIIIIAAAggggAACCCCAAAIIIICACAlQh+8F9957r9x2222mlZ9//lmuuOIK6dixo6xZs8anlvW0eL0y/A033CD/+Mc/zMU6SpYsKdYjQX0KRCUEEEAAAQQQQAABBBBAAAEEEEAAAQRcKEACNACTPmXKFGnVqpVpSU9znzNnjiQmJvrU8uLFi2XAgAHy66+/mvp6Jfm3335brrzySp/2pxICoSSwa9cu+e2337jqdihNCn1BwGaB7OxsiYuLk+3bt4suazly5Ihs3bq1wN+5trkrhEMAAQQQQAABBBBAAAEEjAAJ0ADcEapUqSILFy6UV155RWrUqGFabNKkiU8t161b11uvevXqokeR9u7d27uOBQTCRWDChAmiF+7S38V96qmnwqXb9BMBBPwUGDRokOjF/fSMhxEjRsjBgwelZs2aor9bXb9+fcnKyvIzItURQAABBBBAAAEEEEAAgaIJkAAtmp/Pe+tp60OHDpU9e/bIypUrRZOivpTLL79c9MPk0qVL5ffff5dbbrnFl92og0DICej911Osy551/EUAgcgQsD6+dVl/yiUtLc0MTo8E1TMhKAgggAACCCCAAAIIIIBAIAWiAtkYbYkUK1ZMWrRo4TOFXuho8ODBPtenIgIIIIAAAggggAACCCCAAAIIIIAAAgj8IcARoH9YsIQAAggggAACCCCAAAIIIIAAAggggAACESZAAjTCJpThIIAAAggggAACCCCAAAIIIIAAAggggMAfAiRA/7BgCQEEEEAAAQQQQAABBBBAAAEEEEAAAQQiTIAEaIRNKMNBAAEEEEAAAQQQQAABBBBAAAEEEEAAgT8EuAjSHxYsIYBABAjExsaKXmn6yiuvlGrVqkXAiBgCAkUTSExMlA0bNkjZsmWlefPmRQvG3ggggAACCCAQUgJpaWnyyy+/SPHixaVly5YSFcVH/JCaIDqDAAIhI8ARoCEzFXQEAQSKKqBJniZNmkjbtm2lRYsWRQ3H/ghEhMB9990nbdq0kRtuuEFmzZoVEWNiEAgggAACCCDwX4Hnn39ebrvtNmndurUMGzYMFgQQQACBPARIgOYBw2oEEAg/AT3y01Osy551/EXAjQKHDx/2Dtu67F3JAgIIIIAAAgiErYD1Pa91OWwHRMcRQAABhwRIgDoES1gEEEAAAQQQQAABBBBAAAEEEEAAAQQQCL4ACdDgzwE9QAABBBBAAAEEEEAAAQQQQAABBBBAAAGHBEiAOgRLWAQQQAABBBBAAAEEEEAAAQQQQAABBBAIvgAJ0ODPAT1AAAEEEEAAAQQQQAABBBBAAAEEEEAAAYcESIA6BEtYBBBAAAEEEEAAAQQQQAABBBBAAAEEEAi+QFTwu0APEEAAAQQQOFdgy5Ytsn79eqlcubLceeed527kVkAF0tPTZfbs2ZKZmSlt2rSRSy65JKDt0xgCCCCgAqdPn5Z58+bJ2bNnzetChQoVwg4mOTnZjCE7O1v0uZWCAAIIIIAAAoETIAEaOGtaQgABBBDwUeD222+Xw4cPm9qrVq2S5s2b+7gn1ewWeO+992TgwIEm7IMPPijTpk2zuwniIYAAAgUKjBw5UoYOHWrq/e1vf5OPP/64wH1CrcLw4cPlX//6l+lWgwYNQq179AcBBBBAAIGIFuAU+IieXgaHAAIIhKfAiRMnvB23LntXshAwAau/dTlgHaAhBBBA4H8FrM8/1uVwwjl58qS3uxkZGd5lFhBAAAEEEEDAeQESoM4b0wICCCCAAAIIIIAAAggggAACCCCAAAIIBEmABGiQ4GkWAQQQQAABBBBAAAEEEEAAAQQQQAABBJwXIAHqvDEtIIAAAggggAACCCCAAAIIIIAAAggggECQBEiABgmeZhFAAAEEEEAAAQQQQAABBBBAAAEEEEDAeQESoM4b0wICCCCAAAIIIIAAAggggAACCCCAAAIIBEkgKkjt0iwCCCDgk8CMGTNk165d0rBhQ2nfvr1P+1AJAQTCRyAuLk7mzp0r0dHR0q1bNylbtmz4dN7mni5dulR++eUXqVy5sjz66KNSrFgxbwvHjx+XL774QrKysuS+++6TWrVqebeF48KRI0fkyy+/lLNnz8qDDz4o1atXD8dhuL7P2dnZMnHiRDl69Ki0bNlSbrrpJtebAIAAAggggAACoSlAAjQ054VeIYDA/wrs379fOnfu7LXQBMDFF1/svc0CAgiEv8Czzz4rP/zwgxnImTNnpE+fPuE/qEKOoFOnTpKYmGj2rlu3rtx8883eSO+8844MGTLE3F65cqVMmTLFuy0cF0aOHCmjRo0yXY+NjZVPPvkkHIfh+j4vWrRIunfvbhwuueQSOXTokOtNAEAAAQQQQACB0BTgFPjQnBd6hQAC/yuQkpJyjkN6evo5t7mBAALhL2B9nKempob/gIowAuv4rS4aMr9tRWgyaLtax2cdW9A6RMOFErDOnXVOCxWMnRBAAAEEEEAAAQcFSIA6iEtoBBAomoD19M+iRWJvBBBAAAEEEEAAAQQQQAABBBBwqwAJULfOPONGAAEEEEAAAQQQQAABBBBAAAEEEEDABQIkQF0wyQwRAQQQQAABBBBAAAEEEEAAAQQQQAABtwqQAHXrzDNuBBBAAAEEEEAAAQQQQAABBBBAAAEEXCBAAtQFk8wQEUAAAQQQQAABBBBAAAEEEEAAAQQQcKtAlFsHzrgRQAABBBBwQiAzM1NeffVVSU9PlwceeEBuuOEGJ5ohJgKuFsjKypJRo0bJkSNHpGXLltK5c2dXezB4BIItsG3bNvn0009FL2DZq1cvqVWrVrC7RPsIIIAAAgicI0AC9BwObiCAAAIIIFA0gWPHjskbb7xhgvz666+ycOHCogVkbwQQOE9gxYoV8s9//tOsL1OmDAnQ84RYgUBgBYYPHy6ff/65aVS/ABw9enRgO0BrCCCAAAIIFCDAKfAFALEZAQQQQAABfwSys7O91c+cOeNdZgEBBOwTsD62MjIy7AtMJAQQKJSA9TFpXS5UMHZCAAEEEEDAAQESoA6gEhIBBBBAAAEEEEAAAQQQQAABBBBAAAEEQkOABGhozAO9QAABBBBAAAEEEEAAAQQQQAABBBBAAAEHBEiAOoBKSAQQQAABBBBAAAEEEEAAAQQQQAABBBAIDQESoKExD/QCAQQQQAABBBBAAAEEEEAAAQQQQAABBBwQIAHqACohEUAAAQQQQAABBBBAAAEEEEAAAQQQQCA0BKJCoxv0AgEEEIgsgcGDB8v27dulQYMG8uqrr0bW4BhNyAvMnj1bpk2bJmXKlJHMzMyQ728wOjhy5EiJjY2V2rVry5AhQ4LRBdpEAAEEEAgBgezsbBk0aJDs3r1bGjVqJC+88EII9IouIIAAAgjYLUAC1G5R4iGAgOsF4uPj5fXXX/c6PPHEE1K1alXvbRYQcFpAE/Br1qwxzVSpUsXp5sIu/okTJ875gNutW7ewGwMdRgABBBCwR2Dnzp3yxhtveIP17NlTypcv773NAgIIIIBAZAhwCnxkzCOjQACBEBLIyso6pzccgXcOBzcCIGC9D+qRLZRzBaw+uiXn7XNrcwsBBBBAIJIFcr5P4zUhkmebsSGAgJsFSIC6efYZOwIIIIAAAggggAACCCCAAAIIIIAAAhEuQAI0wieY4SGAAAIIIIAAAggggAACCCCAAAIIIOBmARKgbp59xo4AAggggAACCCCAAAIIIIAAAggggECEC5AAjfAJZngIIIAAAggggAACCCCAAAIIIIAAAgi4WYAEqJtnn7EjgAACCCCAAAIIIIAAAggggAACCCAQ4QIkQCN8ghkeAggggEBkCyQnJ8vDDz8sd9xxhwwdOjSyB8voEIhwgQkTJpjHcqdOnWTPnj0RPtrADi8lJUX+8pe/GN9BgwYFtnFaQwABBBBAAIGgC0QFvQcu70BCQoIkJiaKvinTf6VKlZJy5cpJTEyMVKxY0dx2ORHDRwABBBDIR+DXX3+VKVOmmBrLli2TV199NZ/abEIAgVAWGDNmjGzYsMF08a677pKnnnoqlLsbVn1bt26dTJ482fR54cKFMmTIkLDqP51FAAEEEEAAgaIJkAAtmp/fe586dUomTpwokyZNkk2bNonezqtERUVJ48aNpUWLFtKhQwe5++67pVixYnlVZz0CCCCAgAsFzp496x21ddm7kgUEEAgbgezsbG9feTx7KWxZsHpal20JThAEEEAAAQQQCHkBToEP0BQdOnRIevfuLdWrV5dnnnlGVqxYkW/yU7uVmZkp+m31hx9+aBKgTZo0kblz5waoxzSDAAIIIIAAAggggAACCCCAAAIIIIBA+AtwBGgA5vD48eNy5513SmxsrLc1PZKzWrVqUrNmTalcubKULl1aoqOjTdIzLS1NTp48KfHx8eb3n9LT081+esToPffcI6NGjZI+ffp4Y7GAAAIIIIAAAggggAACCCCAAAIIIIAAArkLkADN3cW2tadPn5b27dt7k5/NmzeXfv36Sdu2bU3is6CGMjIyZNWqVea0ef1hfL3dt29fueKKK8wp8QXtz3YEEEAAAQQQQAABBBBAAAEEEEAAAQTcLMAp8A7P/rRp08zp7tpM165dZeXKleavHvXpSylZsqS0atVKxo8fLzNnzhS9reWFF14Qfr/IF0HqIIAAAggggAACCCCAAAIIIIAAAgi4WYAEqMOzv3z5ctOC/n6nXvyoePHCk+tFkN566y0TT0+n3717t8O9JzwCCCCAAAIIIIAAAggggAACCCCAAALhLVD4bFx4jztgvV+2bJlpq2PHjt6jN4vS+P333+/dPS4uzrvMAgIIIIAAAgiEtsDOnTvlxhtvlEaNGsnw4cNDu7P0DgEEEEAAAQQQQACBCBIgAerwZO7bt8+0UKNGDVtaqlixojeRmpqaaktMgiCAAAIIIICA8wKLFi2SX375RTZv3iyfffaZ8w3SAgIIIIAAAggggAACCBgBEqAO3xHq1atnWlixYoUtLekp9XohJC3XXnutLTEJggACCCCAAAKBFcjOzg5sg7SGAAIIIIAAAggggICLBUiAOjz5zZo1My1MnTpV9MiPopSkpCTp37+/CVGhQgWpU6dOUcKxLwIIIIAAAggggAACCCCAAAIIIIAAAhEvQALU4Sl+8cUXzSnraWlp0qlTJ3M19zNnzvjd6vr166Vdu3aif7X06tXL7xjsgAACCCCAAAIIIIAAAggggAACCCCAgNsEotw24ECPV0+B1wsdDBw4UE6cOGESl7p86623yjXXXGOO4qxSpYqULl1aSpUqJZmZmaLJ0pMnT0p8fLzs2LFDFi9eLJs2bfJ2XROhQ4cO9d5mAQEEEEAAAQQQQAABBBBAAAEEEEAAAQRyFyABmruLrWsHDBggevGi3r17i1646NSpUzJnzhzzz9+G7rrrLpk0aZIUL87Bu/7aUR8BBBBAAAEEEEAAAQQQQAABBBBAwH0CZNECNOc9evSQPXv2yEsvvSRVq1b1q9Xo6Ghz+vzs2bPlu+++E/39TwoCCCCAAAIIIIAAAggggAACCCCAAAIIFCzAEaAFG9lWo3LlyjJs2DDz7/fff5eVK1fK9u3bzenuenq8HhlasmRJKVu2rMTExIiePn/VVVdJ06ZNzTrbOuJnID2Ff/To0WLHFWtPnz5tWtdkMAUBBMJb4OjRo+bnPA4ePCitWrWSb7/9NrwHFEa9P3bsmLRu3VrU/oorrgijntNVOwQOHDgg+vM5Z8+eNT+z88QTT9gRlhghLPD000+LXlBT3x/qzyVRgiPw97//XWbMmCEXX3yx/Pjjj1K3bt3gdIRWEUAAAQQQQMBvARKgfpPZs0Pt2rVF/4VD2b9/v+iHbTuL/hQABQEEwltg27ZtsmXLFjMIPUKdEjgBq71+mUZxl4B++XD48GEz6J9++klIgEb+/M+dO1cSExPNP02CUoIjoD9h5ZmHdevWkQANzjTQKgIIIIAAAoUSIAFaKLai75Seni56aru/RRORnuThZZdd5u/uhar/wQcfmKNW9UiTopaXX35ZPvzwQ2nYsGFRQ7E/AggggAACrhew4+wM1yMCgICPAjzefISiGgIIIIAAAiEoQAI0gJMyffp0+eSTT2Tt2rVy5MgRadCggTRv3lx69uxpTh/1pSvdu3f3XjwpkG/C9FQfO4pe6Z6CAAIIIIAAAggggEC4CRQrVizcukx/EUAAAQQQQOD/BLgIUgDuCvq7l4899pg8+OCDMn/+fHPamiYv9RTGzz//3PyOW79+/bxHdgagSzSBAAIIIIAAAggggAACCCCAAAIIIICAKwRIgAZgmvXK7xMnTvS2dOGFF0qdOnXE8y2ynlr+9ttvyzXXXCO7d+/21mMBAQQQQAABBBBAAAEEEEAAAQQQQAABBIomQAK0aH4F7r1+/XrR39DUoldsnTVrlrnq+65du+T48ePy73//W8qVK2e2x8XFyW233UYS1GjwHwIIIIAAAggggAACCCCAAAIIIIAAAkUXIAFadMN8I4wbN06ysrIkKipKvv/+e7nnnnukePH/smvic+DAgbJ161Zp2rSpibN3715p27atHDp0KN+4bEQgGAIZGRnm/hyMtgPRpj5WdYxOFv35izNnztjWhMby9wJlOs7MzEzb+kCgwgnoHDAPhbPzZa/CPDZ8iUud0BfQ58Scz7PcH0J/3ughAggggAACCCDgpAAJUCd1/ze2Jje1PPLII94kp1lh+a9atWqyePFiufXWW81aPQ2+ffv2or8dSkEgVAR69OghF1xwgehPOKxYsSJUumVbP/QxWKZMGTNGvWCZEyUxMVGqVq0q0dHR0qhRIynqhcw6d+5sYl100UUSGxvrU5e/+uorM8aSJUvK4MGDfdqHSvYL7N+/3zsP69ats78Bl0ds1aqVeWxUrFhR4uPjXa7hruHr+66YmBgz/x06dDCD79q1q7ldtmxZcyFKd4kwWgQQQAABBBBAAAEVIAHq8P3gt99+My00a9Ys35b0zfp3330nLVu2NPXWrFkjXbp0ieij7fIFYWPICaxatcr0KT09XTZu3Bhy/Stqh3RMniOG9EhsJ4rGPXz4sAm9efPmIn/J4ZmTlJQU0Xi+FH1u8Rwx+uuvv/qyC3UcEDhx4oQ3Ae65TzjQjGtDeh4bSUlJsmPHDtc6uHHgmgD1fIHsuR94/qampsqmTZvcyMKYEUAAAQQQQAAB1wuQAHX4LuBJqOiRZQWV0qVLy7fffiuXX365qTpv3jx59tlnC9qN7QgggAACCCBgEfBcZNCyikUEEEAAAQQQQAABBBBwsQAJUIcnv379+qaFLVu2+NRSpUqVZP78+VK5cmVTX39DdPTo0T7tSyUEEEAAAQQQQAABBBBAAAEEEEAAAQQQOFeABOi5Hrbf8iRAJ02aJPr7f76UevXqmSNB9YhQLQMGDJCJEyf6sit1EEAAAQQQQAABBBBAAAEEEEAAAQQQQMAiQALUguHEol78SIv+xpsu+3p19xtvvFE0aapXjNcLpegFaPSCJZ7f7nOir8REAAEEEEAAAQQQQAABBBBAAAEEEEAg0gRIgDo8o3o19zvuuMO08v3338uVV15pkpnvv/9+gS3fd999MnbsWNHfMtPE5+uvv25Ojy9wRyoggAACCCCAAAIIIIAAAggggAACCCCAgBEgARqAO8L48eOlcePGpqXjx4/Lp59+Kh9++KFPLffs2VP+85//SFRUlKnPEaA+sVEJgYALJCQkyL59+wLebs4G9Whzvdp8VlZWzk3ctkng6NGjxjgzM9PniHr1ab3yOwUBBBBAQEQvEqqvVb7+PJTbzfT1Y8+ePZKWluZ2CsaPAAIIIIBAoQVIgBaazvcd69atK6tWrZLevXvLhRdeaHa89NJLfQ7QvXt3Wbdundxyyy0+70NFBBAInMCYMWOkevXqUqNGDRk0aFDgGs7R0pw5c6RKlSpSq1YtefTRR3Ns5aYdAkuXLpVLLrnEGHfskxdFyAAAQABJREFU2NHnkI0aNRK9qB0FAQQQQEDk1ltvNc+j+ny6ceNGSPIRiI+Pl6pVq0rt2rXl6quvzqcmmxBAAAEEEEAgPwESoPnp2LitVKlSoqe9JyUlyYoVK8yFjfwJrx+eFy9eLJ999pno74PGxMT4szt1EUDAQYHt27d7o8fFxXmXA72wY8cOb5PB7Ie3ExG4sHPnTvO7zDo0X431aNxdu3ZFoAZDQgABBAon4Hn+1OfH3bt3Fy6IS/bav3+/98hPfS3hDA+XTDzDRAABBBCwXeC/51XbHpaAeQnoqeyawCxs6datm+g/CgIIIIAAAggggAACCCCAAAIIIIAAAggULMARoAUbUQMBBBBAAAEEEEAAAQQQQAABBBBAAAEEwlSABGiYThzdRgABBBBAAAEEEEAAAQQQQAABBBBAAIGCBUiAFmxEDQQQQAABBBBAAAEEEEAAAQQQQAABBBAIUwESoGE6cXQbAQQQQAABBBBAAAEEEEAAAQQQQAABBAoW4CJIBRtRA4GIFtCrrx4+fFjq1Kkjl1xyiW1jPXbsmOhVyStWrCiXX365bXEJhEBBAvv27RO9am56enpBVdmOAAIIIIAAAggggAACCCDgAgESoC6YZIaIQF4Cu3btkvr168vZs2elSpUqcvDgwbyq+r3+xhtvNAlQ3XH9+vV+788OCBRG4MSJE+Y+nZaWJtHR0YUJwT4IIIAAAggggAACCCCAAAIRJsAp8BE2oQwHAX8EDh06ZJKfuo8uZ2Vl+bN7vnUTEhK82+1MrHqDsoBALgLHjx8XTX5q4QjQXIBYhQACCCCAAAIIIIAAAgi4UIAEqAsnnSEjgAACkSpQrFixSB0a40IAAQQQQAABBBBAAAEEECikAAnQQsKxGwIIIIAAAggggAACCCCAAAIIIIAAAgiEvgAJ0NCfI3qIAAIIIIAAAggggAACCCCAAAIIIIAAAoUUIAFaSDh2QwABBBBAAAEEEEAAAQQQQAABBBBAAIHQFyABGvpzRA8RQAABBBBAAAEEEEAAAQQQQAABBBBAoJACUYXcj90QQMDlAtnZ2bJw4UI5deqUNG/eXC699NKAiJw4cUIWL14sJUqUkDvuuEMuuOCCgLS7fft22bx5s1StWlVuvPHGgLRJIwgggAACoSuQmpoqCxYsMB28/fbb5cILLwzdztrUs8TERFm6dKl57dXXYIp7BTZu3ChbtmyRI0eOSJ06dSQzM9O9GIwcAQQQQCAsBEiAhsU00UkEQk/g22+/lXvvvdd0TBOgq1atCkgn+/TpI59++qlpa9iwYfLSSy8FpN0WLVrI8ePHTVuaCL3qqqsC0i6NIIAAAgiEpsDgwYNl5MiRpnPPPfecjBkzJjQ7amOvevbsKdOnTzcR3333Xbn88sttjE6ocBFISkqSZs2anZP0bNCgQbh0n34igAACCLhUgFPgXTrxDBuBogroUSCe4kkMem47+TdY7VrHaO2Dk2MlNgIIIIBA6ApYXwusrxGh2+Oi98w6Zuty0SMTIZwEkpOTz0l+at/PnDkTTkOgrwgggAACLhQgAerCSWfICISzQLFixcK5+/QdAQQQQCBCBHg9ipCJZBgIIIAAAggg4AoBEqCumGYGiQACCCCAAAIIIIAAAggggAACCCCAgDsFSIC6c94ZNQIIIIAAAggggAACCCCAAAIIIIAAAq4QIAHqimlmkAgggAACCCCAAAIIIIAAAggggAACCLhTgASoO+edUSOAAAIIIIAAAggggAACCCCAAAIIIOAKgShXjJJBIoBASAosWbJENm/eLDVq1JD27duHZB/pFAIIIIBA8AX27dsn8+bNk6ioKOnSpUvwOxQhPTh27JjMmDHDjObee++VSpUqhe3Ivv/+e9m9e7c0aNBAbr/99rAdRzA7fvr0aZk2bZpkZGTIXXfdJTVr1gxmd85rW680P2XKFElNTZU2bdpI/fr1z6vDivAROHLkiMycOVP0gnKdO3eWChUqhE/n6SkCCISlAAnQsJw2Oo1A+Avom1h985qZmWkGs337drn88svDf2CMAAEEEEDAdoF+/frJV199ZeIeOHBAWrZsaXsbbgw4ePBgee+998zQN2zY4F0ON4uEhASTsNN+azIlKSkp3IYQEv0dO3asPP/886YvnTp1MsmpkOjY/3Vi8uTJ0qNHD3OrVatWsnTp0lDqHn3xU+DVV1+V8ePHm722bt0qo0aN8jMC1RFAAAH/BDgF3j8vaiOAgE0C6enp3uSnhtSjDigIIIAAAgjkJpCcnOxdzeuFl6LIC1ZLq3GRAwc4gHUc2dnZ5gjBAHchIpqzOobi/cHaJ+tyROC7cBChfn9z4ZQwZAQiXoAEaMRPMQNEIDQF9AgNCgIIIIAAAggggAACCCCAAAIIIOC0AAlQp4WJjwACCCCAAAIIIIAAAggggAACCCCAAAJBEyABGjR6GkYAAQQQQAABBBBAAAEEEEAAAQQQQAABpwVIgDotTHwEEEAAAQQQQAABBBBAAAEEEEAAAQQQCJoACdCg0dMwAggggAACCCCAAAIIIIAAAggggAACCDgtEOV0A8RHAAEEEBDZsWOHjB8/vlAUv/zyi8yZM0fWr18v5cuXlxIlSkijRo1Er3RLsUdgw4YNMnPmTImOjpbMzEx7gkZwlOnTp0tsbKzUrFlT/va3v0XwSEW2b98uX375pXnc/f3vf5cqVapE9HjtHNzs2bNl9erVUq1aNenZs6cU9uJ3H330kZmHgvqmbU2dOrWgao5s1ytSDx061MTu3r271KhRw5F2ghE0MTFRBg8eLFFRUXLmzJlgdCHs2jx69Kj8z//8j2RkZEiXLl3kyiuvDLsxhGuHrfYPPvigXHXVVeE6FPqNAAIIIGCzAAlQm0EJhwACCOQm8Nprr8nkyZNz21TguqefflrWrl17Xj1NhlLsEejfv78sWLDABLvsssvsCRqhUVJSUkQ/VHrKLbfcIldccYXnZsT9HTRokEyZMsWM6/Tp0zJ8+PCIG6MTA9IvaDp37uz9QqF58+bSrFkzv5vavHmzPPnkkz7t9+yzz8rKlSt9qmt3Jf1CYMaMGSbs4cOH5b333rO7iaDFW7ZsmUycONG0X7t27aD1I5waHjdunOhzh5Z169aZL9jCqf/h3Fervb53mjVrVjgPh74jgAACCNgowCnwNmISCgEEEMhLID09Pa9NBa7Pa1+OAC2QzucKVmNc82fTI5qsxWpnXR8py9bxWZcjZXxOjUMfR9ajqQtr589+/tS1e9xnz571hgxmP7ydsHEhKyvLG43nRy9FvgtpaWne7ZF2f/AOLEQXrN7W5RDtLt1CAAEEEAigAAnQAGLTFAIIIIAAAggggAACCES2QGF/7iGyVRgdAggggAACwRUgARpcf1pHAAEEEEAAAQQQQAABBBBAAAEEEEAAAQcFSIA6iEtoBBBAAAEEEEAAAQQQQAABBBBAAAEEEAiuAAnQ4PrTOgIIIIAAAggggAACCCCAAAIIIIAAAgg4KEAC1EFcQiOAAAIIIIAAAggggAACCCCAAAIIIIBAcAWigts8rSOAAAJ/CGzbtk3ee+890avMPvXUU1K6dOk/Ntq8NGvWLJk3b57ExMTIoEGDbI4eWeF0PoYPHy579+6VJk2aSO/evSNrgCE4mn//+9+yc+dOufLKK6VPnz4h2MOidWn58uXy+eefS8mSJcWuq/ROnjxZFi1aJBUrVjTPIUXrIXsjgAAC4S9w9uxZGTBggJw6dUo6duwoHTp0CP9BMQIEEEAAAQQKKUACtJBw7IYAAvYLvP/++zJ27FgTODU1VV5++WX7G/m/iP379zcJJr15/fXXO9ZOJAT+7bff5JVXXvEO5bHHHpOyZct6b7Ngr8CePXvkn//8pzfoX//6V6lUqZL3diQsDB06VObPn2+GUrNmTVuGpIn5pKQkE6tEiRK2xCQIAgggEM4CaWlpMmrUKDOExYsXkwAN58mk7wgggAACRRbgFPgiExIAAQTsEsjIyPCGyszM9C47sWCNb112oq1wj5nTJ+ftcB9fqPU/p6/1cRFqfS1sf6xj1COM7SjWmHbEIwYCCCAQ7gLW59dIfC0J9/mh/wgggAACgRUgARpYb1pDAIF8BIoVK5bPVjYhgAACeQvw/JG3DVsQQAABBBBAAAEEEHC7AAlQt98DGD8CCCCAAAIIIIAAAggggAACCCCAAAIRLEACNIInl6EhgAACCCCAAAIIIIAAAggggAACCCDgdgESoG6/BzB+BBBAAAEEEEAAAQQQQAABBBBAAAEEIliABGgETy5DQwABBBBAAAEEEEAAAQQQQAABBBBAwO0CJEDdfg9g/GEtsHHjRnnggQfkvvvukwULFoT1WJzs/PHjx6Vbt25yzz33yIcffuhkU8RGAAEEQlpg3rx5cu+998qDDz4ov/32W0j3lc6FtsDkyZNl+vTpod1JeocAAgg4KLBkyRLzOez++++XNWvWONgSoRFAwA6BKDuCEKPwAgkJCZKYmCgpKSnmX6lSpaRcuXISExMjFStWFL1NQSAvgc8//1y+/vprs7lEiRLStm3bvKq6ev3ChQtFrbTom5NevXq52oPBI4CAewXeffdd+f777w1Ao0aNpGXLlu7FYORFEoiLi5Ndu3YVKQY7I4AAAuEsMH78eJk5c6YZwqWXXirNmjUL5+HQdwQiXoAEaICn+NSpUzJx4kSZNGmSbNq0SfR2XiUqKkoaN24sLVq0kA4dOsjdd98txYoVy6s6610ocPbsWe+os7KyvMssnCtgdbIun1uLWwgggEDkC1ifA3ndiPz5dnqE1vuT020RHwEEEAg1AevrKM+HoTY79AeB8wU4Bf58E0fWHDp0SHr37i3Vq1eXZ555RlasWJFv8lM7kZmZKevWrTOn7GoCtEmTJjJ37lxH+kdQBBBAAAEEEEAAAQQQQAABBBBAAAEEIlGAI0ADMKv6+4N33nmnxMbGelvTIzmrVasmNWvWlMqVK0vp0qUlOjraJD3T0tLk5MmTEh8fL3v27JH09HSznx4xqr9hOGrUKOnTp483FgsIIIAAAggggAACCCCAAAIIIIAAAgggkLsACdDcXWxbe/r0aWnfvr03+dm8eXPp16+f+a1GTXwWVDIyMmTVqlXmtPkJEyaI3u7bt69cccUV5pT4gvZnOwIIIIAAAggggAACCCCAAAIIIIAAAm4W4BR4h2d/2rRp5nR3baZr166ycuVK89eX5KfuU7JkSWnVqpV4fmBZb2t54YUXhN8ZMRT8hwACCCCAAAIIIIAAAggggAACCCCAQJ4CJEDzpLFnw/Lly00g/f1OvfhR8eKFJ9eLIL311lsmnp5Ov3v3bns6SRQEEEAAAQQQQAABBBBAAAEEEEAAAQQiVKDw2bgIBbF7WMuWLTMhO3bsaI7mLGr8+++/3xsiLi7Ou8wCAggggAACCCAQKIHBgwfLDTfcIH/6059EL/TohvLEE0+YMet7Mc/vs7th3AkJCY4OUw8Q0PuSftGvv5vvKXrRUF3fqVMnSUlJ8azmLwJBFfjPf/4jLVq0kNatW3t/4szODj377LPe+73+lBoFAQQQQMA+AX4D1D7LXCPt27fPrK9Ro0au2/1dWbFiRZNI1d8CTU1N9Xd36iOAAAIIIIAAAkUWGDt2rBw+fNjE0bNd7rvvviLHDOUAycnJ8vHHH5su/vrrr+KmL6HPnDnj6NTMnTvXm1BW23bt2pmLgn7wwQfedvVCoBQEQkHg008/Nddn0L7MmzdPGjdubFu3srKy5P333/fG0/u9JlspCCCAAAL2CHAEqD2OeUapV6+e2bZixYo86/izQT9kaPJTy7XXXuvPrtRFAAEEEEAAAQRsEcjOzvbGsS57V0bYQs4x5rwdYcMN6HCslp5lz19PR3Le9qznLwKBFrBeg8Hp+6XT8QNtR3sIIIBAsAVIgDo8A82aNTMtTJ06VRYtWlSk1pKSkqR///4mRoUKFaROnTpFisfOCCCAAAIIIIAAAggggAACCCCAAAIIRLoACVCHZ/jFF180p6ynpaWZ3zDSq7kX5lSi9evXm1OC9K+WXr16OdxzwiOAAAIIIIAAAggggAACCCCAAAIIIBD+AvwGqMNzqKfADx8+XAYOHCgnTpwwiUtdvvXWW+Waa64xR3FWqVJFSpcuLaVKlTK/eaTJ0pMnT0p8fLzs2LFDFi9eLNbfPtLfRho6dKjDPSc8AggggAACCCCAAAIIIIAAAggggAAC4S9AAjQAczhgwADRixf17t3bXLjo1KlTMmfOHPPP3+bvuusumTRpkhQvzsG7/tpRHwEEEEAAAQQQQAABBBBAAAEEEEDAfQJk0QI05z169JA9e/bISy+9JFWrVvWr1ejoaHP6/OzZs+W7774T/f1PCgIIIIAAAggggAACCCCAAAIIIIAAAggULMARoAUb2VajcuXKMmzYMPPv999/l5UrV8r27dvN6e56erweGVqyZEkpW7asxMTEiJ4+f9VVV0nTpk3NOts64meg0aNHy5gxY8R61UM/Q3ir64WctOjp/ZTAC0yYMEEGDx5sjiAeO3aslCtXLvCdoEUEEMhTYMaMGbJz5848t7MBgUAJ6PuUjh07ir5ud+7c2bwP0LY3b94sDzzwgBw7dsyvrrzwwguye/duueyyy+SHH37wa99wqxwXFye1a9c2r7XvvfeetG/f3rEhjBs3TlavXn1e/IceekiWL19uvnRX7/Lly59Xx44Vdrw3tKMfhYlRv359+eyzz+Smm24qzO7sg4BrBfQ555FHHhH92bann35a9Pk9nMvSpUule/fukpGRYS44/Nxzz4XFcFasWCHdunUz1xfp06eP9O3bNyz6TScRCKYACdAg6esbY/0XDmXr1q2yd+9eW7uqyV5K4AXmzp1rjkTWlr///nvp0qVL4DtBiwggkKdAamqq/PLLL3luZwMCgRJYtWqV9/fHp0+f7k2ALlu2TLZt2+Z3N5YsWWL22bdvn/ny1+8AYbSDfsmrZ/1o0ddaJxOgmuTU5w1ryc7OlmnTpplV6q3v40jyWYX+u6y/s79w4UJszqdhDQL5CixatMj7PD5z5sywT4AuWLDA++XzrFmzJFwSoPr8pc9jWnQeSIDme7dlIwJGgAQod4QCBfTK9a+//rroG+qiFo3zySefmCNbixqL/f0XsGMO/W+VPRBAAAEEwlmA145wnj2x5f1beAvQewQQcEqA1wenZImLAAJOCJAAdUI1wmLqBZeqV69uy6guuugiW+IQBAEEEEAAAQQQQAABBBBAAAEEEEAAAV8EuAiSL0rUQQABBBBAAAEEEEAAAQQQQAABBBBAAIGwFCABGpbTRqcRQAABBBBAAAEEEEAAAQQQQAABBBBAwBcBEqC+KFEHAQQQQAABBBBAAAEEEEAAAQQQQAABBMJSgN8AdXjaKleu7NiPzx89etTh3hMeAQQQQAABBBBAAAEEEEAAAQQQQACB8BbgCFCH5y8xMVGOHTvmyD+Hu054BwU2btwoFStWlJIlS0r37t1taykjI0MaN25s4jZs2FBSU1Nl3LhxUqpUKSldurTs3bvXtrYIhIAvAllZWaJfBOl9/aGHHvJll1zrzJkzRy688EKJjo6WYcOG5Von0lfq60nt2rWN5ZNPPhnpw2V8CLhGYODAgXLBBRdITEyMJCcnu2bcDBSBYAlMmDDBvDfW98cfffRRsLpBuwgggAACARbgCFCHwZcsWSI9evSQuLg4b0tVq1aVEiVKeG+z4D6BDRs2iCYztCxatMg2AD0qeNOmTSbeb7/9JgkJCbJ06VJJT0836zQZT0EgkAJnz54Vz9HqRbmvr1y5UlJSUkzX9XnVjWX37t2yZ88eM/QtW7a4kYAxIxCRAosXLxb9AlP/lS1bNiLHyKAQCCWBZcuWed8b6/Itt9wSSt2jLwgggAACDgmQAHUI1hP2pptuEv3gftddd8mqVavM6scff9y1RzB5XPiLAAIIIIAAAggggAACCCCAAAIIIIBAIAQ4BT4AyuXLl5cff/xRrrzyStPaiBEj5Oeffw5AyzSBAAIIRIZAsWLFImMgjAIBBBBAAAEEEEAAAQQQQCDgAiRAA0Suv+v0ySefSPHixUVPCX300Ufl5MmTAWqdZhBAAAEEEEAAAQQQQAABBBBAAAEEEHCnAAnQAM57y5Yt5dlnnzUt6m8zvv/++wFsnaYQQAABBBBAAAEEEEAAAQQQQAABBBBwnwAJ0ADPuV69uE6dOqbV0aNHc7XPAPvTHAIIIIAAAggggAACCCCAAAIIIICAuwS4CFKA5/vCCy+UL7/8UmbPnm1a1qv6Nm7cOMC9oDkE8hfQq8VfcMEFctFFF+Vfka2OCWRnZ4tnHuxqhJ/dsEuSOAgg4BaBzMxMOXr0qOhzcqCL53WgVKlSgW466O358nqVlJRk5kV/az9nSU9P917lO+c2boeWQEpKiui/ChUqSFpamndZfzbMrpKRkSEnTpww72ujo6PPCattnjlz5px13LBHQM2zsrLM3Oqy/gxcbo/X3FpLTEyUEiVKSLly5XLb7Pc6bVtjlilTxvzzO4ANO6Smpsrp06eNgY7NyWK1d7IdYiMQbgL2vbKE28iD2N8WLVrIG2+8Yf6R/AziRNB0rgI9e/aUSpUqif5urSdRn2tFVjoqMH36dDMP+sYvOTnZlrY6deokP/30ky2xCIIAAgi4QeCxxx6TypUrS926dQM+3I8//tj7OqAJPbeUadOmmXHnN94dO3aYJIImzUaOHHle1SZNmsj3339/3npWhJbA1q1bTXJMH2PNmjWTiy++2Dze2rVrZ1tHNQF3+eWXm7hVq1Y1STBr8KlTp0qbNm2sq1i2QeDTTz8181mxYkX585//bJb18Tp06NACo7/44oui++n9YeLEiQXW96VC27ZtzX1AE7CxsbG+7GJrHT3oScek9/XmzZvbGjtnsM8++8xr/9JLL+XczG0EXC1AAtTV08/gEThfYNOmTd6VW7Zs8S6zEFiBQ4cOmQb1CCA7P/jqkUwUBBBAAAHfBPbt22cq2vVFlG+t/rfWgQMHzIImcPQINreUzZs3FzhUPbrJU6zvWzzrrNs96/gbegI7d+70vseJi4vz3s9zm9PC9v7UqVOyd+9es7seNazXYchZ9Iwbir0C1sfxb7/95g3uy9xa61jjeIMUYsETU4/21S9QAl127dolegSoFrvGlNcYrPGty3nVZz0CbhIgAeqm2WasCCCAAAIIIIAAAggggAACCCCAAAIIuEyABKjLJpzhIoAAAggggAACCCCAAAIIIIAAAggg4CYBEqBumm3GigACCCCAAAIIIIAAAggggAACCCCAgMsESIC6bMIZLgIIIIAAAggggAACCCCAAAIIIIAAAm4SIAHqptlmrAgggAACCCCAAAIIIIAAAggggAACCLhMgASoyyac4SKAAAIIIIAAArkJnD17VvSqzJTACezfv19SUlIC1yAt5SoQHx8vepXo5OTkXLeH2kq9krVe3TkYV7MOlMWePXtEx+lPOXHihBw+fNifXWypq/eftLQ0W2KFaxC1j42NlYSEhIAOIedjV6+0ro/l33//3fF+HDlyRJKSkhxvJ9QaSE9PN88/vF8ItZmhP74IkAD1RYk6CCCAAAIIIIBAhAvoh5rLL79cvv766wgfaWgMLzs7W2rWrGk+rIdGj9zZi3Xr1kmtWrWkcePG0qpVq7BA6N69uzRq1Ejq168vX375ZVj02Z9OauKzdu3acuDAAX92kyZNmshHH33k1z5FrbxmzRpz/3F7Mkjt9Z8+pwXKwmOvj93WrVubqezQoYN5LNepU0cWLFhQ1OnNc39NfOp9dP78+XnWidQNf/nLX8zzD+8XInWGI3tcJEAje34ZHQIIIIAAAggg4JeAHnlFCYyAHnVLCa7Avn37RJPRWvbu3RvczvjYurWfkfh4zcrK8lHi3GpWl3O3OHdLj0D03H+cayX0I3vsde4CdRSo9bHreRx4+qFi1mW7BY8dO+bao/etrh53u32Jh4BTAiRAnZIlLgIIIIAAAggggAACCCCAAAIIIIAAAggEXYAEaNCngA4ggAACCCCAAAIIIIAAAggggAACCCCAgFMCJECdkiUuAggggAACCCCAAAIIIIAAAggggAACCARdgARo0KeADiCAAAIIIIAAAggggAACCCCAAAIIIICAUwIkQJ2SJS4CCCCAAAIIIIAAAggggAACCCCAAAIIBF0gKug9oAMIRJDAyZMnZdWqVRIdHS2tWrWS4sX/+x1DYmKirF27VsqUKSM33XSTTyPWK0ouW7ZM0tLS5Prrr5eLL77Yp/2CVWn58uXmaojXXXedVKhQId9u6NiWLFmSbx23bDx16pS5z5QsWZKriLpl0kNknIcOHZKNGzea55bmzZuHSK/oBgIIBEpg+/btsn///kA1Z2s7qamptsbLGezo0aOybt06ueiii+TGG2/MudnR2ykpKbJy5UrzHvLmm2/2ua3Vq1fL8ePHJSkpyed9dP63bNkilSpVkmuvvdbn/XytuGnTJjlw4IDUr19fateu7etuYV9P39v9+OOPolfIrlWrllxzzTVSuXJlY6Em5cuXN+/t/R3omTNnzGcDfR+tnydKlSrlbwjq2yCQnp4uK1assCFSZIUI5vNmZEkyGicFSIA6qUts1wn06NFDvvnmGzPu8ePHy5NPPmmWu3TpIgsWLDDLU6dO9cnls88+E42npWPHjvLtt9/6tF8wKiUnJ5uEr7Z9++23y88//5xvN/bu3St33313vnXcslHvI1OmTDHDrVu3rluGzThDQODOO++U2NhY05OFCxeGQI/oAgIIBEpAEzSNGzcW/SAfjuXgwYOOdvvee+81iSZtZNasWXLPPfc42p41eL9+/UTfQ2p54403pG3bttbNuS4vXbpUbrnlFrPt0ksvzbVObiv1y3pN0mnRBKqdZffu3eY+pjFjYmJMctZzYICd7YRirHHjxomO31NatGhhktpt2rSRbdu2mdV6IIA/CW7daejQoeY+ocv/+Mc/5J133tFFSoAFXn31VXnzzTcD3GroN6fPk57EsH5u1c+vFARCTYBT4ENtRuhPWAvoN1+ecuTIEc+i5LXsrZDLQmH2ySVMQFZlZWV527H227syx4J+g035r4DVKyMjAxYEAiZgve9ZlwPWARpCAIGgCegXl+Ga/AwEmvU50bociLat7yWty/m1ba2nZyP5Wqz72T3OY8eOebuhfXLTez/9gsFaPM5WY886a72Clou6f0Hx2e6bgHUefNvDHbWs92mM3DHn4ThKEqDhOGv0GQEEEEAAAQQQQAABBBBAIOQEihUrlmuf8lqfa+VcVhZ1/1xCsgoBBBBwlQAJUFdNN4NFAAEEEEAAAQQQQAABBBBAAAEEEEDAXQIkQN0134wWAQQQQAABBBBAAAEEEEAAAQQQQAABVwmQAHXVdDNYBBBAAAEEEEAAAQQQQAABBBBAAAEE3CVAAtRd881oEUAAAQQQQAABBBBAAAEEEEAAAQQQcJVAlKtGy2ARQACBXAQSEhIkNjY2ly0iehXD+fPn57otlFeePXtWvvrqK9G/eZXMzEz58ssvTZ3U1NS8qgVs/aJFi6R58+ZSq1atgLVJQ+EpoFfYnTVrltxzzz3CRSHCcw7pNQKRJpCenm6el/Rq5zmvAl7YsW7ZskW2bt1a2N1z3U/jrV69WsqXL5/rdidX6vutn3/+WS644ALp1KmTk03ZFvunn34S7Xfjxo3l2muvtS2uNdDGjRtl1apVsmPHDutqVy4vXLhQ4uPjgzb2rKwsmTJliujfm266SVauXGneJ//pT3+SSpUq+dQvvY/v27dPrr76amnWrJlP++zevVuWLl0qZcuWNe9tSpQo4dN+ham0bNky2blzp9SrV09atWpVmBDsg0DYCpAADdupo+MIIGCXwKhRo+TQoUO5htu1a5f8+c9/znVbKK88evSodOnSJd8u6pufRx55xNRp0KBBvnUDsfH999+XDRs2yOLFiwPRHG2EsYB+MXHvvffKnDlzpH379mE8ErqOAAKRIvDhhx9Knz59zHDq169vy7B++OEHkzC0Jdj/BdHnTE22aClVqtT/rQ3Mn169esns2bNNY2PGjJG6desGpuFCtqIJ6DvvvNPsXaZMGUlOTi5kpPx3u+222+T48eP5V3LBVn3P3aZNm6COVJOvDz/8sOmDJjA3b95slrt37y4TJkwosG/bt2+Xtm3bmnrR0dHmPhMVVXDKpWvXriYJrjtqAvahhx4qsK3CVDh27Jjccsstkp2dLcWLF5fDhw9LxYoVCxOKfRAIS4HiYdlrOo0AAgjYKBAKRz/aOBwTKr8jPz1t6RGgnqJHrIRCOXnyZCh0gz6EiQD3lzCZKLqJgAsErM9HejSoXcX6Wm1HTGs/NQkSyGJt27ocyD7405a1jykpKeaoQH/297WutR1f94nEenYdOV0UGz3y01NOnz7tWRRf58haT58HMjIyvDHyW7DuZ13Ob5/CbNMxeR73+llB79cUBNwkQALUTbPNWBFAAAEEEEAAAQQQQMB2AX6Ow3ZS1wTkvuOaqc5zoNwH8qRhAwK2CpAAtZWTYAgggAACCCCAAAIIIIAAAggggAACCCAQSgIkQENpNugLAggggAACCCCAAAIIIIAAAggggAACCNgqQALUVk6CIYAAAggggAACCCCAAAIIIIAAAggggEAoCZAADaXZoC8IIIAAAggggAACCCCAAAIIIIAAAgggYKtAlK3RCIaACwV27NghM2fOlJIlS0rOK3Xq1fX+85//yOHDhwuUWbFihSxZskTKly8vPXr0yLX+Tz/9JGvXrpWqVatKt27dcq0TjJX+XkHwxIkTBXZTY37yyScF1qNCZAnoY+Xjjz/2XqEyskbHaCJNQK+k+umnn8qRI0dEn+8pvgnoa926det8q2xzrblz50qjRo3kuuuuszlyaIc7duyYTJw40VzF+oEHHpDo6OiQ7PD69etl2bJlIdm33DqVnJwsEyZMkLS0NJ/e6+UWg3XuFNiyZYvExcVJpUqVivSeZ/r06bJ169awR9QrwOtzVGGLvh6PHz9ejh8/7leIhQsXytKlS/3aJxCV9Qry+hlSXe644w7zmqXPjfqvQoUK531W1M+gY8aMMVed99cgt/F88cUXkpCQINdcc420a9cutyqsQyAsBUiAhuW00elQEhgwYIDMmjXLdKl27drndO3nn3+WJ5544px1ed14+OGHZc+ePWZz9erVc63WoUMH0RdELfoBLlTK6dOn/epKUlJSgfVjY2Plm2++KbAeFSJL4MCBA+Yxo18oUBAIdQH94urxxx833SxdunSodzdk+te3b98ifeAvykCmTZsm27Ztkw0bNhQlTNjt+/bbb8uwYcNMv/WL1FGjRoXkGF577TXv+5yQ7GCOTukXIM8995xZW6dOnRxbuYlA3gIjRowwyS2tUbx44U7K3L9/vzz44IN5NxJGW1avXi3bt28vdI8zMjKkV69efu/fqVMn7zz4vbODO3z99dfy9NNPmxaaNm0q+uWQzrW+T9ZSq1Yt89fznyYr+/TpY27Wq1fPs7pQfzdu3CiPPvqo2TcqKsp8wVOiRIlCxWInBEJNoHDPtqE2CvqDQBAFUlNTva3nPALIus1bKY8Fa13rsqe6frPpSX7qutzqeOpGwt+cR9NGwpgYg+8Cen+nIBDqAnrUl6fohy+KbwLBfnxH+utnbrNgHbN1Obe6wVx35syZYDbvd9tWS54D/OZz9Q523F+sr0HhjlnU9/2FfV2xPoZDydDaL8+ydb6ty9pv62fQrKysIg3FGlvnpajxitQZdkbAZgESoDaDEg4BBOwRKFasmD2BiIIAAggggAACCDggwHsVB1AJiQACwnMLdwIEnBEgAeqMK1ERQAABBBBAAAEEEEAAAQQQQAABBBBAIAQESICGwCTQBQQQQAABBBBAAAEEEEAAAQQQQAABBBBwRoAEqDOuREUAAQQQQAABBBBAAAEEEEAAAQQQQACBEBAgARoCk0AXEEAAAQQQQAABBBBAAAEEEEAAAQQQQMAZgShnwhIVAQR8FUhMTJTXX39d/L164fz58+X//b//52szEVFvyJAhkpKSUqSx6FUSX3vtNVH3QJWuXbvKvn37bG/Oc1VIDbxmzRpZtWqV7W04HdB6pUmn2/I1/okTJ3ytGrB6sbGx8s4779jS3qlTp+TNN9+UkydP2hJPg+zYsUPGjx9v4ln99HE2atQo29rJGWjt2rXmfl++fHm/n0NzxuL2HwIzZ86UG2+88Y8VDi/pfXLgwIGmFV0uqGj/FixYUFC1sN/ui4UdV5K2C0rfx+jr9MGDB/MMqc8Pb731lpw+fTrPOoHcsGfPnkK/do4YMULS09Nt6a6+futzaM+ePW2J52sQ65W3Bw0alOt7rM8++0zWr18vNWrUkL59+xb64iw67/pa4Sl79+6V1atXe26e89eX9wb79++XN954Q55//nlJSkqSt99++5wYekPfJ+l7Pmv56quvZOXKldZVuS7rmN99991ct/m7Ut97vvrqq5KcnOzvroWqr4/F0aNHm/ee1113nTz66KMmjs73v//9bzly5Ii0atVKHnjggULFL2inH374QX7++edcq1mf7315H6LPJ/3795eSJUtKnz59pGLFimYMR48elejo6FzbCJeVS5YskRkzZkiZMmXOudL6tGnTpHHjxt5h6FXYX3nllVwfn95KBSx89NFHsmXLFrn44osLqOnf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6XMcyiHPWPsqc7zXPrN5iMshritK0xxzzJEcR0K9j9PcyLzSp7zkHfvi/BR5x/uole44XJiP8xKW6VX1W+UTvr/idXE5xMubnVf+lXf9acrmIcQb1x8ty6v3cTmF7Wq9at/xd21R2CJ7fX/JMP7+z54vyFLfJ/oe0asm1Vl9v8fnoXG+dcypd74Q141G5uO81SrD+NiR56n8KH3hcxfqvSzjc56i/eXtW9vq/Hr8+PHxZjXn8+xrbuBXxnUmW5+0bTYPeWmtt4/sesWp35t5v33j+OPyj+ez6dQ22e/abLp1PNE+ta3+8o4t2XSG9zqeqZ7q86/XvPP7EFZ1XevDZ1e/cVU3wvE2nDudddZZbpdddgmb8dqDAjSA9mChDuYsdUMD6G677eZ08GNCAAEEEEAAAQQQQAABBBBAAIHeF6ABtPfLeLrez+LgzuEbb7yRXAlWjwr96aqYrpTo6nzoaTK4c9B7qSvbc6X3BMgRAggggAACCCCAAAIIIIAAAggg0DsCNIB2uCx1q+uFF17oLrroIvfYY4+lt77mJUNd35dZZhm3yiqruE022cRttNFGya2LeWFZhgACCCCAAAIIIIAAAggggAACCCCAAAIDBXgI0kCTtizROGp77rmn+/KXv+z22msvd88999Rs/FQiNE7JQw895M4888ykAXTZZZd148aNa0v6iBQBBBBAAAEEEEAAAQQQQAABBBBAAIFeFKAHaAdKVQNHf/e733WPPvpoujcN2jz//PO7hRZaKBm8WwP3aqBgNXpqEF49wOLVV191L7/8cjpwv3qMbrbZZu6kk04atA8QSjPIDAIIIIAAAggggAACCCCAAAIIIIAAAoNAgAbQNheCnjS28cYbp42f3/zmN90BBxzg1llnnaThs97u9cS9++67L7lt/rzzzkuewKcHCS2xxBLJLfH1tmc9AggggAACCCCAAAIIIIAAAggggAAC/SzALfBtLv0//elPye3u2s0222zj7r333uR1nnnmaWjP008/vVtttdWSp5JfccUVTu81HXrooe6LL75oKA4CIYAAAggggAACCCCAAAIIIIAAAggg0K8C9ABtc8nffffdyR40fqcefjTNNM23OeshSCeeeKLbd999kx6lL774ohsxYkSbc+Dc6aef7k477TRn8XT0t99+O0nvG2+80fZ0swMEEEAAAQQQQAABBBBA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QAABBBBAAAEEEEAAAQQQQAABBBAoJ0ADaDkvQiOAAAIIIIAAAggggAACCCCAAAIIIIBAFwnQANpFhUVSEUAAAQQQQAABBBBAAAEEEEAAAQQQQKCcwHTlghMaATuB9957z40ZM8Y98MAD7tlnn3X//Oc/3aKLLuqWXHJJt/rqq7s999zTDR06tO4Or7zySqe/hx9+2D399NPuS1/6kvva177mdt55Zzd69Gg3ZMiQunEowPPPP++OOeaYJD2aX3DBBd23vvUtt9pqq7kf/OAHbuaZZ64bz+eff+7OP/9898c//jHJ08SJE93KK6+cxLHRRhu5kSNH1o1DAaziaWhnbQp09913J+U455xzunfffbdwL+PGjXOXX3554fpaK3bddVf3zW9+s1aQdJ3KYo011nBvvvmm23zzzd2ZZ56ZriuasSoHq3gs6mhRXtuxvJXPuMpWbmWn+eef3/3Hf/xH7maffPKJO/nkk93tt9/unnrqqaReLr744snxYqeddnLf+c53crfLLrQqB4t4rOpWNo/tfP/222+74447zt13331JOUyZMsUttNBCboMNNnA//elPk++AvP136ljR6LErTqNVOVjFY1G34vxNrfn/+q//ckceeWSy+zvvvNN99atfrZsUnVPonODvf/978n2uDZZaain37W9/2x1yyCFu9tlnrxuH1bFisJVnN9YLi/LMK/Ay5wRffPGF22uvvZxeG5l0zljr+8SiHKzqllU8jbhYhbE679d3ysUXX5ycr+t3iH5z6DeIfkPsvvvubvnll6+Z5KuvvtopjkammWaaKfnNUxTWqhws6pbSaBVPUX47sXzDDTd0119/vTv11FOTz28j+9TvlbFjx7oHH3ww+V2p74IRI0a4tdde2+27777uy1/+ct1oLOuFVTlYxGNVR63iqVsQBECgSKDChMBUEPjNb35TmWOOOSq+Xhb++ZOQyi233FKYug8++KDyox/9qHB7xe1PXiqvvPJKYRxhxQknnFCZfvrpC+NaddVVK++//34Invv62muvVb7xjW8UxjHddNNVfv/73+duGy+0iieOs9PzslpiiSUSi7nmmqvm7o866qhCs1r1Q+suueSSmnHHK7fffvt0P1tvvXW8Knfeqhys4rGoo7kZbdPCVj/j+rzUK/+89b6hIzdHt956a2WxxRarGaeOJ+PHj8/dPiy0KgeL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GkD7uPDJOgIIIIAAAggg0EmBbAPoyJEjB+xe1+b/9a9/uUmTJrlXX33VffLJJ2mYFVZYwd15551upplmSpcxgwACCCCAAAIIIIBAPQEaQOsJsR4BBBBAAAEEEEDARCDbAFrvRiQ1fh5yyCHu1FNPTfe//fbbuwsuuCB9zwwCCCCAAAIIIIAAAvUEaACtJ8R6BBBAAAEEEEAAAROBsg2gYaennXaa23vvvZO3s846qxs/frybZhqe5Rl8eEUAAQQQQAABBBCoLcCZY20f1iKAAAIIIIAAAghMZYFtt93WTTvttEkqPvzwQ/fYY49N5RSxewQQQAABBBBAAIFuEuAp8N1UWqQVAQQQQAABBBDoQ4Hhw4e7VVZZxd19991J7u+//3637LLLJvO33nqru+SSS5L5Y4891k2YMMHpddy4cW7mmWd26623njvwwAPdQgstVCX32WefuXPPPdcprocffti9/PLLbskll3TLL7+8W3fddd3mm29eFT5+s99++yVjk84777zuyCOPjFdVzT/yyCPujDPOSJZtsskmTn/Z6fPPP3eXXXZZ8oCn5557zr322mtJWpdeemmnvx122IEHP2XReI8AAggggAACCJQU4Bb4kmAERwABBBBAAAEEEGhOoNlb4LW3lVdeOWms1Pxf//pX973vfU+z7vTTT3d77bVXMq8Gx8022yxpzEwW/O+/3/3ud+4nP/lJuujJJ590P/rRj9xDDz2ULsvObL311knj5Zxzzpld5XQb/kcffeS++tWvumeffXbA+rDgyiuvTBtSDz/8cHfYYYeFVcnru+++69Zaay33+OOPVy2P38wxxxxJHtULlgkBBBBAAAEEEECgOQF6gDbnxlYIIIAAAggggAACHRKYOHFiVSPhN77xjdw9H3TQQWnjp26ZV+9KPTF+q622SsPfdtttbsMNN3STJ09OlulJ9Ouvv75bZJFFklvrr7/+evf0008nPTLvvfdep0bV2WefPd3eakZPuldjbWj8XG211dymm27q1KtUt/grHU888UQy3qkaa9WbdfTo0Va7Jx4EEEAAAQQQQKCvBGgA7aviJrMIIIAAAggggEB3CehJ8erhOWnSpCThCy64oBsxYkRuJm666aZk3W9+85vkNnY1Xr700ktJj01toEbHPffcM238POGEE9wBBxxQ9UAlPXl+9913d+eff37SmHrEEUe4MWPG5O6vlYW69f6ee+5JotADnk455ZSq6E466SR3/PHHu5/97GfJct2uTwNoFRFvEEAAAQQQQACBhgV4CFLDVAREAAEEEEAAAQQQsBRQg2Ten24NV+PlRRdd5FZccUX3+9//Pt3tqaeeWtVgma7wM3oy/AUXXOA23nhjN8MMMyS3zf/gBz9Ig5x55plpj0vdEq8eo9mnyQ8bNsydd955btVVV0220xPon3rqqTQOq5k777wzjWrLLbdM5+OZffbZJxkPVL1C9eR7DSHAhAACCCCAAAIIIFBegB6g5c3YAgEEEEAAAQQQQMBAYPrppy8Vy3bbbZeOqZm34UorreR0K3nRpPFCw3TUUUeF2dxX9QzVrfN6WNLFF19c82FHuRHUWbjAAgukIdQwO2rUqKTRNl3oZ9QY+8ILLzjdzs+EAAIIIIAAAggg0LwAPUCbt2NLBBBAAAEEEEAAgQ4I6GFDV199tbvwwgtr7k3hiiaNB6rGRE2LLrqom3/++YuCJsv10KUw1XrQUQhT9lVPpx8yZEiymZ5ir6fa6yFJui1eaQ0TjZ9BglcEEEAAAQQQQKB5AXqANm/HlggggAACCCCAAAItCGy++ea5W88111zJQ4kWXnjh5HWVVVZxQ4cOzQ0bL1x88cXjt1XzL7/8svv000+TZW+88YbTWKKNTu1oAJ1nnnmSp7tr/E81eD7zzDNJL9MjjzzSDR8+3KmBdKONNkrG/ZxtttkaTSrhEEAAAQQQQAABBHIEaADNQWERAggggAACCCCAQPsFLr/8ctOd1GrUfO6559J9aSzN119/PX1fb+b555+vF6Sp9XrY0kILLeQOPPDA5MnzIZL333/fqVeo/nQbvBpJjznmGG6FD0C8IoAAAggggAACJQVoAC0JRnAEEEAAAQQQQACBwSmQfaBRnMqZZ545favb2zWeaKNT0VilekJ9rUkPeKo36YFN+rvvvvvctdde666//nqnJ8R/8cUXyaZ6Kr2eVv/AAw8kwwDMNNNM9aJkPQIIIIAAAggggEBGgAbQDAhvEUAAAQQQQAABBHpPYIkllqjK1F577VX1vpk3ekBSrWnChAm1VletU6Os/g4//HCnHqA33XST++Mf/+iuuuoqp4bWm2++OVk2evToqu14gwACCCCAAAIIIFBfgIcg1TciBAIIIIAAAggggECXC2jMzTnmmCPJxaOPPpo83b1WliZNmuRuuOGG5Nb0yZMnVwUNPUKzy6sC+TcvvvhiuijbW1TxP/TQQ+7GG29Mw4QZjQG69dZbuyuuuCK59T0sV+9QJgQQQAABBBBAAIHyAjSAljdjCwQQQAABBBBAAIEuFBg1alSSajVcnnrqqTVzcNZZZ7kNNtjALbXsAukiAAAItUlEQVTUUm7HHXesChseSvTuu++69957r2pdeKPb36+55prwdsDrcsst51ZccUW3ySabuIkTJw5YHxYoDWF69dVXwyyvCCCAAAIIIIAAAiUEaAAtgUVQBBBAAAEEEEAAge4VOO6449IHCR122GHu8ccfz83M008/7Y4++uh03T777JPOa2b55ZdP3qtXpx5glDftvPPO7uGHH85blSz7/ve/n7zqNvp4X9kNxo0bly4K+00XMIMAAggggAACCCDQkAANoA0xEQgBBBBAAAEEEECg2wWWXXZZt8ceeyTZ+Oijj9zIkSPdiSee6J599tlknM3x48e78847z6299tppz041VK622mpVWd91113T9xdccIHT09x1u7xuedf2m266qdPyBRZYIA2Xndlpp53cLLPMkiw+/vjj3U9/+lP3xBNPJLfm6wFIr7zyivv3f/93p4ZaTQob0p4s4B8CCCCAAAIIIIBAwwJD/JXr2o+vbDgqAiKAAAIIIIAAAgggUCwwZcoUN2zYsDSAxWno6aef7sIDjc455xynhsVa08cff+wOOOAAd/bZZ1cFGzp0qPv000+rlq277rrJbewzzDBD1XKlWw8juvrqq6uWx2/00KXrrrvOjRgxIlmshxuFxswQTttvvvnm6RPftVxPsp922mmrxihddNFFk/FA1YDLhAACCCCAAAIIIFBegB6g5c3YAgEEEEAAAQQQQKBLBWaeeWan8T318KFlllkmvSU+bvxUo+W5556bNGBmGz+V7SFDhrgrr7zSnXDCCW7uueeuktD4oGocvfPOO93CCy9ctS77Rj1F77vvvqQRVHFqUu/P8HT5L33pS26bbbZx999/v6PxM6vHewQQQAABBBBAoHEBeoA2bkVIBBBAAAEEEEAAgR4T+OSTT9xTTz2V3AavJ8UvtthibsEFF0x6Yjaa1ZdffjkZ71MNnmqoVC/OstMHH3zgFI9ufZ9uuuncCius4Oaff/6y0RAeAQQQQAABBBBAIEeABtAcFBYhgAACCCCAAAIIIIAAAggggAACCCCAQG8IlL883Rv5JhcIIIAAAggggAACCCCAAAIIIIAAAggg0AcCNID2QSGTRQQQQAABBBBAAAEEEEAAAQQQQAABBPpVgAbQfi158o0AAggggAACCCCAAAIIIIAAAggggEAfCNAA2geFTBYRQAABBBBAAAEEEEAAAQQQQAABBBDoVwEaQPu15Mk3AggggAACCCCAAAIIIIAAAggggAACfSBAA2gfFDJZRAABBBBAAAEEEEAAAQQQQAABBBBAoF8FaADt15In3wgggAACCCCAAAIIIIAAAggggAACCPSBAA2gfVDIZBEBBBBAAAEEEEAAAQQQQAABBBBAAIF+FaABtF9LnnwjgAACCCCAAAIIIIAAAggggAACCCDQBwI0gPZBIZNFBBBAAAEEEEAAAQQQQAABBBBAAAEE+lWABtB+LXnyjQACCCCAAAIIIIAAAggggAACCCCAQB8I0ADaB4VMFhFAAAEEEEAAAQQQQAABBBBAAAEEEOhXARpA+7XkyTcCCCCAAAIIIIAAAggggAACCCCAAAJ9IEADaB8UMllEAAEEEEAAAQQQQAABBBBAAAEEEECgXwVoAO3XkiffCCCAAAIIIIAAAggggAACCCCAAAII9IEADaB9UMhkEQEEEEAAAQQQQAABBBBAAAEEEEAAgX4VoAG0X0uefCOAAAIIIIAAAggggAACCCCAAAIIINAHAjSA9kEhk0UEEEAAAQQQQAABBBBAAAEEEEAAAQT6VYAG0H4tefKNAAIIIIAAAggggAACCCCAAAIIIIBAHwjQANoHhUwWEUAAAQQQQAABBBBAAAEEEEAAAQQQ6FcBGkD7teTJNwIIIIAAAggggAACCCCAAAIIIIAAAn0gQANoHxQyWUQAAQQQQAABBBBAAAEEEEAAAQQQQKBfBWgA7deSJ98IIIAAAggggAACCCCAAAIIIIAAAgj0gQANoH1QyGQRAQQQQAABBBBAAAEEEEAAAQQQQACBfhWgAbRfS558I4AAAggggAACCCCAAAIIIIAAAggg0AcCNID2QSGTRQQQQAABBBBAAAEEEEAAAQQQQAABBPpVgAbQfi158o0AAggggAACCCCAAAIIIIAAAggggEAfCNAA2geFTBYRQAABBBBAAAEEEEAAAQQQQAABBBDoVwEaQPu15Mk3AggggAACCCCAAAIIIIAAAggggAACfSBAA2gfFDJZRAABBBBAAAEEEEAAAQQQQAABBBBAoF8FaADt15In3wgggAACCCCAAAIIIIAAAggggAACCPSBAA2gfVDIZBEBBBBAAAEEEEAAAQQQQAABBBBAAIF+FaABtF9LnnwjgAACCCCAAAIIIIAAAggggAACCCDQBwI0gPZBIZNFBBBAAAEEEEAAAQQQQAABBBBAAAEE+lWABtB+LXnyjQACCCCAAAIIIIAAAggggAACCCCAQB8I0ADaB4VMFhFAAAEEEEAAAQQQQAABBBBAAAEEEOhXARpA+7XkyTcCCCCAAAIIIIAAAggggAACCCCAAAJ9IEADaB8UMllEAAEEEEAAAQQQQAABBBBAAAEEEECgXwVoAO3XkiffCCCAAAIIIIAAAggggAACCCCAAAII9IEADaB9UMhkEQEEEEAAAQQQQAABBBBAAAEEEEAAgX4VoAG0X0uefCOAAAIIIIAAAggggAACCCCAAAIIINAHAjSA9kEhk0UEEEAAAQQQQAABBBBAAAEEEEAAAQT6VYAG0H4tefKNAAIIIIAAAggggAACCCCAAAIIIIBAHwjQANoHhUwWEUAAAQQQQAABBBBAAAEEEEAAAQQQ6FcBGkD7teTJNwIIIIAAAggggAACCCCAAAIIIIAAAn0gQANoHxQyWUQAAQQQQAABBBBAAAEEEEAAAQQQQKBfBWgA7deSJ98IIIAAAggggAACCCCAAAIIIIAAAgj0gcD/A/pCWvdhQpdEAAAAAElFTkSuQmCC" width="672" /></p>
+<pre class="r"><code>PropertyPricesAux &lt;- PropertyPrices
+
+
+#com la variable que volem predir té molts valors possibles el que faré és discretitzarla i reduïr els seus valors a 12 possibles
+intervals &lt;- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 500000000)
+intervals2 &lt;- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000)
+
+PropertyPrices$price &lt;- cut(PropertyPrices$price, breaks = intervals, labels = intervals2, include.lowest = TRUE)
+
+PropertyPrices$price</code></pre>
+<pre><code>##    [1] 2e+05 4e+05 9e+05 1e+06 1e+05 2e+05 2e+05 2e+05 4e+05 4e+05 3e+05 1e+05
+##   [13] 8e+05 4e+05 4e+05 3e+05 4e+05 4e+05 2e+05 2e+05 2e+05 2e+05 1e+05 3e+05
+##   [25] 5e+05 2e+05 8e+05 1e+05 4e+05 4e+05 3e+05 2e+05 2e+05 2e+05 3e+05 4e+05
+##   [37] 4e+05 3e+05 3e+05 4e+05 5e+05 2e+05 3e+05 8e+05 5e+05 7e+05 4e+05 4e+05
+##   [49] 4e+05 5e+05 1e+06 1e+05 6e+05 2e+05 4e+05 6e+05 4e+05 1e+05 5e+05 5e+05
+##   [61] 3e+05 5e+05 3e+05 1e+05 4e+05 3e+05 2e+05 7e+05 7e+05 2e+05 1e+05 3e+05
+##   [73] 8e+05 8e+05 3e+05 1e+06 5e+05 9e+05 2e+05 5e+05 3e+05 2e+05 1e+06 3e+05
+##   [85] 1e+06 1e+06 8e+05 8e+05 8e+05 1e+05 3e+05 2e+05 1e+05 3e+05 2e+05 1e+05
+##   [97] 8e+05 4e+05 3e+05 1e+06 3e+05 6e+05 1e+05 4e+05 4e+05 1e+05 2e+05 2e+05
+##  [109] 1e+05 3e+05 4e+05 4e+05 1e+05 2e+05 2e+05 2e+05 2e+05 1e+06 3e+05 7e+05
+##  [121] 6e+05 5e+05 4e+05 4e+05 3e+05 5e+05 2e+05 5e+05 3e+05 1e+06 4e+05 3e+05
+##  [133] 2e+05 6e+05 4e+05 2e+05 1e+05 3e+05 2e+05 4e+05 8e+05 3e+05 4e+05 2e+05
+##  [145] 2e+05 9e+05 3e+05 2e+05 3e+05 4e+05 4e+05 7e+05 1e+05 50000 1e+05 1e+05
+##  [157] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 50000 50000 1e+05 50000 1e+05
+##  [169] 1e+05 1e+05 1e+05 50000 50000 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05
+##  [181] 1e+05 2e+05 2e+05 1e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05 1e+05
+##  [193] 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+##  [205] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+##  [217] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05
+##  [229] 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 2e+05
+##  [241] 3e+05 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+##  [253] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+##  [265] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05 4e+05 3e+05 3e+05
+##  [277] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05 3e+05 4e+05 4e+05 4e+05
+##  [289] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+##  [301] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+##  [313] 4e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+##  [325] 5e+05 5e+05 9e+05 7e+05 8e+05 8e+05 8e+05 8e+05 8e+05 8e+05 8e+05 7e+05
+##  [337] 8e+05 7e+05 7e+05 7e+05 9e+05 7e+05 9e+05 7e+05 8e+05 8e+05 8e+05 7e+05
+##  [349] 9e+05 9e+05 9e+05 4e+05 1e+06 1e+06 1e+06 1e+06 1e+06 5e+05 2e+05 1e+06
+##  [361] 2e+05 1e+06 1e+05 1e+06 1e+06 7e+05 3e+05 1e+06 6e+05 1e+06 1e+05 2e+05
+##  [373] 1e+06 5e+05 2e+05 3e+05 3e+05 3e+05 1e+05 1e+06 7e+05 2e+05 5e+05 7e+05
+##  [385] 5e+05 1e+06 2e+05 3e+05 3e+05 4e+05 4e+05 4e+05 1e+05 6e+05 2e+05 6e+05
+##  [397] 5e+05 5e+05 1e+06 4e+05 8e+05 3e+05 6e+05 4e+05 5e+05 4e+05 5e+05 8e+05
+##  [409] 3e+05 3e+05 3e+05 6e+05 3e+05 4e+05 3e+05 6e+05 4e+05 4e+05 4e+05 4e+05
+##  [421] 5e+05 3e+05 2e+05 4e+05 3e+05 3e+05 3e+05 1e+05 1e+06 3e+05 7e+05 3e+05
+##  [433] 2e+05 5e+05 5e+05 1e+05 5e+05 1e+05 1e+06 9e+05 50000 4e+05 3e+05 1e+05
+##  [445] 5e+05 2e+05 1e+06 6e+05 2e+05 4e+05 50000 1e+05 1e+05 1e+05 1e+05 2e+05
+##  [457] 2e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+##  [469] 1e+05 1e+05 2e+05 1e+05 1e+05 1e+05 2e+05 2e+05 1e+05 1e+05 2e+05 1e+05
+##  [481] 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05
+##  [493] 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+##  [505] 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+##  [517] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+##  [529] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+##  [541] 4e+05 3e+05 4e+05 4e+05 4e+05 4e+05 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+##  [553] 4e+05 4e+05 4e+05 4e+05 3e+05 4e+05 4e+05 4e+05 4e+05 3e+05 3e+05 4e+05
+##  [565] 3e+05 3e+05 4e+05 4e+05 5e+05 4e+05 4e+05 4e+05 5e+05 5e+05 4e+05 5e+05
+##  [577] 4e+05 4e+05 5e+05 5e+05 4e+05 4e+05 5e+05 5e+05 5e+05 4e+05 4e+05 4e+05
+##  [589] 4e+05 5e+05 4e+05 4e+05 4e+05 5e+05 4e+05 4e+05 4e+05 5e+05 5e+05 6e+05
+##  [601] 6e+05 6e+05 5e+05 6e+05 6e+05 6e+05 6e+05 6e+05 5e+05 5e+05 6e+05 5e+05
+##  [613] 5e+05 6e+05 6e+05 6e+05 6e+05 6e+05 5e+05 6e+05 6e+05 6e+05 6e+05 6e+05
+##  [625] 6e+05 7e+05 8e+05 7e+05 6e+05 7e+05 7e+05 6e+05 7e+05 6e+05 7e+05 7e+05
+##  [637] 7e+05 8e+05 6e+05 6e+05 6e+05 6e+05 7e+05 7e+05 8e+05 7e+05 7e+05 7e+05
+##  [649] 7e+05 8e+05 7e+05 7e+05 7e+05 6e+05 1e+06 8e+05 1e+06 1e+06 8e+05 8e+05
+##  [661] 9e+05 1e+06 8e+05 1e+06 8e+05 9e+05 8e+05 9e+05 9e+05 9e+05 1e+06 9e+05
+##  [673] 9e+05 1e+06 1e+06 1e+06 1e+06 9e+05 9e+05 9e+05 9e+05 1e+06 1e+06 7e+05
+##  [685] 1e+05 2e+05 4e+05 1e+06 2e+05 1e+06 1e+06 1e+05 1e+06 1e+06 1e+06 2e+05
+##  [697] 1e+06 2e+05 2e+05 1e+06 8e+05 1e+06 2e+05 2e+05 7e+05 1e+06 6e+05 4e+05
+##  [709] 3e+05 3e+05 3e+05 1e+06 5e+05 3e+05 6e+05 1e+05 9e+05 2e+05 4e+05 3e+05
+##  [721] 3e+05 1e+05 1e+06 2e+05 4e+05 1e+06 3e+05 3e+05 2e+05 2e+05 3e+05 2e+05
+##  [733] 3e+05 5e+05 1e+06 4e+05 3e+05 1e+05 1e+05 6e+05 2e+05 3e+05 3e+05 3e+05
+##  [745] 3e+05 6e+05 2e+05 3e+05 5e+05 1e+05 1e+05 3e+05 3e+05 4e+05 3e+05 4e+05
+##  [757] 3e+05 3e+05 4e+05 3e+05 2e+05 1e+05 3e+05 1e+06 1e+05 2e+05 1e+06 2e+05
+##  [769] 2e+05 2e+05 2e+05 50000 2e+05 3e+05 2e+05 3e+05 2e+05 2e+05 2e+05 2e+05
+##  [781] 2e+05 1e+05 3e+05 2e+05 2e+05 3e+05 3e+05 9e+05 1e+05 2e+05 2e+05 1e+05
+##  [793] 5e+05 4e+05 3e+05 4e+05 4e+05 5e+05 7e+05 4e+05 3e+05 5e+05 6e+05 6e+05
+##  [805] 4e+05 3e+05 3e+05 6e+05 4e+05 3e+05 3e+05 3e+05 4e+05 3e+05 5e+05 7e+05
+##  [817] 4e+05 6e+05 4e+05 4e+05 4e+05 4e+05 9e+05 8e+05 6e+05 1e+06 2e+05 9e+05
+##  [829] 1e+05 4e+05 1e+06 9e+05 1e+06 8e+05 1e+05 1e+06 2e+05 7e+05 2e+05 4e+05
+##  [841] 1e+06 4e+05 8e+05 2e+05 2e+05 5e+05 3e+05 3e+05 4e+05 6e+05 5e+05 5e+05
+##  [853] 5e+05 2e+05 3e+05 3e+05 4e+05 1e+06 8e+05 3e+05 4e+05 1e+05 1e+06 4e+05
+##  [865] 4e+05 1e+06 4e+05 2e+05 3e+05 5e+05 1e+05 4e+05 4e+05 1e+06 4e+05 2e+05
+##  [877] 2e+05 1e+05 1e+06 3e+05 1e+05 5e+05 3e+05 3e+05 1e+06 3e+05 2e+05 5e+05
+##  [889] 5e+05 2e+05 1e+05 4e+05 3e+05 3e+05 8e+05 4e+05 5e+05 4e+05 2e+05 1e+06
+##  [901] 9e+05 4e+05 1e+05 4e+05 1e+05 2e+05 3e+05 2e+05 2e+05 1e+05 3e+05 4e+05
+##  [913] 1e+05 4e+05 4e+05 3e+05 2e+05 3e+05 1e+05 3e+05 2e+05 2e+05 3e+05 2e+05
+##  [925] 2e+05 1e+05 3e+05 2e+05 2e+05 5e+05 5e+05 5e+05 6e+05 5e+05 5e+05 4e+05
+##  [937] 6e+05 5e+05 4e+05 5e+05 5e+05 5e+05 6e+05 4e+05 4e+05 5e+05 4e+05 5e+05
+##  [949] 5e+05 5e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 7e+05 7e+05 7e+05
+##  [961] 7e+05 6e+05 1e+06 1e+06 8e+05 1e+06 7e+05 6e+05 9e+05 6e+05 6e+05 7e+05
+##  [973] 6e+05 1e+06 1e+06 1e+06 7e+05 8e+05 8e+05 1e+06 7e+05 8e+05 7e+05 8e+05
+##  [985] 6e+05 1e+06 7e+05 3e+05 1e+06 8e+05 3e+05 3e+05 4e+05 3e+05 4e+05 1e+05
+##  [997] 3e+05 3e+05 3e+05 3e+05 1e+06 1e+06 3e+05 3e+05 1e+06 3e+05 4e+05 3e+05
+## [1009] 2e+05 4e+05 4e+05 7e+05 7e+05 5e+05 5e+05 3e+05 4e+05 4e+05 4e+05 50000
+## [1021] 3e+05 3e+05 5e+05 6e+05 5e+05 4e+05 5e+05 4e+05 5e+05 6e+05 3e+05 9e+05
+## [1033] 5e+05 50000 5e+05 3e+05 3e+05 3e+05 3e+05 3e+05 1e+05 2e+05 4e+05 8e+05
+## [1045] 5e+05 4e+05 2e+05 1e+05 3e+05 2e+05 4e+05 2e+05 2e+05 2e+05 1e+06 5e+05
+## [1057] 4e+05 3e+05 7e+05 9e+05 3e+05 2e+05 3e+05 3e+05 3e+05 8e+05 1e+06 1e+05
+## [1069] 3e+05 1e+05 50000 3e+05 2e+05 1e+05 4e+05 6e+05 1e+05 1e+05 1e+05 1e+05
+## [1081] 1e+05 1e+05 3e+05 4e+05 4e+05 50000 1e+05 4e+05 1e+05 1e+05 1e+05 1e+05
+## [1093] 2e+05 1e+05 2e+05 2e+05 2e+05 1e+05 1e+05 2e+05 2e+05 1e+05 1e+05 1e+05
+## [1105] 1e+05 1e+05 2e+05 1e+05 2e+05 1e+05 1e+05 2e+05 1e+05 1e+05 2e+05 2e+05
+## [1117] 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [1129] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [1141] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05
+## [1153] 3e+05 2e+05 3e+05 3e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 3e+05 2e+05
+## [1165] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 2e+05 2e+05 2e+05 3e+05
+## [1177] 2e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [1189] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [1201] 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05 4e+05 4e+05 4e+05 3e+05 4e+05
+## [1213] 3e+05 4e+05 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05 3e+05 4e+05 4e+05 3e+05
+## [1225] 4e+05 4e+05 4e+05 4e+05 3e+05 4e+05 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [1237] 5e+05 4e+05 5e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 5e+05 4e+05 4e+05
+## [1249] 4e+05 4e+05 4e+05 4e+05 5e+05 4e+05 4e+05 4e+05 6e+05 6e+05 5e+05 6e+05
+## [1261] 5e+05 5e+05 5e+05 5e+05 6e+05 6e+05 6e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [1273] 5e+05 5e+05 5e+05 6e+05 5e+05 5e+05 5e+05 5e+05 5e+05 6e+05 7e+05 8e+05
+## [1285] 8e+05 8e+05 7e+05 6e+05 8e+05 8e+05 7e+05 8e+05 7e+05 8e+05 8e+05 7e+05
+## [1297] 6e+05 8e+05 7e+05 7e+05 8e+05 8e+05 7e+05 7e+05 8e+05 6e+05 2e+05 1e+06
+## [1309] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 8e+05 1e+06 1e+06 1e+06 9e+05 1e+06
+## [1321] 3e+05 3e+05 1e+06 1e+06 1e+06 1e+06 1e+05 1e+06 1e+06 1e+06 1e+06 2e+05
+## [1333] 2e+05 4e+05 1e+05 8e+05 2e+05 3e+05 4e+05 5e+05 9e+05 5e+05 1e+05 6e+05
+## [1345] 3e+05 2e+05 3e+05 3e+05 2e+05 2e+05 2e+05 2e+05 5e+05 4e+05 6e+05 1e+06
+## [1357] 2e+05 2e+05 5e+05 5e+05 7e+05 2e+05 2e+05 1e+05 3e+05 3e+05 8e+05 3e+05
+## [1369] 1e+05 5e+05 1e+05 1e+06 3e+05 2e+05 2e+05 3e+05 2e+05 6e+05 1e+06 1e+05
+## [1381] 7e+05 3e+05 4e+05 3e+05 5e+05 2e+05 5e+05 9e+05 1e+05 2e+05 4e+05 4e+05
+## [1393] 2e+05 4e+05 1e+05 3e+05 3e+05 3e+05 2e+05 4e+05 2e+05 1e+05 2e+05 7e+05
+## [1405] 2e+05 5e+05 1e+05 2e+05 4e+05 2e+05 1e+06 4e+05 2e+05 4e+05 5e+05 1e+06
+## [1417] 4e+05 6e+05 6e+05 4e+05 7e+05 5e+05 6e+05 4e+05 1e+06 7e+05 7e+05 5e+05
+## [1429] 4e+05 9e+05 6e+05 8e+05 7e+05 8e+05 7e+05 5e+05 5e+05 1e+06 5e+05 5e+05
+## [1441] 5e+05 1e+05 4e+05 2e+05 3e+05 2e+05 4e+05 9e+05 1e+06 5e+05 1e+06 1e+06
+## [1453] 4e+05 3e+05 1e+05 4e+05 4e+05 3e+05 1e+05 3e+05 4e+05 1e+06 5e+05 1e+05
+## [1465] 5e+05 2e+05 2e+05 3e+05 2e+05 4e+05 7e+05 4e+05 2e+05 1e+05 5e+05 4e+05
+## [1477] 1e+06 4e+05 6e+05 2e+05 3e+05 9e+05 1e+05 1e+06 8e+05 50000 2e+05 3e+05
+## [1489] 6e+05 4e+05 1e+05 1e+06 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [1501] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [1513] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05
+## [1525] 1e+05 2e+05 2e+05 1e+05 2e+05 1e+05 1e+05 2e+05 1e+05 2e+05 2e+05 1e+05
+## [1537] 2e+05 1e+05 2e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 1e+05 1e+05 1e+05
+## [1549] 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [1561] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [1573] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [1585] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [1597] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [1609] 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [1621] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [1633] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [1645] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [1657] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [1669] 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [1681] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [1693] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [1705] 5e+05 5e+05 5e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [1717] 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 5e+05 5e+05 5e+05 4e+05 6e+05 6e+05
+## [1729] 6e+05 5e+05 5e+05 6e+05 5e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05
+## [1741] 6e+05 5e+05 5e+05 6e+05 6e+05 6e+05 5e+05 6e+05 5e+05 6e+05 6e+05 6e+05
+## [1753] 5e+05 6e+05 6e+05 7e+05 7e+05 7e+05 6e+05 6e+05 7e+05 7e+05 7e+05 7e+05
+## [1765] 6e+05 6e+05 6e+05 7e+05 6e+05 7e+05 6e+05 6e+05 7e+05 7e+05 7e+05 7e+05
+## [1777] 7e+05 7e+05 6e+05 6e+05 6e+05 7e+05 7e+05 6e+05 9e+05 9e+05 8e+05 9e+05
+## [1789] 9e+05 8e+05 8e+05 9e+05 8e+05 8e+05 8e+05 8e+05 9e+05 7e+05 8e+05 8e+05
+## [1801] 9e+05 8e+05 7e+05 8e+05 9e+05 8e+05 9e+05 9e+05 9e+05 8e+05 8e+05 9e+05
+## [1813] 1e+06 1e+06 1e+05 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [1825] 1e+05 1e+06 3e+05 1e+06 1e+06 1e+06 1e+06 1e+06 3e+05 1e+06 4e+05 1e+06
+## [1837] 2e+05 5e+05 2e+05 3e+05 4e+05 3e+05 3e+05 3e+05 5e+05 6e+05 7e+05 2e+05
+## [1849] 3e+05 2e+05 5e+05 5e+05 3e+05 5e+05 5e+05 4e+05 3e+05 4e+05 3e+05 2e+05
+## [1861] 2e+05 4e+05 3e+05 7e+05 7e+05 3e+05 5e+05 8e+05 7e+05 3e+05 2e+05 8e+05
+## [1873] 2e+05 5e+05 2e+05 8e+05 7e+05 3e+05 2e+05 50000 1e+05 5e+05 8e+05 3e+05
+## [1885] 5e+05 3e+05 1e+06 5e+05 2e+05 3e+05 1e+06 4e+05 5e+05 1e+05 2e+05 1e+05
+## [1897] 50000 50000 1e+05 1e+05 2e+05 1e+05 1e+05 2e+05 2e+05 1e+05 1e+05 2e+05
+## [1909] 1e+05 2e+05 1e+05 1e+05 2e+05 1e+05 2e+05 1e+05 2e+05 1e+05 1e+05 2e+05
+## [1921] 1e+05 2e+05 3e+05 2e+05 3e+05 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05 3e+05
+## [1933] 3e+05 2e+05 3e+05 3e+05 3e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05
+## [1945] 2e+05 3e+05 3e+05 4e+05 3e+05 4e+05 3e+05 3e+05 4e+05 3e+05 4e+05 4e+05
+## [1957] 4e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05 3e+05 3e+05 3e+05
+## [1969] 4e+05 4e+05 3e+05 4e+05 4e+05 2e+05 9e+05 2e+05 5e+05 1e+05 2e+05 2e+05
+## [1981] 5e+05 1e+05 5e+05 3e+05 2e+05 4e+05 1e+05 9e+05 6e+05 1e+05 6e+05 1e+05
+## [1993] 4e+05 3e+05 3e+05 3e+05 2e+05 3e+05 5e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2005] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2017] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2029] 3e+05 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 2e+05 3e+05
+## [2041] 2e+05 2e+05 3e+05 2e+05 2e+05 3e+05 3e+05 2e+05 2e+05 3e+05 3e+05 3e+05
+## [2053] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [2065] 4e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05 4e+05 3e+05 3e+05 4e+05 3e+05
+## [2077] 4e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05 4e+05 4e+05 4e+05 4e+05
+## [2089] 4e+05 5e+05 5e+05 5e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 5e+05
+## [2101] 4e+05 4e+05 5e+05 4e+05 4e+05 4e+05 4e+05 4e+05 5e+05 4e+05 5e+05 4e+05
+## [2113] 6e+05 6e+05 6e+05 6e+05 5e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 7e+05
+## [2125] 6e+05 6e+05 5e+05 5e+05 6e+05 6e+05 5e+05 6e+05 6e+05 5e+05 5e+05 5e+05
+## [2137] 6e+05 5e+05 9e+05 8e+05 8e+05 7e+05 7e+05 7e+05 7e+05 7e+05 9e+05 8e+05
+## [2149] 7e+05 7e+05 7e+05 7e+05 1e+06 7e+05 8e+05 8e+05 7e+05 1e+06 9e+05 8e+05
+## [2161] 7e+05 7e+05 7e+05 9e+05 7e+05 7e+05 9e+05 3e+05 1e+06 1e+06 1e+06 1e+06
+## [2173] 1e+06 6e+05 1e+06 4e+05 1e+06 1e+06 1e+06 3e+05 1e+06 1e+06 1e+06 2e+05
+## [2185] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 7e+05 1e+06 1e+06 1e+06 1e+05 7e+05
+## [2197] 3e+05 5e+05 2e+05 4e+05 5e+05 4e+05 5e+05 3e+05 4e+05 3e+05 4e+05 1e+06
+## [2209] 3e+05 2e+05 6e+05 7e+05 4e+05 2e+05 1e+06 4e+05 1e+05 4e+05 2e+05 3e+05
+## [2221] 3e+05 1e+06 3e+05 1e+05 5e+05 2e+05 3e+05 6e+05 6e+05 3e+05 4e+05 1e+06
+## [2233] 6e+05 3e+05 3e+05 2e+05 5e+05 4e+05 6e+05 3e+05 4e+05 4e+05 4e+05 4e+05
+## [2245] 3e+05 3e+05 1e+06 50000 50000 50000 2e+05 50000 4e+05 1e+05 2e+05 1e+05
+## [2257] 1e+05 3e+05 2e+05 3e+05 4e+05 1e+05 5e+05 5e+05 3e+05 1e+05 50000 2e+05
+## [2269] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [2281] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [2293] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 1e+05
+## [2305] 1e+05 2e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 1e+05 2e+05 1e+05
+## [2317] 2e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 1e+05 1e+05 1e+05
+## [2329] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2341] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2353] 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2365] 3e+05 3e+05 2e+05 2e+05 2e+05 3e+05 2e+05 2e+05 3e+05 2e+05 2e+05 2e+05
+## [2377] 2e+05 3e+05 2e+05 2e+05 2e+05 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05
+## [2389] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [2401] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [2413] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05
+## [2425] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 3e+05
+## [2437] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [2449] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [2461] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [2473] 4e+05 5e+05 5e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 5e+05
+## [2485] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [2497] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05
+## [2509] 5e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05
+## [2521] 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 5e+05 6e+05 6e+05 7e+05 6e+05 7e+05
+## [2533] 8e+05 8e+05 7e+05 7e+05 7e+05 7e+05 7e+05 7e+05 7e+05 7e+05 8e+05 7e+05
+## [2545] 7e+05 8e+05 7e+05 7e+05 7e+05 7e+05 8e+05 8e+05 7e+05 7e+05 7e+05 7e+05
+## [2557] 9e+05 1e+06 1e+06 9e+05 9e+05 9e+05 9e+05 8e+05 9e+05 8e+05 1e+06 8e+05
+## [2569] 9e+05 9e+05 1e+06 9e+05 9e+05 8e+05 9e+05 1e+06 8e+05 8e+05 9e+05 1e+06
+## [2581] 1e+06 8e+05 8e+05 1e+06 1e+05 2e+05 2e+05 3e+05 3e+05 3e+05 3e+05 8e+05
+## [2593] 8e+05 4e+05 2e+05 4e+05 2e+05 2e+05 5e+05 2e+05 4e+05 2e+05 3e+05 2e+05
+## [2605] 2e+05 1e+05 7e+05 4e+05 3e+05 7e+05 8e+05 1e+06 1e+06 6e+05 8e+05 8e+05
+## [2617] 6e+05 1e+06 1e+06 1e+06 6e+05 1e+06 6e+05 8e+05 1e+06 8e+05 7e+05 1e+06
+## [2629] 1e+06 5e+05 3e+05 6e+05 5e+05 3e+05 4e+05 5e+05 2e+05 8e+05 &lt;NA&gt;  4e+05
+## [2641] 4e+05 8e+05 5e+05 2e+05 2e+05 2e+05 5e+05 4e+05 4e+05 5e+05 3e+05 5e+05
+## [2653] 8e+05 2e+05 6e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [2665] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [2677] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05
+## [2689] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2701] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2713] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 2e+05 2e+05
+## [2725] 3e+05 2e+05 3e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05
+## [2737] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 4e+05 3e+05 4e+05 3e+05 3e+05
+## [2749] 4e+05 4e+05 4e+05 3e+05 4e+05 3e+05 4e+05 3e+05 3e+05 4e+05 4e+05 4e+05
+## [2761] 4e+05 4e+05 3e+05 4e+05 3e+05 3e+05 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [2773] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 4e+05 5e+05 4e+05 5e+05 5e+05
+## [2785] 5e+05 5e+05 5e+05 5e+05 4e+05 5e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [2797] 4e+05 5e+05 4e+05 5e+05 5e+05 5e+05 8e+05 8e+05 8e+05 7e+05 8e+05 8e+05
+## [2809] 8e+05 7e+05 7e+05 8e+05 8e+05 8e+05 8e+05 8e+05 7e+05 7e+05 7e+05 8e+05
+## [2821] 7e+05 8e+05 7e+05 8e+05 7e+05 8e+05 8e+05 8e+05 1e+06 1e+06 1e+06 1e+06
+## [2833] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [2845] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [2857] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [2869] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [2881] 3e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 1e+05 1e+05 50000 1e+05
+## [2893] 3e+05 1e+05 50000 3e+05 1e+05 1e+05 4e+05 4e+05 1e+05 1e+05 1e+05 1e+05
+## [2905] 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2917] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [2929] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 3e+05
+## [2941] 3e+05 2e+05 3e+05 3e+05 2e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [2953] 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 2e+05 3e+05 3e+05 2e+05 2e+05 3e+05
+## [2965] 3e+05 4e+05 4e+05 5e+05 4e+05 4e+05 5e+05 4e+05 4e+05 5e+05 4e+05 4e+05
+## [2977] 5e+05 4e+05 4e+05 5e+05 4e+05 5e+05 4e+05 4e+05 4e+05 5e+05 4e+05 3e+05
+## [2989] 4e+05 3e+05 5e+05 5e+05 3e+05 4e+05 3e+05 2e+05 7e+05 5e+05 4e+05 3e+05
+## [3001] 3e+05 3e+05 1e+05 2e+05 4e+05 4e+05 4e+05 3e+05 4e+05 2e+05 3e+05 3e+05
+## [3013] 4e+05 4e+05 5e+05 3e+05 3e+05 3e+05 4e+05 5e+05 2e+05 1e+05 1e+06 5e+05
+## [3025] 4e+05 4e+05 5e+05 2e+05 1e+05 2e+05 4e+05 6e+05 4e+05 2e+05 8e+05 3e+05
+## [3037] 7e+05 4e+05 3e+05 3e+05 2e+05 3e+05 2e+05 4e+05 6e+05 1e+05 1e+05 1e+05
+## [3049] 2e+05 1e+05 2e+05 6e+05 1e+05 2e+05 1e+05 2e+05 2e+05 3e+05 1e+05 50000
+## [3061] 9e+05 1e+05 1e+05 3e+05 3e+05 1e+05 5e+05 1e+05 1e+05 1e+05 1e+05 2e+05
+## [3073] 2e+05 1e+05 2e+05 2e+05 1e+05 2e+05 1e+05 1e+05 2e+05 2e+05 1e+05 2e+05
+## [3085] 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 1e+05
+## [3097] 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [3109] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [3121] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 4e+05 3e+05
+## [3133] 4e+05 3e+05 4e+05 3e+05 4e+05 3e+05 3e+05 4e+05 4e+05 4e+05 4e+05 3e+05
+## [3145] 4e+05 4e+05 4e+05 3e+05 4e+05 3e+05 3e+05 4e+05 4e+05 4e+05 3e+05 4e+05
+## [3157] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [3169] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [3181] 5e+05 5e+05 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [3193] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [3205] 1e+06 1e+06 1e+06 1e+06 1e+06 3e+05 4e+05 2e+05 3e+05 1e+06 1e+06 1e+05
+## [3217] 1e+06 2e+05 4e+05 3e+05 1e+06 1e+06 3e+05 3e+05 3e+05 3e+05 1e+06 3e+05
+## [3229] 4e+05 1e+05 5e+05 5e+05 6e+05 4e+05 1e+06 1e+05 5e+05 5e+05 1e+05 1e+05
+## [3241] 4e+05 2e+05 3e+05 3e+05 4e+05 1e+05 1e+05 2e+05 1e+05 50000 1e+05 1e+05
+## [3253] 1e+05 1e+05 1e+05 50000 3e+05 1e+05 1e+05 1e+05 4e+05 8e+05 50000 50000
+## [3265] 8e+05 6e+05 1e+05 50000 4e+05 50000 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [3277] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [3289] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [3301] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [3313] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [3325] 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [3337] 2e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 1e+05 2e+05
+## [3349] 2e+05 2e+05 1e+05 1e+05 2e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05
+## [3361] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [3373] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05
+## [3385] 3e+05 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 2e+05 2e+05
+## [3397] 2e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3409] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3421] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3433] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3445] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3457] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [3469] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [3481] 5e+05 4e+05 4e+05 5e+05 4e+05 5e+05 5e+05 5e+05 4e+05 4e+05 5e+05 4e+05
+## [3493] 5e+05 5e+05 4e+05 4e+05 4e+05 5e+05 5e+05 4e+05 4e+05 4e+05 5e+05 5e+05
+## [3505] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [3517] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [3529] 5e+05 5e+05 6e+05 6e+05 7e+05 6e+05 6e+05 6e+05 7e+05 6e+05 6e+05 6e+05
+## [3541] 6e+05 6e+05 6e+05 7e+05 6e+05 7e+05 7e+05 6e+05 7e+05 6e+05 7e+05 7e+05
+## [3553] 1e+06 7e+05 8e+05 7e+05 7e+05 1e+06 7e+05 7e+05 1e+06 1e+06 8e+05 7e+05
+## [3565] 1e+06 7e+05 9e+05 8e+05 1e+06 1e+06 8e+05 9e+05 8e+05 8e+05 9e+05 8e+05
+## [3577] 8e+05 7e+05 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [3589] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [3601] 1e+06 2e+05 3e+05 8e+05 2e+05 8e+05 3e+05 7e+05 1e+05 8e+05 3e+05 1e+06
+## [3613] 1e+05 1e+06 7e+05 3e+05 3e+05 1e+05 1e+05 9e+05 1e+06 1e+05 3e+05 3e+05
+## [3625] 3e+05 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 4e+05 1e+06 1e+06 1e+06 1e+05
+## [3637] 1e+06 1e+06 1e+06 7e+05 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 2e+05 2e+05
+## [3649] 4e+05 4e+05 2e+05 1e+06 5e+05 3e+05 3e+05 2e+05 1e+06 3e+05 2e+05 2e+05
+## [3661] 9e+05 4e+05 3e+05 7e+05 1e+05 5e+05 8e+05 2e+05 1e+05 1e+05 1e+05 2e+05
+## [3673] 2e+05 2e+05 1e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [3685] 2e+05 2e+05 2e+05 1e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [3697] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [3709] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05 2e+05
+## [3721] 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3733] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3745] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3757] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [3769] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05
+## [3781] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [3793] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [3805] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [3817] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [3829] 4e+05 5e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 5e+05 4e+05
+## [3841] 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 5e+05 4e+05 5e+05 4e+05 4e+05 4e+05
+## [3853] 5e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [3865] 5e+05 6e+05 5e+05 5e+05 5e+05 5e+05 5e+05 6e+05 5e+05 5e+05 6e+05 5e+05
+## [3877] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 6e+05 6e+05 6e+05 6e+05
+## [3889] 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05
+## [3901] 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 6e+05 1e+06 1e+06 1e+06
+## [3913] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06
+## [3925] 1e+06 1e+06 1e+06 1e+06 1e+06 1e+06 2e+05 2e+05 1e+06 5e+05 1e+05 1e+06
+## [3937] 1e+06 3e+05 1e+06 1e+06 2e+05 1e+05 3e+05 2e+05 2e+05 6e+05 1e+06 6e+05
+## [3949] 9e+05 2e+05 2e+05 1e+05 2e+05 1e+05 5e+05 9e+05 1e+05 8e+05 3e+05 3e+05
+## [3961] 4e+05 4e+05 3e+05 4e+05 1e+05 4e+05 1e+05 4e+05 4e+05 5e+05 9e+05 6e+05
+## [3973] 50000 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [3985] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [3997] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [4009] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 2e+05
+## [4021] 2e+05 2e+05 2e+05 3e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 4e+05 4e+05
+## [4033] 4e+05 5e+05 5e+05 4e+05 4e+05 4e+05 5e+05 5e+05 5e+05 4e+05 5e+05 4e+05
+## [4045] 5e+05 5e+05 4e+05 4e+05 5e+05 5e+05 6e+05 8e+05 6e+05 8e+05 8e+05 7e+05
+## [4057] 8e+05 5e+05 6e+05 6e+05 9e+05 7e+05 7e+05 1e+06 6e+05 9e+05 6e+05 6e+05
+## [4069] 6e+05 6e+05 7e+05 6e+05 6e+05 5e+05 3e+05 3e+05 1e+05 4e+05 3e+05 3e+05
+## [4081] 3e+05 2e+05 4e+05 7e+05 4e+05 2e+05 3e+05 2e+05 2e+05 3e+05 3e+05 3e+05
+## [4093] 2e+05 2e+05 2e+05 1e+06 3e+05 3e+05 3e+05 5e+05 5e+05 6e+05 5e+05 6e+05
+## [4105] 6e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [4117] 6e+05 6e+05 6e+05 5e+05 5e+05 5e+05 6e+05 8e+05 7e+05 6e+05 6e+05 8e+05
+## [4129] 6e+05 8e+05 7e+05 8e+05 7e+05 7e+05 7e+05 6e+05 7e+05 6e+05 6e+05 6e+05
+## [4141] 7e+05 8e+05 6e+05 6e+05 8e+05 6e+05 7e+05 2e+05 3e+05 1e+06 1e+06 1e+06
+## [4153] 1e+06 2e+05 1e+06 1e+06 1e+06 2e+05 1e+06 1e+06 1e+06 1e+06 2e+05 1e+06
+## [4165] 1e+06 1e+06 1e+06 7e+05 3e+05 2e+05 4e+05 1e+05 1e+05 2e+05 1e+05 3e+05
+## [4177] 7e+05 1e+05 5e+05 4e+05 5e+05 2e+05 6e+05 4e+05 1e+05 1e+05 1e+05 1e+05
+## [4189] 50000 1e+05 1e+05 1e+05 50000 1e+05 50000 1e+05 1e+05 50000 1e+05 1e+05
+## [4201] 50000 1e+05 1e+05 1e+05 1e+05 1e+05 50000 1e+05 1e+05 1e+05 1e+05 1e+05
+## [4213] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [4225] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [4237] 1e+05 1e+05 1e+05 1e+05 2e+05 3e+05 1e+05 1e+05 2e+05 1e+05 1e+05 1e+05
+## [4249] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [4261] 2e+05 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [4273] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [4285] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [4297] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [4309] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 3e+05 3e+05 2e+05 2e+05 3e+05 2e+05
+## [4321] 3e+05 2e+05 2e+05 2e+05 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 2e+05 2e+05
+## [4333] 3e+05 3e+05 3e+05 2e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4345] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4357] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4369] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4381] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4393] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4405] 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 4e+05 3e+05 4e+05 4e+05 4e+05 4e+05
+## [4417] 4e+05 4e+05 4e+05 4e+05 4e+05 3e+05 4e+05 4e+05 3e+05 4e+05 3e+05 4e+05
+## [4429] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [4441] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [4453] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [4465] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 6e+05
+## [4477] 7e+05 7e+05 6e+05 6e+05 7e+05 6e+05 8e+05 6e+05 6e+05 7e+05 7e+05 6e+05
+## [4489] 6e+05 7e+05 8e+05 7e+05 7e+05 6e+05 7e+05 8e+05 7e+05 7e+05 8e+05 8e+05
+## [4501] 7e+05 3e+05 1e+05 1e+06 4e+05 3e+05 1e+05 5e+05 50000 1e+05 2e+05 5e+05
+## [4513] 3e+05 2e+05 1e+05 3e+05 3e+05 4e+05 4e+05 2e+05 1e+05 2e+05 3e+05 6e+05
+## [4525] 3e+05 2e+05 2e+05 1e+06 1e+05 2e+05 1e+05 1e+05 1e+05 50000 1e+05 1e+05
+## [4537] 1e+05 1e+05 50000 50000 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [4549] 50000 1e+05 50000 1e+05 1e+05 1e+05 1e+05 1e+05 3e+05 3e+05 3e+05 3e+05
+## [4561] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4573] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 4e+05 4e+05
+## [4585] 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 3e+05 4e+05
+## [4597] 3e+05 4e+05 3e+05 3e+05 4e+05 3e+05 4e+05 4e+05 3e+05 3e+05 5e+05 5e+05
+## [4609] 5e+05 4e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05
+## [4621] 5e+05 5e+05 5e+05 5e+05 5e+05 5e+05 4e+05 5e+05 3e+05 4e+05 3e+05 2e+05
+## [4633] 1e+05 5e+05 50000 50000 3e+05 3e+05 3e+05 2e+05 50000 2e+05 3e+05 3e+05
+## [4645] 50000 3e+05 3e+05 1e+06 50000 3e+05 5e+05 50000 1e+05 1e+05 1e+05 1e+05
+## [4657] 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05 1e+05
+## [4669] 1e+05 1e+05 1e+05 1e+05 50000 1e+05 1e+05 1e+05 1e+05 1e+05 2e+05 2e+05
+## [4681] 1e+05 1e+05 2e+05 2e+05 2e+05 1e+05 2e+05 2e+05 2e+05 1e+05 1e+05 2e+05
+## [4693] 1e+05 1e+05 1e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [4705] 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05 2e+05
+## [4717] 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05 3e+05
+## [4729] 3e+05 3e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05
+## [4741] 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 4e+05 7e+05 9e+05 8e+05 7e+05
+## [4753] 7e+05 8e+05 9e+05 7e+05 7e+05 9e+05 8e+05 9e+05 8e+05 8e+05 7e+05 9e+05
+## [4765] 9e+05 9e+05 9e+05 7e+05 9e+05 9e+05
+## 11 Levels: 50000 1e+05 2e+05 3e+05 4e+05 5e+05 6e+05 7e+05 8e+05 ... 1e+06</code></pre>
+</div>
+<div id="r-libraryggplot2-librarycluster-librarydplyr-aplicar-k-means-con-por-ejemplo-3-clusters-num_clusters---11-propertyprices-propertyprices_numeric---propertyprices-select_ifis.numeric-modelo_kmeans---kmeanspropertyprices_numericprice-centers-num_clusters-agregar-información-de-clusters-a-los-datos-propertyprices_numericcluster---as.factorpropertyprices_numericcluster-visualización-de-los-clusters-vs.-valores-reales-ggplotpropertyprices_numeric-aesx-price-color-cluster-geom_point-labstitle-clusters-vs.-valores-reales-x-precio-y-frecuencia-theme_minimal" class="section level1" number="3">
+<h1><span class="header-section-number">3</span>
+<code>{r} # library(ggplot2) # library(cluster) # library(dplyr) #  #  # # Aplicar K-means con, por ejemplo, 3 clusters # num_clusters &lt;- 11 #  # PropertyPrices #  # PropertyPrices_numeric &lt;- PropertyPrices %&gt;% select_if(is.numeric) #  # modelo_kmeans &lt;- kmeans(PropertyPrices_numeric$price, centers = num_clusters) #  # # Agregar información de clusters a los datos # PropertyPrices_numeric$cluster &lt;- as.factor(PropertyPrices_numeric$cluster) #  # # Visualización de los clusters vs. valores reales # ggplot(PropertyPrices_numeric, aes(x = price, color = cluster)) + #   geom_point() + #   labs(title = &quot;Clusters vs. Valores Reales&quot;, #        x = &quot;Precio&quot;, #        y = &quot;Frecuencia&quot;) + #   theme_minimal() #  #</code></h1>
 </div>
 
 

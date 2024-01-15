@@ -1,6 +1,6 @@
 ---
 title: 'Mineria de dades: PRA1 - Selecció i preparació d''un joc de dades'
-author: "Autor: Nom estudiant"
+author: "Autor: Ignasi Grau"
 date: "Novembre 2023"
 output:
   html_document:
@@ -10,11 +10,7 @@ output:
     toc: yes
     toc_depth: 2
     includes:
-      in_header: 05.584-PAC-header.html
-  word_document: default
-  pdf_document:
-    highlight: zenburn
-    toc: yes
+      in_header: 05.584-PAC-header-1.html
 ---
 
 ```{r setup, include=FALSE}
@@ -85,3 +81,256 @@ Només cal lliurar el document html i cal fer-lo amb el següent nom 75.584-PRA1
   
 
 ******
+1. Un dels grans problemes dels joves és la dificultat de comprar una propietat degut als alts preus de compra i de lloguer.  L'objectiu d'aquesta pràctica serà identificar les variables més determinants a l'hora de fixar el preu a una casa 
+i posteriorment fer una predicció dels preus segons les variables de les que disposem. Es treballara amb un algoritme supervisat i un no supervisat per comparar els resultas.
+
+2. El joc de dades seleccionat és el següent: belgian_property_prices.csv. Aquest joc de dades conta amb més de 4000 observacions i més de 50 variables, complint els requisits de variables categòriques, nùmeriques i binàries.
+Un dels grans problemes que em trobo jo com a jove es el gran preu dels lloguers i de les propietats per aixó he decidit fer aquest estudi. Primer de tot vaig buscar un joc de dades de la ciutat de Barcelona però no vaig trobar
+cap joc de dades prou complet per fer l'estudi però vaig trobar aquest joc del preu de les propietats a Bélgica que complia els requisits.
+```{r}
+PropertyPrices <- read.csv("belgian_property_prices.csv")
+
+head(PropertyPrices)
+
+structure = str(PropertyPrices)
+summary = summary(PropertyPrices)
+
+print(structure)
+print(summary)
+
+```
+
+Joc de dades de la pàgina web NYC Open Data. Aquest joc de dades mostra les ofertes de feina a la ciutat de NYC.
+
+1. as_built_plan: Si hi ha un pla com a construït disponible.
+2. available_as_of: Data en què la propietat va estar disponible per comprar.
+3. basement: Presència d'un soterrani.
+4. bathrooms: Número de banys.
+5. bedroom_1_surface: Superfície del primer dormitori.
+6. bedroom_2_surface: Superfície del segon dormitori.
+7. bedroom_3_surface: Superfície del tercer dormitori.
+8. bedrooms: Número de dormitoris.
+9. building_condition: Condició del edifici.
+10. co2_emission: Informació d'emissió de CO2.
+11. cadastral_income: Renda cadastral de la propietat.
+12. connection_to_sewer_network: Informació sobre la connexió a la xarxa d'aigües residuals.
+13. construction_year: Any de construcció.
+14. covered_parking_spaces: Nombre d'aparcaments coberts.
+15. dining_room: Presència de menjador.
+16. double_glazing: Presència de vidres dobles.
+17. energy_class: Classe d'eficiència energètica de la propietat.
+18. external_reference: Informació de referència externa.
+19. flood_zone_type: Tipus de zona d'inundació.
+20. furnished: Si la propietat està amoblada.
+21. garden_surface: Superfície del jardí.
+22. gas_water__electricity: Disponibilitat de gas, aigua i electricitat.
+23. heating_ewtype: Tipus de sistema de calefacció.
+24. kitchen_surface: Superfície de la cuina.
+25. kitchen_type: Tipus de cuina.
+26. latest_land_use_designation: Informació sobre la destinació d'ús del sòl.
+27. living_area: Superfície habitable total de la propietat.
+28. living_room_surface: Superfície de la sala d'estar.
+29. number_of_frontages: Nombre de façanes.
+30. office: Presència d'una oficina.
+31. outdoor_parking_spaces: Nombre d'aparcaments a l'aire lliure.
+32. planning_permission_obtained: Informació sobre el permís d'urbanisme obtingut.
+33. possible_priority_purchase_right: Informació sobre el dret de compra prioritari.
+34. price: Preu de la propietat.
+35. primary_energy_consumption: Informació sobre el consum d'energia primària.
+36. proceedings_for_breach_of_planning_regulations: Informació sobre procediments per incompliment de normatives d'urbanisme.
+37. reference_number_of_the_epc_report: Número de referència de l'informe EPC (Certificat d'Eficiència Energètica).
+38. street_frontage_width: Ample de la façana de la via.
+39. subdivision_permit: Informació sobre un permís de subdivisió.
+40. surface_of_the_plot: Superfície de la parcel·la.
+41. surroundings_type: Tipus d'entorn.
+42. tv_cable: Disponibilitat de cable de televisió.
+43. tenement_building: Informació sobre edificis en coopropietat.
+44. toilets: Nombre de lavabos.
+45. website: Informació sobre el lloc web associat a la propietat.
+46. width_of_the_lot_on_the_street: Ample de la parcel·la al carrer.
+47. yearly_theoretical_total_energy_consumption: Consum d'energia teòric total anual.
+48. housenumber: Número de casa.
+49. street: Nom del carrer.
+50. city: Ciutat on es troba la propietat.
+51. postal: Codi postal.
+52. state: Informació sobre l'estat o la regió.
+53. lat: Latitud.
+54. lng: Longitud.
+
+```{r}
+#primer de tot borrarem algunes variables que sembla que no influeixen a la predicció
+info_eliminar <- c("available_as_of", "lat", "lng", "postal", "street", "housenumber","website", "external_reference", "possible_priority_purchase_right",
+                   "reference_number_of_the_epc_report", "proceedings_for_breach_of_planning_regulations", "tenement_building", "planning_permission_obtained")
+PropertyPrices <- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]
+
+```
+
+```{r}
+#seguidament arreglarem els valors nuls dels data set
+print('NA')
+colSums(is.na(PropertyPrices))
+print('Blancs')
+colSums(PropertyPrices=="")
+```
+```{r}
+#posem a 0 els valors nuls de les següents variables:
+PropertyPrices$as_built_plan[is.na(PropertyPrices$as_built_plan)] <- 0
+PropertyPrices$covered_parking_spaces[is.na(PropertyPrices$covered_parking_spaces)] <- 0
+PropertyPrices$office[is.na(PropertyPrices$office)] <- 0
+PropertyPrices$basement[is.na(PropertyPrices$basement)] <- 0
+PropertyPrices$connection_to_sewer_network[is.na(PropertyPrices$connection_to_sewer_network)] <- 0
+PropertyPrices$flood_zone_type[is.na(PropertyPrices$flood_zone_type)] <- 0
+PropertyPrices$outdoor_parking_spaces[is.na(PropertyPrices$outdoor_parking_spaces)] <- 0
+PropertyPrices$double_glazing[is.na(PropertyPrices$double_glazing)] <- 0
+PropertyPrices$furnished[is.na(PropertyPrices$furnished)] <- 0
+PropertyPrices$subdivision_permit[is.na(PropertyPrices$subdivision_permit)] <- 0
+PropertyPrices$garden_surface[is.na(PropertyPrices$garden_surface)] <- 0
+```
+
+```{r}
+#posem a 1 les variables dining_room, gas_water__electricity, tv_cable i bedrooms, per la cosideració que casi totes les propietats conten amb aquetes caracteristiques
+PropertyPrices$dining_room[is.na(PropertyPrices$dining_room)] <- 1
+PropertyPrices$gas_water__electricity[is.na(PropertyPrices$gas_water__electricity)] <- 1
+PropertyPrices$tv_cable[is.na(PropertyPrices$tv_cable)] <- 1
+PropertyPrices$bedrooms[is.na(PropertyPrices$bedrooms)] <- 1
+```
+
+```{r}
+#Ara omplirem els NA que queden amb els valors de la mitja i mitjana depen de la variable
+#MEAN
+PropertyPrices$living_area <- ifelse(is.na(PropertyPrices$living_area),
+                                       mean(PropertyPrices$living_area, na.rm = TRUE),
+                                       PropertyPrices$living_area)
+
+PropertyPrices$cadastral_income <- ifelse(is.na(PropertyPrices$cadastral_income),
+                                       mean(PropertyPrices$cadastral_income, na.rm = TRUE),
+                                       PropertyPrices$cadastral_income)
+
+PropertyPrices$bedroom_1_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface),
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$kitchen_surface <- ifelse(is.na(PropertyPrices$kitchen_surface),
+                                       mean(PropertyPrices$kitchen_surface, na.rm = TRUE),
+                                       PropertyPrices$kitchen_surface)
+
+PropertyPrices$yearly_theoretical_total_energy_consumption <- ifelse(is.na(PropertyPrices$yearly_theoretical_total_energy_consumption),
+                                       mean(PropertyPrices$yearly_theoretical_total_energy_consumption, na.rm = TRUE),
+                                       PropertyPrices$yearly_theoretical_total_energy_consumption)
+
+PropertyPrices$living_room_surface <- ifelse(is.na(PropertyPrices$living_room_surface),
+                                       mean(PropertyPrices$living_room_surface, na.rm = TRUE),
+                                       PropertyPrices$living_room_surface)
+
+PropertyPrices$primary_energy_consumption <- ifelse(is.na(PropertyPrices$primary_energy_consumption),
+                                       mean(PropertyPrices$primary_energy_consumption, na.rm = TRUE),
+                                       PropertyPrices$primary_energy_consumption)
+
+PropertyPrices$street_frontage_width <- ifelse(is.na(PropertyPrices$street_frontage_width),
+                                       mean(PropertyPrices$street_frontage_width, na.rm = TRUE),
+                                       PropertyPrices$street_frontage_width)
+
+PropertyPrices$toilets <- ifelse(is.na(PropertyPrices$toilets),
+                                       mean(PropertyPrices$toilets, na.rm = TRUE),
+                                       PropertyPrices$toilets)
+
+PropertyPrices$bathrooms <- ifelse(is.na(PropertyPrices$bathrooms),
+                                       mean(PropertyPrices$bathrooms, na.rm = TRUE),
+                                       PropertyPrices$bathrooms)
+
+PropertyPrices$co2_emission <- ifelse(is.na(PropertyPrices$co2_emission),
+                                       mean(PropertyPrices$co2_emission, na.rm = TRUE),
+                                       PropertyPrices$co2_emission)
+
+PropertyPrices$width_of_the_lot_on_the_street <- ifelse(is.na(PropertyPrices$width_of_the_lot_on_the_street),
+                                       mean(PropertyPrices$width_of_the_lot_on_the_street, na.rm = TRUE),
+                                       PropertyPrices$width_of_the_lot_on_the_street)
+
+PropertyPrices$width_of_the_lot_on_the_street <- ifelse(is.na(PropertyPrices$width_of_the_lot_on_the_street),
+                                       mean(PropertyPrices$width_of_the_lot_on_the_street, na.rm = TRUE),
+                                       PropertyPrices$width_of_the_lot_on_the_street)
+
+PropertyPrices$garden_surface <- ifelse(is.na(PropertyPrices$garden_surface),
+                                       mean(PropertyPrices$garden_surface, na.rm = TRUE),
+                                       PropertyPrices$garden_surface)
+
+PropertyPrices$surface_of_the_plot <- ifelse(is.na(PropertyPrices$surface_of_the_plot),
+                                       mean(PropertyPrices$surface_of_the_plot, na.rm = TRUE),
+                                       PropertyPrices$surface_of_the_plot)
+
+
+#en aquestes tres variables només omplirem el valor si la variable habitacions és més gran o igual que l'habitació que estem mirant
+PropertyPrices$bedroom_1_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface) & PropertyPrices$bedrooms >= 1,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$bedroom_2_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface) & PropertyPrices$bedrooms >= 2,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$bedroom_3_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface) & PropertyPrices$bedrooms >= 3,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+
+
+#aquestes dos últimes variables he considerat que era millor omplirles amb la mitjana i na la mitja
+PropertyPrices$construction_year <- ifelse(is.na(PropertyPrices$construction_year),
+                                       median(PropertyPrices$construction_year, na.rm = TRUE),
+                                       PropertyPrices$construction_year)
+
+PropertyPrices$number_of_frontages <- ifelse(is.na(PropertyPrices$number_of_frontages),
+                                       median(PropertyPrices$number_of_frontages, na.rm = TRUE),
+                                       PropertyPrices$number_of_frontages)
+#comprobació que ja no queden valors nuls
+colSums(is.na(PropertyPrices))
+```
+
+```{r}
+#aqui podem veure els valors que pren la variable Price que va dels 30.000 fins als 2M aproximadament
+barplot(table(PropertyPrices$price), main = "Preus", xlab = "Preus", col = "skyblue")
+```
+
+```{r}
+PropertyPricesAux <- PropertyPrices
+
+
+#com la variable que volem predir té molts valors possibles el que faré és discretitzarla i reduïr els seus valors a 12 possibles
+intervals <- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 500000000)
+intervals2 <- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000)
+
+PropertyPrices$price <- cut(PropertyPrices$price, breaks = intervals, labels = intervals2, include.lowest = TRUE)
+
+PropertyPrices$price
+
+```
+
+# ```{r}
+# library(ggplot2)
+# library(cluster)
+# library(dplyr)
+# 
+# 
+# # Aplicar K-means con, por ejemplo, 3 clusters
+# num_clusters <- 11
+# 
+# PropertyPrices
+# 
+# PropertyPrices_numeric <- PropertyPrices %>% select_if(is.numeric)
+# 
+# modelo_kmeans <- kmeans(PropertyPrices_numeric$price, centers = num_clusters)
+# 
+# # Agregar información de clusters a los datos
+# PropertyPrices_numeric$cluster <- as.factor(PropertyPrices_numeric$cluster)
+# 
+# # Visualización de los clusters vs. valores reales
+# ggplot(PropertyPrices_numeric, aes(x = price, color = cluster)) +
+#   geom_point() +
+#   labs(title = "Clusters vs. Valores Reales",
+#        x = "Precio",
+#        y = "Frecuencia") +
+#   theme_minimal()
+# 
+# ```
+
+
