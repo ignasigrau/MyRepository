@@ -81,17 +81,47 @@ Només cal lliurar el document html i cal fer-lo amb el següent nom 75.584-PRA1
   
 
 ******
-1. Un dels grans problemes dels joves és la dificultat de comprar una propietat degut als alts preus de compra i de lloguer.  L'objectiu d'aquesta pràctica serà identificar les variables més determinants a l'hora de fixar el preu a una casa 
-i posteriorment fer una predicció dels preus segons les variables de les que disposem. Es treballara amb un algoritme supervisat i un no supervisat per comparar els resultas.
+Identificació de Variables Determinants:
+Realitzar un anàlisi exploratori de dades per identificar les variables que podrien tenir una influència significativa en la determinació del preu d'una propietat.
+Emprar tècniques estadístiques per avaluar la relació entre aquestes variables i el preu de la casa.
+
+Preprocessament de Dades:
+Realitzar neteja de dades per gestionar valors nuls, outliers i altres anomalies que puguin afectar la qualitat del model.
+Normalitzar i estandarditzar les dades per garantir una millor convergència i rendiment dels algoritmes.
+
+Construcció del Model Supervisat:
+Seleccionar un algoritme d'aprenentatge supervisat (com ara "regressió lineal, regressió polinòmica, o altres""""""""") per predir el preu de les propietats.
+Dividir les dades en conjunts d'entrenament i proves per avaluar l'eficàcia del model.
+Optimitzar els paràmetres del model per millorar la precisió de les prediccions.
+
+Construcció del Model No Supervisat:
+Emprar un algoritme no supervisat (com ara """"""""") per identificar patrons o segments en les dades relacionats amb el preu de les propietats.
+Explorar les característiques dels grups creats i comprendre les diferències entre ells.
+
+Comparació de Models:
+Comparar el rendiment del model supervisat amb el del model no supervisat, avaluant la seva capacitat per predir els preus de les propietats.
+Utilitzar mètriques com ara l'error mitjà absolut (MAE), l'error mitjà quadràtic (MSE) i el coeficient de determinació (R2) per mesurar la precisió dels models.
+
+Interpretació de Resultats:
+Interpretar els resultats obtinguts per comprendre quines variables tenen una influència més gran en la determinació del preu de les propietats.
+Identificar insights rellevants per ajudar a comprendre millor el mercat immobiliari i les seves dinàmiques.
 
 2. El joc de dades seleccionat és el següent: belgian_property_prices.csv. Aquest joc de dades conta amb més de 4000 observacions i més de 50 variables, complint els requisits de variables categòriques, nùmeriques i binàries.
-Un dels grans problemes que em trobo jo com a jove es el gran preu dels lloguers i de les propietats per aixó he decidit fer aquest estudi. Primer de tot vaig buscar un joc de dades de la ciutat de Barcelona però no vaig trobar
+Un dels grans problemes que em trobo jo com a jove és el gran preu dels lloguers i de les propietats per aixó he decidit fer aquest estudi. Primer de tot vaig buscar un joc de dades de la ciutat de Barcelona però no vaig trobar
 cap joc de dades prou complet per fer l'estudi però vaig trobar aquest joc del preu de les propietats a Bélgica que complia els requisits.
+
+
+El primer pas per realitzar un anàlisi exploratòria és carregar el fitxer de dades.
+
 ```{r}
 PropertyPrices <- read.csv("belgian_property_prices.csv")
 
 head(PropertyPrices)
+```
 
+Verifiquem l'estructura del joc de dades principal. Veiem el nombre de columnes que tenim i exemples dels continguts de les files.
+
+```{r}
 structure = str(PropertyPrices)
 summary = summary(PropertyPrices)
 
@@ -157,14 +187,23 @@ Joc de dades de la pàgina web NYC Open Data. Aquest joc de dades mostra les ofe
 53. lat: Latitud.
 54. lng: Longitud.
 
+
+
+### Neteja
+
+Primer de tot borrarem algunes variables que no influeixen a la predicció, com el número de carrer, el codi postal o el nom del carrer d'entre altres.
 ```{r}
-#primer de tot borrarem algunes variables que sembla que no influeixen a la predicció
+
 info_eliminar <- c("available_as_of", "lat", "lng", "postal", "street", "housenumber","website", "external_reference", "possible_priority_purchase_right",
-                   "reference_number_of_the_epc_report", "proceedings_for_breach_of_planning_regulations", "tenement_building", "planning_permission_obtained")
+                   "reference_number_of_the_epc_report", "proceedings_for_breach_of_planning_regulations", "tenement_building", "planning_permission_obtained","latest_land_use_designation")
 PropertyPrices <- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]
 
 ```
 
+
+
+
+El següent pas serà la neteja de dades, mirant si hi ha valors buits o nulls. 
 ```{r}
 #seguidament arreglarem els valors nuls dels data set
 print('NA')
@@ -172,6 +211,7 @@ colSums(is.na(PropertyPrices))
 print('Blancs')
 colSums(PropertyPrices=="")
 ```
+En les següents variables he considerat que el més adequat és considerar el pitjor cas, osigui posar tots els valors nuls a 0.
 ```{r}
 #posem a 0 els valors nuls de les següents variables:
 PropertyPrices$as_built_plan[is.na(PropertyPrices$as_built_plan)] <- 0
@@ -187,6 +227,9 @@ PropertyPrices$subdivision_permit[is.na(PropertyPrices$subdivision_permit)] <- 0
 PropertyPrices$garden_surface[is.na(PropertyPrices$garden_surface)] <- 0
 ```
 
+
+
+Les següents variables les he posat a 1 per la consideració que la gran majoria dels habitatges compten amb aquestes mínimes prestacions.
 ```{r}
 #posem a 1 les variables dining_room, gas_water__electricity, tv_cable i bedrooms, per la cosideració que casi totes les propietats conten amb aquetes caracteristiques
 PropertyPrices$dining_room[is.na(PropertyPrices$dining_room)] <- 1
@@ -195,6 +238,9 @@ PropertyPrices$tv_cable[is.na(PropertyPrices$tv_cable)] <- 1
 PropertyPrices$bedrooms[is.na(PropertyPrices$bedrooms)] <- 1
 ```
 
+
+
+La resta de variables les he ompler amb la mitja perquè són variables númeriques i contínues, i he considerat que el més adequat és omplir amb la mitja, amb la excepció de les variables any de contrucció i número de façanes, que al ser discretes la mitjana és millor mesura per emplenar-ler
 ```{r}
 #Ara omplirem els NA que queden amb els valors de la mitja i mitjana depen de la variable
 #MEAN
@@ -284,7 +330,49 @@ PropertyPrices$number_of_frontages <- ifelse(is.na(PropertyPrices$number_of_fron
                                        PropertyPrices$number_of_frontages)
 #comprobació que ja no queden valors nuls
 colSums(is.na(PropertyPrices))
+
 ```
+Ara mirem quins valors en blanc queden.
+```{r}
+colSums(PropertyPrices=="")
+```
+Les úniques variables buides restants són les següents:
+
+building_condition
+heating_type
+surroundings_type 
+state
+kitchen_type
+city
+
+Al ser variables categòriques les omplirem amb els valors més repetits. En el cas de surroundings_type la varible serà eliminada ja que més de la meitat dels seus valors estàn en blanc.
+
+```{r}
+# mode_value <- calculate_mode(PropertyPrices$building_condition)
+install.packages("DescTools")
+library(DescTools)
+```
+
+```{r}
+mode_conditions <- Mode(PropertyPrices$building_condition, na.rm = TRUE)
+mode_heat <- Mode(PropertyPrices$heating_type, na.rm = TRUE)
+mode_state <- Mode(PropertyPrices$state, na.rm = TRUE)
+mode_kitchen_type <- Mode(PropertyPrices$kitchen_type, na.rm = TRUE)
+mode_city <- Mode(PropertyPrices$city, na.rm = TRUE)
+
+info_eliminar <- c("surroundings_type")
+PropertyPrices <- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]
+
+PropertyPrices$building_condition[PropertyPrices$building_condition==""] <- mode_conditions[1]
+PropertyPrices$heating_type[PropertyPrices$heating_type==""] <- mode_heat[1]
+PropertyPrices$state[PropertyPrices$state==""] <- mode_state[1]
+PropertyPrices$kitchen_type[PropertyPrices$kitchen_type==""] <- mode_kitchen_type[1]
+PropertyPrices$city[PropertyPrices$city==""] <- mode_city[1]
+
+
+colSums(PropertyPrices=="")
+```
+Ara ja tindrem tot el dataset completament net.
 
 ```{r}
 #aqui podem veure els valors que pren la variable Price que va dels 30.000 fins als 2M aproximadament
@@ -303,34 +391,65 @@ PropertyPrices$price <- cut(PropertyPrices$price, breaks = intervals, labels = i
 
 PropertyPrices$price
 
+barplot(table(PropertyPrices$price), main = "Preus", xlab = "Preus", col = "skyblue")
+
+```
+Veiem que segueix mantenint la mateixa distribució d'abans però ara amb els rangs de valors és molt més ordenat i visual que abans.
+
+Tot seguit calcularem les variables númeriques amb més correlació amb el preu de l'habitatge.
+```{r}
+numeric_variables <- PropertyPrices[, sapply(PropertyPrices, is.numeric)]
+correlation_matrix <- cor(numeric_variables)
+correlation_matrix["price",]
+```
+```{r}
+sorted_correlations <- sort(abs(correlation_matrix["price",]), decreasing = TRUE)
+top_10_correlations <- sorted_correlations[2:11]
+top_10_correlations
+```
+Podem observar que les tres variables amb més correlació amb el preu són living_area, bathrooms, toilets.
+
+Ara mirarem el mateix però només amb les variables categòriques.
+Primer de tot pasem les 6 variables categòriques a factors.
+
+```{r}
+PropertyPrices$building_condition <- as.factor(PropertyPrices$building_condition)
+PropertyPrices$energy_class <- as.factor(PropertyPrices$energy_class)
+PropertyPrices$heating_type <- as.factor(PropertyPrices$heating_type)
+PropertyPrices$kitchen_type <- as.factor(PropertyPrices$kitchen_type)
+PropertyPrices$city <- as.factor(PropertyPrices$city)
+PropertyPrices$state <- as.factor(PropertyPrices$state)
+
+summary(PropertyPrices)
+
 ```
 
-# ```{r}
-# library(ggplot2)
-# library(cluster)
-# library(dplyr)
-# 
-# 
-# # Aplicar K-means con, por ejemplo, 3 clusters
-# num_clusters <- 11
-# 
-# PropertyPrices
-# 
-# PropertyPrices_numeric <- PropertyPrices %>% select_if(is.numeric)
-# 
-# modelo_kmeans <- kmeans(PropertyPrices_numeric$price, centers = num_clusters)
-# 
-# # Agregar información de clusters a los datos
-# PropertyPrices_numeric$cluster <- as.factor(PropertyPrices_numeric$cluster)
-# 
-# # Visualización de los clusters vs. valores reales
-# ggplot(PropertyPrices_numeric, aes(x = price, color = cluster)) +
-#   geom_point() +
-#   labs(title = "Clusters vs. Valores Reales",
-#        x = "Precio",
-#        y = "Frecuencia") +
-#   theme_minimal()
-# 
-# ```
+```{r}
+anova_result_condition <- aov(price ~ building_condition, data = PropertyPrices)
+anova_result_kitchen <- aov(price ~ kitchen_type, data = PropertyPrices)
+anova_result_energy <- aov(price ~ energy_class, data = PropertyPrices)
+anova_result_heating <- aov(price ~ heating_type, data = PropertyPrices)
+anova_result_city <- aov(price ~ city, data = PropertyPrices)
+anova_result_state <- aov(price ~ state, data = PropertyPrices)
+
+anova_result_condition
+anova_result_kitchen
+anova_result_energy
+anova_result_heating
+anova_result_city
+anova_result_state
+```
+```{r}
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+```{r}
+ggplot(PropertyPrices, aes(x = building_condition, y = price)) +
+  geom_violin() +
+  labs(title = "Violin plot de la relació entre una variable categòrica i una variable numèrica",
+       x = "Categoria",
+       y = "Variable Numèrica")
+```
 
 
