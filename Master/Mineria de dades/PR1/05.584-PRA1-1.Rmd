@@ -543,5 +543,7 @@ summary(PropertyPrices_PCA)
 #vectors propis (loadings)
 print(PropertyPrices_PCA$rotation)
 ```
-Després de netejar les dades inicials hem obtingut un dataframe  amb 4770 mostres i 27 variables. Partint de la base que el dataframe original tenia les mateixes observacions però casi el doble de variables (54), he eliminat moltes variables que no aportaven cap mena d'infromació pel fet de que estaven incompletes i tenien variança nula.
+Després de netejar les dades inicials hem obtingut un dataframe  amb 4770 mostres i 27 variables. Partint de la base que el dataframe original tenia les mateixes observacions però casi el doble de variables (54), he eliminat moltes variables que no aportaven cap mena d'infromació pel fet de que estaven incompletes i tenien variança nula. Les variables incompletes les he completat segons he vist convenient amb la mean o median.
+El resultat final es un dataframe amb les variables més significatives, sense cap valor buit i processat amb l'algoritme PCA. El resultat d'aquest algoritme ens dona un dataframe amb la dimensionalitat de les variables reduïdes, amb menys soroll i menys valors outliners i amb una millora de l'eficiència computacional quan sigui aplicat posteriorment a algoritmes de predicció.
+El dataframe ja està preparat per ser processat per models de predicció.
 
