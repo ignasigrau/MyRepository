@@ -374,6 +374,23 @@ colSums(PropertyPrices=="")
 ```
 Ara ja tindrem tot el dataset completament net.
 
+
+Pasem les 6 variables categòriques a factors.
+```{r}
+PropertyPrices$building_condition <- as.factor(PropertyPrices$building_condition)
+PropertyPrices$energy_class <- as.factor(PropertyPrices$energy_class)
+PropertyPrices$heating_type <- as.factor(PropertyPrices$heating_type)
+PropertyPrices$kitchen_type <- as.factor(PropertyPrices$kitchen_type)
+PropertyPrices$city <- as.factor(PropertyPrices$city)
+PropertyPrices$state <- as.factor(PropertyPrices$state)
+
+summary(PropertyPrices)
+
+```
+
+
+
+
 ```{r}
 #aqui podem veure els valors que pren la variable Price que va dels 30.000 fins als 2M aproximadament
 barplot(table(PropertyPrices$price), main = "Preus", xlab = "Preus", col = "skyblue")
@@ -396,7 +413,78 @@ barplot(table(PropertyPrices$price), main = "Preus", xlab = "Preus", col = "skyb
 ```
 Veiem que segueix mantenint la mateixa distribució d'abans però ara amb els rangs de valors és molt més ordenat i visual que abans.
 
-Tot seguit calcularem les variables númeriques amb més correlació amb el preu de l'habitatge.
+Ara mirarem les variables categòriques com estàn relacionades amb el preu.
+
+Preu relacionat amb l'estat:
+
+```{r}
+for (price_level in unique(PropertyPrices$price)) {
+  subset_df <- PropertyPrices[PropertyPrices$price == price_level, ]
+  
+  barplot(table(subset_df$state), 
+          main = paste('Distribució de la Variable estat amb el preu', price_level),
+          xlab = 'estat', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$state))))
+}
+```
+
+Preu relacionat amb la ciutat:
+
+```{r}
+for (price_level in unique(PropertyPrices$price)) {
+  subset_df <- PropertyPrices[PropertyPrices$price == price_level, ]
+  
+  barplot(table(subset_df$city), 
+          main = paste('Distribució de la Variable ciutat amb el preu', price_level),
+          xlab = 'ciutat', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$city))))
+}
+```
+
+
+```{r}
+for (price_level in unique(PropertyPrices$price)) {
+  subset_df <- PropertyPrices[PropertyPrices$price == price_level, ]
+  
+  barplot(table(subset_df$building_condition), 
+          main = paste('Distribució de la Variable estat del habitatge amb el preu', price_level),
+          xlab = 'estat del habitatge', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$building_condition))))
+}
+```
+Es pot veure que en els habitatges més cars l'estat acostuma a ser nou o bon estat, en canvi en els habitatges més econòmics l'estat és a reformar.
+Per inspecció visual clarament aquesta variables està més correlacionada amb el preu que les altres dos.
+
+
+```{r}
+for (price_level in unique(PropertyPrices$price)) {
+  subset_df <- PropertyPrices[PropertyPrices$price == price_level, ]
+  
+  barplot(table(subset_df$heating_type), 
+          main = paste('Distribució de la Variable estat del tipus de calefacció amb el preu', price_level),
+          xlab = 'tipus de calefacció', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$heating_type))))
+}
+```
+
+Aquesta variable no ens aporta gaire informació perquè la seva distribució és molt semblant independentment del seu preu.
+
+```{r}
+for (price_level in unique(PropertyPrices$price)) {
+  subset_df <- PropertyPrices[PropertyPrices$price == price_level, ]
+  
+  barplot(table(subset_df$kitchen_type), 
+          main = paste('Distribució de la Variable estat del tipus de cuina amb el preu', price_level),
+          xlab = 'tipus de cuina', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$kitchen_type))))
+}
+```
+Aquesta variable també està més relacionada amb el preu perquè en preus més alts la cuina està millor equipada.
+Les dos variables més interessants dins de les categòriques són tipus de cuina i estat del habitatge.
+
+
+
+Tot seguit calcularem les variables númeriques amb més correlació amb el preu de l'habitatge per veure les variables més interessants.
 ```{r}
 numeric_variables <- PropertyPrices[, sapply(PropertyPrices, is.numeric)]
 correlation_matrix <- cor(numeric_variables)
@@ -410,36 +498,26 @@ top_10_correlations
 Podem observar que les tres variables amb més correlació amb el preu són living_area, bathrooms, toilets.
 
 Ara mirarem el mateix però només amb les variables categòriques.
-Primer de tot pasem les 6 variables categòriques a factors.
 
-```{r}
-PropertyPrices$building_condition <- as.factor(PropertyPrices$building_condition)
-PropertyPrices$energy_class <- as.factor(PropertyPrices$energy_class)
-PropertyPrices$heating_type <- as.factor(PropertyPrices$heating_type)
-PropertyPrices$kitchen_type <- as.factor(PropertyPrices$kitchen_type)
-PropertyPrices$city <- as.factor(PropertyPrices$city)
-PropertyPrices$state <- as.factor(PropertyPrices$state)
 
-summary(PropertyPrices)
 
-```
 
-```{r}
-anova_result_condition <- aov(price ~ building_condition, data = PropertyPrices)
-anova_result_kitchen <- aov(price ~ kitchen_type, data = PropertyPrices)
-anova_result_energy <- aov(price ~ energy_class, data = PropertyPrices)
-anova_result_heating <- aov(price ~ heating_type, data = PropertyPrices)
-anova_result_city <- aov(price ~ city, data = PropertyPrices)
-anova_result_state <- aov(price ~ state, data = PropertyPrices)
-
-anova_result_condition
-anova_result_kitchen
-anova_result_energy
-anova_result_heating
-anova_result_city
-anova_result_state
-```
-```{r}
+# ```{r}
+# anova_result_condition <- aov(price ~ building_condition, data = PropertyPrices)
+# anova_result_kitchen <- aov(price ~ kitchen_type, data = PropertyPrices)
+# anova_result_energy <- aov(price ~ energy_class, data = PropertyPrices)
+# anova_result_heating <- aov(price ~ heating_type, data = PropertyPrices)
+# anova_result_city <- aov(price ~ city, data = PropertyPrices)
+# anova_result_state <- aov(price ~ state, data = PropertyPrices)
+#
+# anova_result_condition
+# anova_result_kitchen
+# anova_result_energy
+# anova_result_heating
+# anova_result_city
+# anova_result_state
+# ```
+# ```{r}
 install.packages("ggplot2")
 library(ggplot2)
 ```
