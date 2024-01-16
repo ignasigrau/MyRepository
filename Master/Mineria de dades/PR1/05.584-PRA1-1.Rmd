@@ -404,11 +404,10 @@ PropertyPricesAux <- PropertyPrices
 intervals <- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 500000000)
 intervals2 <- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000)
 
-PropertyPrices$price <- cut(PropertyPrices$price, breaks = intervals, labels = intervals2, include.lowest = TRUE)
+PropertyPrices$price_intervals <- cut(PropertyPrices$price, breaks = intervals, labels = intervals2, include.lowest = TRUE)
+PropertyPrices$price_intervals
 
-PropertyPrices$price
-
-barplot(table(PropertyPrices$price), main = "Preus", xlab = "Preus", col = "skyblue")
+barplot(table(PropertyPrices$price_intervals), main = "Preus", xlab = "Preus", col = "skyblue")
 
 ```
 Veiem que segueix mantenint la mateixa distribució d'abans però ara amb els rangs de valors és molt més ordenat i visual que abans.
@@ -486,7 +485,10 @@ Les dos variables més interessants dins de les categòriques són tipus de cuin
 
 Tot seguit calcularem les variables númeriques amb més correlació amb el preu de l'habitatge per veure les variables més interessants.
 ```{r}
+
+
 numeric_variables <- PropertyPrices[, sapply(PropertyPrices, is.numeric)]
+
 correlation_matrix <- cor(numeric_variables)
 correlation_matrix["price",]
 ```
@@ -497,37 +499,49 @@ top_10_correlations
 ```
 Podem observar que les tres variables amb més correlació amb el preu són living_area, bathrooms, toilets.
 
-Ara mirarem el mateix però només amb les variables categòriques.
+```{r}
+PropertyPrices
+```
+```{r}
+
+```
 
 
+```{r}
+numeric_variables
+# Aplica PCA
+PropertyPrices_PCA <- prcomp(numeric_variables, scale. = TRUE)
 
+# Imprimeix el resum dels resultats
+summary(PropertyPrices_PCA)
 
-# ```{r}
-# anova_result_condition <- aov(price ~ building_condition, data = PropertyPrices)
-# anova_result_kitchen <- aov(price ~ kitchen_type, data = PropertyPrices)
-# anova_result_energy <- aov(price ~ energy_class, data = PropertyPrices)
-# anova_result_heating <- aov(price ~ heating_type, data = PropertyPrices)
-# anova_result_city <- aov(price ~ city, data = PropertyPrices)
-# anova_result_state <- aov(price ~ state, data = PropertyPrices)
-#
-# anova_result_condition
-# anova_result_kitchen
-# anova_result_energy
-# anova_result_heating
-# anova_result_city
-# anova_result_state
-# ```
-# ```{r}
-install.packages("ggplot2")
-library(ggplot2)
+# Visualitza els vectors propis (loadings)
+print(PropertyPrices_PCA$rotation)
+```
+```{r}
+colSums(numeric_variables==0)
+```
+```{r}
+info_eliminar <- c("as_built_plan", "flood_zone_type", "furnished", "subdivision_permit")
+PropertyPrices <- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]
+numeric_variables <- numeric_variables[, !(names(numeric_variables) %in% info_eliminar)]
+numeric_variables <- numeric_variables[, apply(numeric_variables, 2, var) != 0]
+```
+
+Aqui el que he fet és borrar les variables que pràcticament eren tot 0, i les que tenien una variança constant per aixi poder aplicar la funció prcomp() que només accepta variables númeriques amb variança no constant.
+
+```{r}
+numeric_variables
 ```
 
 ```{r}
-ggplot(PropertyPrices, aes(x = building_condition, y = price)) +
-  geom_violin() +
-  labs(title = "Violin plot de la relació entre una variable categòrica i una variable numèrica",
-       x = "Categoria",
-       y = "Variable Numèrica")
-```
+# Aplica PCA
+PropertyPrices_PCA <- prcomp(numeric_variables, scale. = TRUE)
 
+summary(PropertyPrices_PCA)
+
+#vectors propis (loadings)
+print(PropertyPrices_PCA$rotation)
+```
+Després de netejar les dades inicials hem obtingut un dataframe  amb 4770 mostres i 27 variables. Partint de la base que el dataframe original tenia les mateixes observacions però casi el doble de variables (54), he eliminat moltes variables que no aportaven cap mena d'infromació pel fet de que estaven incompletes i tenien variança nula.
 
