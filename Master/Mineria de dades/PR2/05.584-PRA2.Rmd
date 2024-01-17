@@ -127,9 +127,86 @@ La data límit de lliurament és el 17/01/2024.
 
 ### Es genera un model no supervisat.
 
-### S'analitzen, mostren i comenten les mesures de qualitat del model generat.
+```{r message= FALSE, warning=FALSE}
+if (!require('cluster')) install.packages('cluster')
+library(cluster)
 
-### Es comenten les conclusions.
+if (!require('stats')) install.packages('stats')
+library(stats)
+
+if (!require("flexclust")) install.packages("flexclust")
+library(flexclust)
+
+```
+
+Carregar dataframe de la pràctica anterior.
+```{r}
+numeric_variables <- readRDS("numeric_variables.rds")
+PropertyPrices <- readRDS("PropertyPrices.rds")
+```
+
+```{r}
+PropertyPrices
+numeric_variables
+```
+```{r}
+numeric_variables$price_intervals <- as.numeric(as.character(PropertyPrices$price_intervals))
+
+numeric_variables <- na.omit(numeric_variables)
+numeric_variables <- as.data.frame(numeric_variables)
+
+numeric_variables_noPrice <- numeric_variables[, -which(names(numeric_variables) == "price")]
+```
+
+```{r}
+fit2 <- kmeans(numeric_variables_noPrice, 2)
+fit4 <- kmeans(numeric_variables_noPrice, 4)
+fit8 <- kmeans(numeric_variables_noPrice, 8)
+fit12 <- kmeans(numeric_variables_noPrice, 12)
+```
+
+```{r}
+cluster2 <- fit2$cluster
+cluster4 <- fit4$cluster
+cluster8 <- fit8$cluster
+cluster12 <- fit12$cluster
+```
+
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster2, pch = 16)
+```
+La primera agrupació amb K=2 ha sigut força bona i es diferencien clarament els habitatges cars dels barats. Seguim estudiant amb agrupacions amb K superior.
+
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster4, pch = 16)
+```
+La agrupació amb K=4 també és força bona, ja que es diferencien clarament 4 rangs de preu encara que en aquest segon cas les agrupacions no són del tot equilibrades.
+
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster8, pch = 16)
+```
+Tornem a tenir una agrupació molt bona on es diferencien els rangs de preu.
+
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster12, pch = 16)
+```
+Encara que l'agrupació és bona no es diferencien els 12 rangs de preu que hi ha, es barregen les agrupacions respecte les reals. 
+
+```{r}
+wcss2 <- fit2$tot.withinss
+wcss2
+
+wcss4 <- fit4$tot.withinss
+wcss4
+
+wcss8 <- fit8$tot.withinss
+wcss8
+
+wcss12 <- fit12$tot.withinss
+wcss12
+```
+Veiem que en cada agrupació el Within-Cluster Sum of Squares es cada cop més petit, resultat esperable ja que cada agrupació està més concentrada i menys dispersa. 
+
 
 ***
 
@@ -137,11 +214,81 @@ La data límit de lliurament és el 17/01/2024.
 
 ### Es genera de nou el model no supervisat anterior, però usant una mètrica de distància diferent.
 
+```{r}
+kmed2 <- kmeans(numeric_variables_noPrice, 2, algorithm = "Lloyd")
+kmed4 <- kmeans(numeric_variables_noPrice, 4, algorithm = "Lloyd")
+kmed8 <- kmeans(numeric_variables_noPrice, 8, algorithm = "Lloyd")
+kmed12 <- kmeans(numeric_variables_noPrice, 12, algorithm = "Lloyd")
+```
+
+
+```{r}
+cluster_med2 <- kmed2$cluster
+cluster_med4 <- kmed4$cluster
+cluster_med8 <- kmed8$cluster
+cluster_med12 <- kmed12$cluster
+```
+
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster_med2, pch = 16)
+```
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster_med4, pch = 16)
+```
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster_med8, pch = 16)
+```
+```{r}
+plot(numeric_variables$living_area, numeric_variables$price_intervals, col = cluster_med12, pch = 16)
+```
+```{r}
+wcss2 <- kmed2$tot.withinss
+wcss2
+
+wcss4 <- kmed4$tot.withinss
+wcss4
+
+wcss8 <- kmed8$tot.withinss
+wcss8
+
+wcss12 <- kmed12$tot.withinss
+wcss12
+```
+
+
 ### Es mostren i es comenten les mesures de qualitat del model generat.
+
+
+
+
+
+
+
+
+
 
 ### Addicionalment es comparen els dos models no supervisats amb mètriques de distància diferents.
 
+
+
+
+
+
+
+
+
 ### Es comenten les conclusions.
+
+
+
+
+
+
+
+
+
+
+
 
 ***
 
@@ -149,13 +296,55 @@ La data límit de lliurament és el 17/01/2024.
 
 ### S'apliquen els algorismes DBSCAN i OPTICS de forma correcta.
 
+
+
+
+
+
+
+
+
 ### Es proven, descriuen i interpreten els resultats amb diferents valors d'`eps` i `minPts`.
+
+
+
+
+
+
+
+
+
 
 ### S'obté una mesura de com és de bo l'agrupament.
 
+
+
+
+
+
+
+
+
 ### Es comparen els resultats obtinguts dels models anteriors i DBSCAN.
 
+
+
+
+
+
+
+
+
 ### Es comenten les conclusions.
+
+
+
+
+
+
+
+
+
 
 *** 
 

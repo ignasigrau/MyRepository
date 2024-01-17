@@ -1,0 +1,554 @@
+---
+title: 'Mineria de dades: PRA1 - Selecció i preparació d''un joc de dades'
+author: "Autor: Ignasi Grau"
+date: "Novembre 2023"
+output:
+  html_document:
+    highlight: default
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    includes:
+      in_header: 05.584-PAC-header-1.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+******
+# Enunciat
+******
+Tot estudi analític ha de néixer d'una necessitat per part del negoci o d'una voluntat de dotar-lo d'un coneixement i contingut en les dades que només podrem obtenir a través d'una col·lecció de bones pràctiques basades en la Mineria de Dades.
+
+El món de l'analítica de dades es sustenta en 3 eixos:
+
+1. Un d'ells és el profund **coneixement** que hauríem de tenir **del negoci** a què tractem de donar respostes mitjançant els estudis analítics.
+
+2. L'altre gran eix és sens dubte les **capacitats analítiques** que siguem capaços de desplegar i en aquest sentit, les dues pràctiques d'aquesta assignatura pretenen que l'estudiant realitzi un recorregut sòlid per aquest segon eix.
+
+3. El tercer eix són els **Dades**. Les necessitats del negoci s'han de concretar amb preguntes analítiques que al seu torn siguin viables respondre a partir de les dades de què disposem. La tasca d'analitzar les dades és sens dubte important, però la tasca d'identificar-los i obtenir-los ha de ser per a un analista un repte permanent.
+
+Com **primera part** de l'estudi analític que ens disposem a realitzar, es demana a l'estudiant que completi els següents passos:
+
+1. Plantejar un problema de analítica de dades detallant-ne els objectius analítics i explica una metodologia per a resoldre'ls d'acord amb lo practicat en les PAC anteriors i també d'acord a lo que s'ha aprés en el material didàctic.
+
+2. Seleccionar un joc de dades i justificar-ne l'elecció. El joc de dades **haurà de tenir capacitats** perquè se li puguin aplicar **algorismes supervisats**, **algorismes no supervisats** i **regles d'associació** i haurà d'estar alineat amb el problema analític plantejat al pas anterior.
+
+**Requisit mínim**: El joc de dades ha de tenir com a mínim 500 observacions amb un mínim de 5 variables numèriques, 2 categòriques i 1 binària. A més ha de **ser diferent**, és important que no sigui un dataset usat a les PAC anteriors.
+
+Adjuntem aquí una llista de portals de dades obertes per seleccionar el joc de dades. Es poden utilitzar altres fonts per obtenir el vostre joc de dades, però recordeu de citar-les:
+
+* **Dades obertes**:
+  + [Google Dataset Search](https://datasetsearch.research.google.com/)
+  + [Datos abiertos España](https://datos.gob.es/es/catalogo?q=&frequency=%7B"type"%3A+"months"%2C+"value"%3A+"1"%7D&sort=score+desc%2C+metadata_modified+desc)
+  + [Datos abiertos Madrid](https://datos.madrid.es/portal/site/egob/)
+  + [Datos abiertos Barcelona](https://opendata-ajuntament.barcelona.cat/es/)
+  + [Datos abiertos Londres](https://data.london.gov.uk/)
+  + [Datos abiertos New York](https://opendata.cityofnewyork.us/)
+  
+* **Conjunts de dades per a aprenentatge automàtic i investigació**
+  + [UCI Machine Learning](https://archive.ics.uci.edu/ml/datasets.php)
+  + [Datasets for machine-learning research (Wikipedia)](https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research)
+  + [Kaggle datasets](https://www.kaggle.com/datasets)
+
+3. Realitzar una anàlisi exploratòria de el joc de dades seleccionat.
+
+4. Realitzar tasques de neteja i condicionat per poder ser usat en processos de modelatge.
+
+5. Realitzar mètodes de discretització
+
+6. Aplicar un estudi PCA sobre el joc de dades. Tot i no estar explicat en el material didàctic, es valorarà si en lloc de PCA investigueu pel vostre compte i apliqueu SVD (Single Value Decomposition).
+* **Alguns recursos**
+  * [PCA per reducció de dimensions](https://www.aprendemachinelearning.com/comprende-principal-component-analysis/)
+  * [SVD Singular Value Decomposition](https://web.mit.edu/be.400/www/SVD/Singular_Value_Decomposition.htm)
+
+Per a totes les PRA **cal documentar** a cada apartat de l'exercici pràctic que s'ha fet, perquè s'ha fet i com s'ha fet. Així mateix, totes les decisions i conclusions hauran de ser presentades de forma raonada i clara, **contextualitzant els resultats**, és a dir, especificant tots i cadascun dels passos que s'hagin dut a terme per resoldre'ls. Finalment, incloeu una **conclusió final** resumint els resultats obtinguts en la pràctica i indiqueu eventuals **citacions bibliogràfiques**, fonts internes/externes i materials de recerca.
+
+* **Document lliurable**
+
+Només cal lliurar el document html i cal fer-lo amb el següent nom 75.584-PRA1-NomEstudiant.html
+
+******
+# Recursos de programació
+******
+* Incloem en aquest apartat una llista de recursos de programació per a mineria de dades on podreu trobar exemples, idees i inspiració:
+  + [Material addicional del llibre: Minería de datos Modelos y Algoritmos](http://oer.uoc.edu/libroMD/)
+  + [Espai de recursos UOC per a ciència de dades](http://datascience.recursos.uoc.edu/)
+  + [Cercador de codi R](https://rseek.org/)  
+  + [Col·lecció de cheatsheets en R](https://www.rstudio.com/resources/cheatsheets/)  
+  
+
+******
+Identificació de Variables Determinants:
+Realitzar un anàlisi exploratori de dades per identificar les variables que podrien tenir una influència significativa en la determinació del preu d'una propietat.
+Emprar tècniques estadístiques per avaluar la relació entre aquestes variables i el preu de la casa.
+
+Preprocessament de Dades:
+Realitzar neteja de dades per gestionar valors nuls, outliers i altres anomalies que puguin afectar la qualitat del model.
+Normalitzar i estandarditzar les dades per garantir una millor convergència i rendiment dels algoritmes.
+
+Construcció del Model Supervisat:
+Seleccionar un algoritme d'aprenentatge supervisat (com ara "regressió lineal, regressió polinòmica, o altres""""""""") per predir el preu de les propietats.
+Dividir les dades en conjunts d'entrenament i proves per avaluar l'eficàcia del model.
+Optimitzar els paràmetres del model per millorar la precisió de les prediccions.
+
+Construcció del Model No Supervisat:
+Emprar un algoritme no supervisat (com ara """"""""") per identificar patrons o segments en les dades relacionats amb el preu de les propietats.
+Explorar les característiques dels grups creats i comprendre les diferències entre ells.
+
+Comparació de Models:
+Comparar el rendiment del model supervisat amb el del model no supervisat, avaluant la seva capacitat per predir els preus de les propietats.
+Utilitzar mètriques com ara l'error mitjà absolut (MAE), l'error mitjà quadràtic (MSE) i el coeficient de determinació (R2) per mesurar la precisió dels models.
+
+Interpretació de Resultats:
+Interpretar els resultats obtinguts per comprendre quines variables tenen una influència més gran en la determinació del preu de les propietats.
+Identificar insights rellevants per ajudar a comprendre millor el mercat immobiliari i les seves dinàmiques.
+
+2. El joc de dades seleccionat és el següent: belgian_property_prices.csv. Aquest joc de dades conta amb més de 4000 observacions i més de 50 variables, complint els requisits de variables categòriques, nùmeriques i binàries.
+Un dels grans problemes que em trobo jo com a jove és el gran preu dels lloguers i de les propietats per aixó he decidit fer aquest estudi. Primer de tot vaig buscar un joc de dades de la ciutat de Barcelona però no vaig trobar
+cap joc de dades prou complet per fer l'estudi però vaig trobar aquest joc del preu de les propietats a Bélgica que complia els requisits.
+
+
+El primer pas per realitzar un anàlisi exploratòria és carregar el fitxer de dades.
+
+```{r}
+PropertyPrices <- read.csv("belgian_property_prices.csv")
+
+head(PropertyPrices)
+```
+
+Verifiquem l'estructura del joc de dades principal. Veiem el nombre de columnes que tenim i exemples dels continguts de les files.
+
+```{r}
+structure = str(PropertyPrices)
+summary = summary(PropertyPrices)
+
+print(structure)
+print(summary)
+
+```
+
+Joc de dades de la pàgina web NYC Open Data. Aquest joc de dades mostra les ofertes de feina a la ciutat de NYC.
+
+1. as_built_plan: Si hi ha un pla com a construït disponible.
+2. available_as_of: Data en què la propietat va estar disponible per comprar.
+3. basement: Presència d'un soterrani.
+4. bathrooms: Número de banys.
+5. bedroom_1_surface: Superfície del primer dormitori.
+6. bedroom_2_surface: Superfície del segon dormitori.
+7. bedroom_3_surface: Superfície del tercer dormitori.
+8. bedrooms: Número de dormitoris.
+9. building_condition: Condició del edifici.
+10. co2_emission: Informació d'emissió de CO2.
+11. cadastral_income: Renda cadastral de la propietat.
+12. connection_to_sewer_network: Informació sobre la connexió a la xarxa d'aigües residuals.
+13. construction_year: Any de construcció.
+14. covered_parking_spaces: Nombre d'aparcaments coberts.
+15. dining_room: Presència de menjador.
+16. double_glazing: Presència de vidres dobles.
+17. energy_class: Classe d'eficiència energètica de la propietat.
+18. external_reference: Informació de referència externa.
+19. flood_zone_type: Tipus de zona d'inundació.
+20. furnished: Si la propietat està amoblada.
+21. garden_surface: Superfície del jardí.
+22. gas_water__electricity: Disponibilitat de gas, aigua i electricitat.
+23. heating_ewtype: Tipus de sistema de calefacció.
+24. kitchen_surface: Superfície de la cuina.
+25. kitchen_type: Tipus de cuina.
+26. latest_land_use_designation: Informació sobre la destinació d'ús del sòl.
+27. living_area: Superfície habitable total de la propietat.
+28. living_room_surface: Superfície de la sala d'estar.
+29. number_of_frontages: Nombre de façanes.
+30. office: Presència d'una oficina.
+31. outdoor_parking_spaces: Nombre d'aparcaments a l'aire lliure.
+32. planning_permission_obtained: Informació sobre el permís d'urbanisme obtingut.
+33. possible_priority_purchase_right: Informació sobre el dret de compra prioritari.
+34. price: Preu de la propietat.
+35. primary_energy_consumption: Informació sobre el consum d'energia primària.
+36. proceedings_for_breach_of_planning_regulations: Informació sobre procediments per incompliment de normatives d'urbanisme.
+37. reference_number_of_the_epc_report: Número de referència de l'informe EPC (Certificat d'Eficiència Energètica).
+38. street_frontage_width: Ample de la façana de la via.
+39. subdivision_permit: Informació sobre un permís de subdivisió.
+40. surface_of_the_plot: Superfície de la parcel·la.
+41. surroundings_type: Tipus d'entorn.
+42. tv_cable: Disponibilitat de cable de televisió.
+43. tenement_building: Informació sobre edificis en coopropietat.
+44. toilets: Nombre de lavabos.
+45. website: Informació sobre el lloc web associat a la propietat.
+46. width_of_the_lot_on_the_street: Ample de la parcel·la al carrer.
+47. yearly_theoretical_total_energy_consumption: Consum d'energia teòric total anual.
+48. housenumber: Número de casa.
+49. street: Nom del carrer.
+50. city: Ciutat on es troba la propietat.
+51. postal: Codi postal.
+52. state: Informació sobre l'estat o la regió.
+53. lat: Latitud.
+54. lng: Longitud.
+
+
+
+### Neteja
+
+Primer de tot borrarem algunes variables que no influeixen a la predicció, com el número de carrer, el codi postal o el nom del carrer d'entre altres.
+```{r}
+
+info_eliminar <- c("available_as_of", "lat", "lng", "postal", "street", "housenumber","website", "external_reference", "possible_priority_purchase_right",
+                   "reference_number_of_the_epc_report", "proceedings_for_breach_of_planning_regulations", "tenement_building", "planning_permission_obtained","latest_land_use_designation")
+PropertyPrices <- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]
+
+```
+
+
+
+
+El següent pas serà la neteja de dades, mirant si hi ha valors buits o nulls. 
+```{r}
+#seguidament arreglarem els valors nuls dels data set
+print('NA')
+colSums(is.na(PropertyPrices))
+print('Blancs')
+colSums(PropertyPrices=="")
+```
+En les següents variables he considerat que el més adequat és considerar el pitjor cas, osigui posar tots els valors nuls a 0.
+```{r}
+#posem a 0 els valors nuls de les següents variables:
+PropertyPrices$as_built_plan[is.na(PropertyPrices$as_built_plan)] <- 0
+PropertyPrices$covered_parking_spaces[is.na(PropertyPrices$covered_parking_spaces)] <- 0
+PropertyPrices$office[is.na(PropertyPrices$office)] <- 0
+PropertyPrices$basement[is.na(PropertyPrices$basement)] <- 0
+PropertyPrices$connection_to_sewer_network[is.na(PropertyPrices$connection_to_sewer_network)] <- 0
+PropertyPrices$flood_zone_type[is.na(PropertyPrices$flood_zone_type)] <- 0
+PropertyPrices$outdoor_parking_spaces[is.na(PropertyPrices$outdoor_parking_spaces)] <- 0
+PropertyPrices$double_glazing[is.na(PropertyPrices$double_glazing)] <- 0
+PropertyPrices$furnished[is.na(PropertyPrices$furnished)] <- 0
+PropertyPrices$subdivision_permit[is.na(PropertyPrices$subdivision_permit)] <- 0
+PropertyPrices$garden_surface[is.na(PropertyPrices$garden_surface)] <- 0
+```
+
+
+
+Les següents variables les he posat a 1 per la consideració que la gran majoria dels habitatges compten amb aquestes mínimes prestacions.
+```{r}
+#posem a 1 les variables dining_room, gas_water__electricity, tv_cable i bedrooms, per la cosideració que casi totes les propietats conten amb aquetes caracteristiques
+PropertyPrices$dining_room[is.na(PropertyPrices$dining_room)] <- 1
+PropertyPrices$gas_water__electricity[is.na(PropertyPrices$gas_water__electricity)] <- 1
+PropertyPrices$tv_cable[is.na(PropertyPrices$tv_cable)] <- 1
+PropertyPrices$bedrooms[is.na(PropertyPrices$bedrooms)] <- 1
+```
+
+
+
+La resta de variables les he ompler amb la mitja perquè són variables númeriques i contínues, i he considerat que el més adequat és omplir amb la mitja, amb la excepció de les variables any de contrucció i número de façanes, que al ser discretes la mitjana és millor mesura per emplenar-ler
+```{r}
+#Ara omplirem els NA que queden amb els valors de la mitja i mitjana depen de la variable
+#MEAN
+PropertyPrices$living_area <- ifelse(is.na(PropertyPrices$living_area),
+                                       mean(PropertyPrices$living_area, na.rm = TRUE),
+                                       PropertyPrices$living_area)
+
+PropertyPrices$cadastral_income <- ifelse(is.na(PropertyPrices$cadastral_income),
+                                       mean(PropertyPrices$cadastral_income, na.rm = TRUE),
+                                       PropertyPrices$cadastral_income)
+
+PropertyPrices$bedroom_1_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface),
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$kitchen_surface <- ifelse(is.na(PropertyPrices$kitchen_surface),
+                                       mean(PropertyPrices$kitchen_surface, na.rm = TRUE),
+                                       PropertyPrices$kitchen_surface)
+
+PropertyPrices$yearly_theoretical_total_energy_consumption <- ifelse(is.na(PropertyPrices$yearly_theoretical_total_energy_consumption),
+                                       mean(PropertyPrices$yearly_theoretical_total_energy_consumption, na.rm = TRUE),
+                                       PropertyPrices$yearly_theoretical_total_energy_consumption)
+
+PropertyPrices$living_room_surface <- ifelse(is.na(PropertyPrices$living_room_surface),
+                                       mean(PropertyPrices$living_room_surface, na.rm = TRUE),
+                                       PropertyPrices$living_room_surface)
+
+PropertyPrices$primary_energy_consumption <- ifelse(is.na(PropertyPrices$primary_energy_consumption),
+                                       mean(PropertyPrices$primary_energy_consumption, na.rm = TRUE),
+                                       PropertyPrices$primary_energy_consumption)
+
+PropertyPrices$street_frontage_width <- ifelse(is.na(PropertyPrices$street_frontage_width),
+                                       mean(PropertyPrices$street_frontage_width, na.rm = TRUE),
+                                       PropertyPrices$street_frontage_width)
+
+PropertyPrices$toilets <- ifelse(is.na(PropertyPrices$toilets),
+                                       mean(PropertyPrices$toilets, na.rm = TRUE),
+                                       PropertyPrices$toilets)
+
+PropertyPrices$bathrooms <- ifelse(is.na(PropertyPrices$bathrooms),
+                                       mean(PropertyPrices$bathrooms, na.rm = TRUE),
+                                       PropertyPrices$bathrooms)
+
+PropertyPrices$co2_emission <- ifelse(is.na(PropertyPrices$co2_emission),
+                                       mean(PropertyPrices$co2_emission, na.rm = TRUE),
+                                       PropertyPrices$co2_emission)
+
+PropertyPrices$width_of_the_lot_on_the_street <- ifelse(is.na(PropertyPrices$width_of_the_lot_on_the_street),
+                                       mean(PropertyPrices$width_of_the_lot_on_the_street, na.rm = TRUE),
+                                       PropertyPrices$width_of_the_lot_on_the_street)
+
+PropertyPrices$width_of_the_lot_on_the_street <- ifelse(is.na(PropertyPrices$width_of_the_lot_on_the_street),
+                                       mean(PropertyPrices$width_of_the_lot_on_the_street, na.rm = TRUE),
+                                       PropertyPrices$width_of_the_lot_on_the_street)
+
+PropertyPrices$garden_surface <- ifelse(is.na(PropertyPrices$garden_surface),
+                                       mean(PropertyPrices$garden_surface, na.rm = TRUE),
+                                       PropertyPrices$garden_surface)
+
+PropertyPrices$surface_of_the_plot <- ifelse(is.na(PropertyPrices$surface_of_the_plot),
+                                       mean(PropertyPrices$surface_of_the_plot, na.rm = TRUE),
+                                       PropertyPrices$surface_of_the_plot)
+
+
+#en aquestes tres variables només omplirem el valor si la variable habitacions és més gran o igual que l'habitació que estem mirant
+PropertyPrices$bedroom_1_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface) & PropertyPrices$bedrooms >= 1,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$bedroom_2_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface) & PropertyPrices$bedrooms >= 2,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+PropertyPrices$bedroom_3_surface <- ifelse(is.na(PropertyPrices$bedroom_1_surface) & PropertyPrices$bedrooms >= 3,
+                                       mean(PropertyPrices$bedroom_1_surface, na.rm = TRUE),
+                                       PropertyPrices$bedroom_1_surface)
+
+
+
+#aquestes dos últimes variables he considerat que era millor omplirles amb la mitjana i na la mitja
+PropertyPrices$construction_year <- ifelse(is.na(PropertyPrices$construction_year),
+                                       median(PropertyPrices$construction_year, na.rm = TRUE),
+                                       PropertyPrices$construction_year)
+
+PropertyPrices$number_of_frontages <- ifelse(is.na(PropertyPrices$number_of_frontages),
+                                       median(PropertyPrices$number_of_frontages, na.rm = TRUE),
+                                       PropertyPrices$number_of_frontages)
+#comprobació que ja no queden valors nuls
+colSums(is.na(PropertyPrices))
+
+```
+Ara mirem quins valors en blanc queden.
+```{r}
+colSums(PropertyPrices=="")
+```
+Les úniques variables buides restants són les següents:
+
+building_condition
+heating_type
+surroundings_type 
+state
+kitchen_type
+city
+
+Al ser variables categòriques les omplirem amb els valors més repetits. En el cas de surroundings_type la varible serà eliminada ja que més de la meitat dels seus valors estàn en blanc.
+
+```{r}
+# mode_value <- calculate_mode(PropertyPrices$building_condition)
+install.packages("DescTools")
+library(DescTools)
+```
+
+```{r}
+mode_conditions <- Mode(PropertyPrices$building_condition, na.rm = TRUE)
+mode_heat <- Mode(PropertyPrices$heating_type, na.rm = TRUE)
+mode_state <- Mode(PropertyPrices$state, na.rm = TRUE)
+mode_kitchen_type <- Mode(PropertyPrices$kitchen_type, na.rm = TRUE)
+mode_city <- Mode(PropertyPrices$city, na.rm = TRUE)
+
+info_eliminar <- c("surroundings_type")
+PropertyPrices <- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]
+
+PropertyPrices$building_condition[PropertyPrices$building_condition==""] <- mode_conditions[1]
+PropertyPrices$heating_type[PropertyPrices$heating_type==""] <- mode_heat[1]
+PropertyPrices$state[PropertyPrices$state==""] <- mode_state[1]
+PropertyPrices$kitchen_type[PropertyPrices$kitchen_type==""] <- mode_kitchen_type[1]
+PropertyPrices$city[PropertyPrices$city==""] <- mode_city[1]
+
+
+colSums(PropertyPrices=="")
+```
+Ara ja tindrem tot el dataset completament net.
+
+
+Pasem les 6 variables categòriques a factors.
+```{r}
+PropertyPrices$building_condition <- as.factor(PropertyPrices$building_condition)
+PropertyPrices$energy_class <- as.factor(PropertyPrices$energy_class)
+PropertyPrices$heating_type <- as.factor(PropertyPrices$heating_type)
+PropertyPrices$kitchen_type <- as.factor(PropertyPrices$kitchen_type)
+PropertyPrices$city <- as.factor(PropertyPrices$city)
+PropertyPrices$state <- as.factor(PropertyPrices$state)
+
+summary(PropertyPrices)
+
+```
+
+
+
+
+```{r}
+#aqui podem veure els valors que pren la variable Price que va dels 30.000 fins als 2M aproximadament
+barplot(table(PropertyPrices$price), main = "Preus", xlab = "Preus", col = "skyblue")
+```
+
+```{r}
+PropertyPricesAux <- PropertyPrices
+
+
+#com la variable que volem predir té molts valors possibles el que faré és discretitzarla i reduïr els seus valors a 12 possibles
+intervals <- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000, 500000000)
+intervals2 <- c(50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000)
+
+PropertyPrices$price_intervals <- cut(PropertyPrices$price, breaks = intervals, labels = intervals2, include.lowest = TRUE)
+PropertyPrices$price_intervals
+
+barplot(table(PropertyPrices$price_intervals), main = "Preus", xlab = "Preus", col = "skyblue")
+
+```
+Veiem que segueix mantenint la mateixa distribució d'abans però ara amb els rangs de valors és molt més ordenat i visual que abans.
+
+Ara mirarem les variables categòriques com estàn relacionades amb el preu.
+
+Preu relacionat amb l'estat:
+
+```{r}
+for (price_level in unique(PropertyPrices$price_intervals)) {
+  subset_df <- PropertyPrices[PropertyPrices$price_intervals == price_level, ]
+  
+  barplot(table(subset_df$state), 
+          main = paste('Distribució de la Variable estat amb el preu', price_level),
+          xlab = 'estat', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$state))))
+}
+```
+
+Preu relacionat amb la ciutat:
+
+```{r}
+for (price_level in unique(PropertyPrices$price_intervals)) {
+  subset_df <- PropertyPrices[PropertyPrices$price_intervals == price_level, ]
+  
+  barplot(table(subset_df$city), 
+          main = paste('Distribució de la Variable ciutat amb el preu', price_level),
+          xlab = 'ciutat', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$city))))
+}
+```
+
+
+```{r}
+for (price_level in unique(PropertyPrices$price_intervals)) {
+  subset_df <- PropertyPrices[PropertyPrices$price_intervals == price_level, ]
+  
+  barplot(table(subset_df$building_condition), 
+          main = paste('Distribució de la Variable estat del habitatge amb el preu', price_level),
+          xlab = 'estat del habitatge', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$building_condition))))
+}
+```
+Es pot veure que en els habitatges més cars l'estat acostuma a ser nou o bon estat, en canvi en els habitatges més econòmics l'estat és a reformar.
+Per inspecció visual clarament aquesta variables està més correlacionada amb el preu que les altres dos.
+
+
+```{r}
+for (price_level in unique(PropertyPrices$price_intervals)) {
+  subset_df <- PropertyPrices[PropertyPrices$price_intervals == price_level, ]
+  
+  barplot(table(subset_df$heating_type), 
+          main = paste('Distribució de la Variable estat del tipus de calefacció amb el preu', price_level),
+          xlab = 'tipus de calefacció', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$heating_type))))
+}
+```
+
+Aquesta variable no ens aporta gaire informació perquè la seva distribució és molt semblant independentment del seu preu.
+
+```{r}
+for (price_level in unique(PropertyPrices$price_intervals)) {
+  subset_df <- PropertyPrices[PropertyPrices$price_intervals == price_level, ]
+  
+  barplot(table(subset_df$kitchen_type), 
+          main = paste('Distribució de la Variable estat del tipus de cuina amb el preu', price_level),
+          xlab = 'tipus de cuina', ylab = 'freqüència',
+          col = rainbow(length(unique(PropertyPrices$kitchen_type))))
+}
+```
+Aquesta variable també està més relacionada amb el preu perquè en preus més alts la cuina està millor equipada.
+Les dos variables més interessants dins de les categòriques són tipus de cuina i estat del habitatge.
+
+
+
+Tot seguit calcularem les variables númeriques amb més correlació amb el preu de l'habitatge per veure les variables més interessants.
+```{r}
+numeric_variables <- PropertyPrices[, sapply(PropertyPrices, is.numeric)]
+
+correlation_matrix <- cor(numeric_variables)
+correlation_matrix["price",]
+```
+```{r}
+sorted_correlations <- sort(abs(correlation_matrix["price",]), decreasing = TRUE)
+top_10_correlations <- sorted_correlations[2:11]
+top_10_correlations
+```
+Podem observar que les tres variables amb més correlació amb el preu són living_area, bathrooms, toilets.
+
+```{r}
+PropertyPrices
+```
+```{r}
+
+```
+
+
+# ```{r}
+# numeric_variables
+# # Aplica PCA
+# PropertyPrices_PCA <- prcomp(numeric_variables, scale. = TRUE)
+# 
+# # Imprimeix el resum dels resultats
+# summary(PropertyPrices_PCA)
+# 
+# # Visualitza els vectors propis (loadings)
+# print(PropertyPrices_PCA$rotation)
+# ```
+```{r}
+colSums(numeric_variables==0)
+```
+```{r}
+info_eliminar <- c("as_built_plan", "flood_zone_type", "furnished", "subdivision_permit")
+PropertyPrices <- PropertyPrices[, !(names(PropertyPrices) %in% info_eliminar)]
+numeric_variables <- numeric_variables[, !(names(numeric_variables) %in% info_eliminar)]
+numeric_variables <- numeric_variables[, apply(numeric_variables, 2, var) != 0]
+```
+
+Aqui el que he fet és borrar les variables que pràcticament eren tot 0, i les que tenien una variança constant per aixi poder aplicar la funció prcomp() que només accepta variables númeriques amb variança no constant.
+
+```{r}
+numeric_variables
+```
+
+```{r}
+# Aplica PCA
+PropertyPrices_PCA <- prcomp(numeric_variables, scale. = TRUE)
+
+summary(PropertyPrices_PCA)
+
+#vectors propis (loadings)
+print(PropertyPrices_PCA$rotation)
+```
+Després de netejar les dades inicials hem obtingut un dataframe  amb 4770 mostres i 27 variables. Partint de la base que el dataframe original tenia les mateixes observacions però casi el doble de variables (54), he eliminat moltes variables que no aportaven cap mena d'infromació pel fet de que estaven incompletes i tenien variança nula. Les variables incompletes les he completat segons he vist convenient amb la mean o median.
+El resultat final es un dataframe amb les variables més significatives, sense cap valor buit i processat amb l'algoritme PCA. El resultat d'aquest algoritme ens dona un dataframe amb la dimensionalitat de les variables reduïdes, amb menys soroll i menys valors outliners i amb una millora de l'eficiència computacional quan sigui aplicat posteriorment a algoritmes de predicció.
+El dataframe ja està preparat per ser processat per models de predicció.
+
+
+```{r}
+
+saveRDS(numeric_variables, "numeric_variables.rds")
+saveRDS(PropertyPrices, "PropertyPrices.rds")
+
+```
