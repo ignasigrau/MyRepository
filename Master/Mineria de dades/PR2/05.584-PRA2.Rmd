@@ -1,6 +1,6 @@
 ---
 title: 'Mineria de dades: PRA2 - Projecte de mineria de dades'
-author: "Autor: Nom de l'estudiant"
+author: "Autor: Ignasi Grau Muñoz"
 date: "Gener 2024"
 output:
   html_document:
@@ -10,7 +10,7 @@ output:
     toc: yes
     toc_depth: 2
     includes:
-      in_header: 05.584-PAC-header.html
+      in_header: 05.584-PAC-header-4.html
   word_document: default
   pdf_document:
     highlight: zenburn
@@ -137,6 +137,24 @@ library(stats)
 if (!require("flexclust")) install.packages("flexclust")
 library(flexclust)
 
+if (!require('dbscan')) install.packages('dbscan'); library('dbscan')
+
+if(!require(ggpubr)){
+    install.packages('ggpubr', repos='http://cran.us.r-project.org')
+    library(ggpubr)
+}
+if(!require(grid)){
+    install.packages('grid', repos='http://cran.us.r-project.org')
+    library(grid)
+}
+if(!require(gridExtra)){
+    install.packages('gridExtra', repos='http://cran.us.r-project.org')
+    library(gridExtra)
+}
+if(!require(C50)){
+    install.packages('C50', repos='http://cran.us.r-project.org')
+    library(C50)
+}
 ```
 
 Carregar dataframe de la pràctica anterior.
@@ -255,39 +273,10 @@ wcss12 <- kmed12$tot.withinss
 wcss12
 ```
 
-
-### Es mostren i es comenten les mesures de qualitat del model generat.
-
-
-
-
-
-
-
-
-
-
-### Addicionalment es comparen els dos models no supervisats amb mètriques de distància diferents.
-
-
-
-
-
-
-
-
-
-### Es comenten les conclusions.
-
-
-
-
-
-
-
-
-
-
+Els resultats de tots els clusters són molt semblants comparats amb el kmeans aplicat anteriorment, degut a que l'algoritme és molt semblant els resultats també ho són.
+L'única diferencia entre Kmeans i kmedians és que un usa la mitjana per calcular els centres dels clusters i l'altre usa la mediana, però l'algoritme és igual excepte aquest aspecte mencionat.
+Encara que són molt semblants podem observar amb la Within-Cluster Sum of Squares que els clusters fets amb K-medians són una mica més dispersos.
+L'algoritme de K-medians és més útil quan hi ha molt valors outliners i amb distribucions no gausianes a diferència del k-means que és més útil amb distribucions gausianes.
 
 
 ***
@@ -296,96 +285,210 @@ wcss12
 
 ### S'apliquen els algorismes DBSCAN i OPTICS de forma correcta.
 
+```{r}
+### Executem l'algoritme OPTICS
+opt1 <- optics(numeric_variables_noPrice, eps = 10000, minPts = 10)
+plot(opt1, data = numeric_variables_noPrice, main = "OPTICS Clustering")
+
+### Extracció d'un clústering DBSCAN tallant l'accessibilitat en el valor eps_cl
+res1 <- extractDBSCAN(opt1, eps_cl = 100000)
+
+plot(res1)
 
 
+selected_variables <- numeric_variables[, c("kitchen_surface", "living_area", "price_intervals")]
+
+hullplot(selected_variables, res1)
+```
 
 
+```{r}
+### Executem l'algoritme OPTICS
+opt2 <- optics(numeric_variables_noPrice, eps = 1000, minPts = 10)
 
+### Extracció d'un clústering DBSCAN tallant l'accessibilitat en el valor eps_cl
+res2 <- extractDBSCAN(opt2, eps_cl = 10000000)
 
+plot(res2) ## negre indica soroll
+# Visualitza els clústers
+hullplot(numeric_variables, res2)
 
+selected_variables <- numeric_variables[, c("kitchen_surface", "living_area", "price_intervals")]
 
-### Es proven, descriuen i interpreten els resultats amb diferents valors d'`eps` i `minPts`.
+hullplot(selected_variables, res2)
 
+```
+```{r}
+### Executem l'algoritme OPTICS
+opt3 <- optics(numeric_variables_noPrice, eps = 10000, minPts = 5)
 
+### Extracció d'un clústering DBSCAN tallant l'accessibilitat en el valor eps_cl
+res3 <- extractDBSCAN(opt3, eps_cl = 100000)
 
+plot(res3)
 
+hullplot(numeric_variables, res3)
 
+selected_variables <- numeric_variables[, c("kitchen_surface", "living_area", "price_intervals")]
 
+hullplot(selected_variables, res3)
 
+```
 
+Despés de comprobar varios valors de eps i minPts hem comprobat que com major sigui la eps, millor és l'agrupació. La segona agrupació amb la epsilon més petita és clarament la pitjor de les tres i és on surgen més punts negres (soroll) encanvi les altres dos agrupacions els clusters obtinguts tenen menys soroll.
 
-
-### S'obté una mesura de com és de bo l'agrupament.
-
-
-
-
-
-
-
-
-
-### Es comparen els resultats obtinguts dels models anteriors i DBSCAN.
-
-
-
-
-
-
-
-
-
-### Es comenten les conclusions.
-
-
-
-
-
-
-
-
+Les agrupacions obtingudes amb aquest algoritme són millors que amb K-means i K-medians aixó és degut a que optics i dbscan poden identificar clústers de formes i mides irregulars, ja que no assumeixen que els clústers siguin esfèrics o de mida similar. DBSCAN també és eficaç per identificar punts que no pertanyen a cap clúster i que podrien ser considerats soroll. K-means requereix especificar prèviament el nombre de clústers. En canvi, DBSCAN pot descobrir el nombre de clústers de manera dinàmica, basant-se en les característiques de densitat del conjunt de dades.
 
 
 *** 
 
 ## Exercici 4
 
-### Es seleccionen les mostres d'entrenament i de prova.
+Separem la variable que volem predir de totes les altres
+```{r}
+set.seed(222)
+y <- numeric_variables[,"price_intervals"] 
+X <- numeric_variables[, !names(numeric_variables) %in% c("price_intervals","price")]
+```
 
-### justifiquen les proporcions seleccionades.
+Agafem 2/3 de les mostres per entrenar i les altres per mirar la validesa del model. La raó d'utilitzar una divisió en 2/3 i 1/3 o altres proporcions és buscar un equilibri entre tenir suficients dades d'entrenament per construir un model precís i tenir dades de prova suficients per avaluar la seva eficàcia.
 
+```{r}
+split_prop <- 3 
+
+indexes = sample(1:nrow(numeric_variables), size=floor(((split_prop-1)/split_prop)*nrow(numeric_variables)))
+
+trainX<-X[indexes,]
+trainy<-y[indexes]
+testX<-X[-indexes,]
+testy<-y[-indexes]
+```
+
+Mirem que després d'agafar les dades de manera aleatoria segueixin tenint les mateixes propietats estadístiques.
+
+```{r}
+summary(trainX);
+summary(trainy)
+summary(testX)
+summary(testy)
+```
+Tot sembla correcte aixi que ja podem procedir a la creació del model.
 *** 
 
 ## Exercici 5
 
-### Es generen regles i es comenten i interpreten les més significatives.
+```{r}
+trainy = as.factor(trainy)
+model <- C50::C5.0(trainX, trainy,rules=TRUE )
+summary(model)
+```
+
+Al tenir tantes variables possibles, les regles de decisió són molt numeroses, hi ha fins a 241 regles de decisió i les variables més útils per les prediccions són cadastral_income amb un 97.55% d'ús, living_area amb un 88.96%, number_of_frontages amb un 62.76%, primary_energy_consumption amb un 57.97%	i yearly_theoretical_total_energy_consumption amb un 56.84%, les altres variables segueixent sent molt útils però ja no superan el 50% d'ús.
+La tassa d'error és força acceptable amb un 27.2%, comptan totes les categories possibles de preu.
+
+Les variables més usades poden canviar al tornar a executar el codi.
 
 ### S'extreuen les regles del model en format text i gràfic.
 
+```{r}
+model1 <- C50::C5.0(trainX, trainy)
+plot(model1,gp = gpar(fontsize = 9.5))
+```
+El model al contar amb tantes desicions i tantes variables, gràficament és impossible de veure res.
+
+Ara repetirem tot el procés pero reduirem les variables per una millor visualització del model.
+
+```{r}
+numeric_data_short <- numeric_variables[, c("price", "cadastral_income", "toilets", "living_area", "yearly_theoretical_total_energy_consumption", "primary_energy_consumption")]
+
+X2 <- numeric_data_short[, !names(numeric_data_short) %in% c("price")]
+
+split_prop <- 3 
+
+indexes = sample(1:nrow(numeric_variables), size=floor(((split_prop-1)/split_prop)*nrow(numeric_variables)))
+
+trainX2<-X2[indexes,]
+trainy2<-y[indexes]
+testX2<-X2[-indexes,]
+testy2<-y[-indexes]
+```
+
+```{r}
+summary(trainX2);
+summary(trainy2)
+summary(testX2)
+summary(testy2)
+```
+
+```{r}
+trainy2 = as.factor(trainy2)
+model2 <- C50::C5.0(trainX2, trainy2,rules=TRUE )
+summary(model2)
+```
+
+Al ser variables númeriques amb tants valors possibles, els arbres de desició es crean amb masses regles i encara que decrementem significativament el nombre de variables el resultat segueix sent semblant i queden models molt difícils de representar i interpretar. Després d'aquest intent fallit de millorar la visualització del model ens quedarem amb el primer model ja que obtenia millors resultats. 
+
+
 ### Addicionalment, es genera la matriu de confusió per a mesurar la capacitat predictiva de l'algoritme, tenint en compte les diferents mètriques associades a aquesta matriu (precisió, sensibilitat, especificitat...)..
 
-### Es comparen i interpreten els resultats (sense i amb opcions de poda), explicant els avantatges i els inconvenients del model generat respecte a un altre mètode de construcció.
+```{r}
+predicted_model <- predict( model1, testX, type="class" )
+print(sprintf("La precisión del árbol es: %.4f %%",100*sum(predicted_model == testy) / length(predicted_model)))
 
-### S'avalua la taxa d'error de l'arbre generat, l'eficiència a la classificació (a les mostres d'entrenament i test) i la comprensibilitat del resultat.
+```
 
-### Es comenten les conclusions.
+```{r}
+mat_conf<-table(testy,Predicted=predicted_model)
+mat_conf
+```
+Els resultats obtinguts no són molt bons amb un error del 38.4277 %. Això és degut a la gran quantitat de possibles rangs de preu.
+Veient la matriu de confusió l'error no està tant malament com pot semblar si mirem el percentatge. L'error queda concentrat aprop de la diagonal principal(classificació correcte), i a mesura que ens allunyem de la diagonal les errades disminueixen molt.
+
+Els resultats són esperats perquè he treballat amb tot variables númeriques. K-Means funciona millor amb dades numèriques ja que el seu càlcul de distàncies entre punts es basa en mesures de distància euclidiana. És eficaç per agrupar les dades en clústers basats en proximitat numèrica. Els arbres de decisió poden gestionar tant variables numèriques com categòriques. Són flexibles i poden adaptar-se a diferents tipus de dades. Però com en el meu cas la totalitat de les variables són númeriques els resultats han sigut millors amb algoritmes no supervisats com optics i dbscans.
 
 ***
 
 ## Exercici 6
 
 ### Es prova amb una variació o un altre enfocament algorítmic.
+```{r}
 
-### Es detalla, comenta i avalua la qualitat de classificació.
+# Ajustar un model de regressió lineal
+model_lineal <- lm(testy2 ~ testX2$cadastral_income + testX2$toilets + testX2$living_area + testX2$yearly_theoretical_total_energy_consumption
+                   + testX2$primary_energy_consumption, data = numeric_data_short)
 
-### Es comparen i es comenten els resultats de manera exhaustiva amb el mètode de construcció anterior.
+# Mostrar resum del model
+summary(model_lineal)
+```
 
+```{r}
+# Fer prediccions
+
+df_test <- data.frame(testX2, testy2)
+prediccions <- predict(model_lineal, newdata = df_test)
+summary(model_lineal)
+
+```
+
+El que he fet és crear un model de regressió lineal amb les dades reduides només agafant part de les variables.
+El model de regressió lineal funciona millor amb variables númeriques però el resultat no es una variable categórica sinó una variable númerica.
+Llavors el resultat obtingut és díficil de comparar amb el model d'arbres de decisió.
+
+L'Error Estándar és aproximadament de 16.000, tenint en compte que els preus que estimem van de 50.000 a 1.000.000, un error de 16.000 és bastant bon resultat.
 ***
 
 ## Exercici 7
 
-### S'identifica quines possibles limitacions tenen les dades que has seleccionat per obtenir conclusions amb els models (supervisat i no supervisat)
+En el cas dels models no supervisats, les dades usades han donat bastant bon resultat, sobretot amb optics i scans. Però al tenir tantes agrupacions de preus (12) era difícil aconseguir molt bons resultats, el mateix ha passat amb els arbres de desició que al tenir tantes possibles prediccions eren difícils de millorar la tassa d'error.
+En el cas dels arbres de desició, he utilitzat només les variables númeriques i això a generat uns arbres impossibles d'interpretar.
+Pero en general les dades usades en la pràctica és un conjunt de dades molt complet.
 
-### S'identifiquen possibles riscos de fer servir el model (mínim 300 paraules).
+
+L'ús de models per predir preus d'habitatges comporta diverses consideracions i desafiaments. La sensibilitat a les dades és crítica, ja que dades inadequades poden impactar la precisió del model. Els models de regressió lineal assumeixen relacions lineals i suposicions d'errors, i qualsevol desviació pot resultar en prediccions imprecises. El mercat immobiliari és inherentment volàtil, amb canvis econòmics, polítics o imprevistos afectant les prediccions del model.
+
+L'overfitting o underfitting són riscos, ja que un model massa ajustat o massa simple pot ser inadequat. Les variables no mesurades podrien ser crucials, i la seva absència pot impactar negativament les prediccions. Biaixos i discriminació poden ser incrustats en models històrics, provocant prediccions injustes. Models complexos poden mancar de transparència, dificultant la interpretació i explicació. La vulnerabilitat del model a manipulacions és una preocupació, especialment en contextos en línia.
+
+Responsabilitat legal i ètica és fonamental, ja que prediccions errònies poden tenir repercussions significatives. Aspectes de regulació i privacitat també són crítics, especialment en la gestió de dades sensibles i personals. La gestió diligent, la curació de dades, la transparència i la comunicació clara amb les parts interessades són crucials per establir confiança. En resum, l'ús de models predictius de preus d'habitatges implica equilibriar molts factors i mitigar riscos per garantir un ús eficaç i ètic en el complex entorn immobiliari.
+
 
 ***

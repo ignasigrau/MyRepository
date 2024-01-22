@@ -109,7 +109,9 @@ Identificar insights rellevants per ajudar a comprendre millor el mercat immobil
 2. El joc de dades seleccionat és el següent: belgian_property_prices.csv. Aquest joc de dades conta amb més de 4000 observacions i més de 50 variables, complint els requisits de variables categòriques, nùmeriques i binàries.
 Un dels grans problemes que em trobo jo com a jove és el gran preu dels lloguers i de les propietats per aixó he decidit fer aquest estudi. Primer de tot vaig buscar un joc de dades de la ciutat de Barcelona però no vaig trobar
 cap joc de dades prou complet per fer l'estudi però vaig trobar aquest joc del preu de les propietats a Bélgica que complia els requisits.
-
+```{r}
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+```
 
 El primer pas per realitzar un anàlisi exploratòria és carregar el fitxer de dades.
 
