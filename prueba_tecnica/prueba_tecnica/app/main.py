@@ -2,6 +2,23 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+def consultar_info(id):
+    # Parámetro de ejemplo a recibir en la solicitud
+    info_a_buscar = request.args.get(id)
+
+    # Consulta SQL para buscar la información en la base de datos
+    query = f"SELECT * FROM impagos WHERE cliend_id = '{info_a_buscar}'"
+
+    # Ejecutar la consulta y obtener los resultados
+    connection = engine.connect()
+    result = connection.execute(query)
+    rows = result.fetchall()
+    connection.close()
+
+    # Convertir los resultados a un formato JSON y devolverlos como respuesta
+    results_json = [dict(row) for row in rows]
+    return jsonify(results_json)
+
 @app.route('/classify-email', methods=['POST'])
 def classify_email():
     try:
